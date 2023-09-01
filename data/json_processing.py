@@ -2,15 +2,8 @@
 
 import json
 
-BASE_PATH1 = '/Users/yo0.guitar27/Desktop'
-BASE_PATH2 = '/WeHelp Bootcamp/Week 9/taipei-day-trip'
-json_file_path = f'{BASE_PATH1}/{BASE_PATH2}/data/taipei-attractions.json'
+json_file_path = '/Users/mac/Desktop/taipei-day-trip/data/taipei-attractions.json'
 
-
-def url_decoder(url_string):
-    urls_split = url_string.split('https://')
-    full_urls = ['https://' + url for url in urls_split if url]
-    return full_urls
 
 def process_metadata(json_results, key):
     data_set = set()
@@ -31,7 +24,13 @@ def process_url_data(json_results, data_id, data_link):
         image_link = result[data_link]
         urls_split = image_link.split('https://')
         full_urls = ['https://' + url for url in urls_split if url]
-        for number in full_urls:
+        
+        filtered_urls = []
+        for url in full_urls:
+            if url.lower().endswith(('.jpg', '.png')):
+                filtered_urls.append(url)
+
+        for number in filtered_urls:
             url_dict[number] = image_id
         
     return url_dict

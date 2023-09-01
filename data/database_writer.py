@@ -68,6 +68,7 @@ def clear_table(table_name):
 if __name__ == "__main__":
     attraction_list, mrt_dict, category_dict, url_dict = main()
     
+
     connection = connection_pool.get_connection()
     cursor = connection.cursor()
 
