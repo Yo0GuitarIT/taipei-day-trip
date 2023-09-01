@@ -2,6 +2,7 @@
 from flask import *
 import mysql.connector
 from mysql.connector import pooling
+import json
 
 app = Flask(__name__)
 app.config["JSON_AS_ASCII"]=False
@@ -106,8 +107,10 @@ def api_attractions():
 		result = {
 			"nextPage": nextPage if nextPage < 5 else None, 
 			"data": data}
-		
-		return jsonify(result), 200
+
+		result = Response(json.dumps(result, ensure_ascii = False),content_type ='application/json;charset=utf-8')
+		return result
+		#return jsonify(result), 200
 	
 	except ValueError as error:
 		return jsonify({"error": True, "message": "伺服器內部錯誤"}), 500
