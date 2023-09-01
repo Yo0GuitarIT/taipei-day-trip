@@ -23,12 +23,9 @@ connection_pool = pooling.MySQLConnectionPool(
     **db_config
 )
 
-def custom_json_encoder(obj):
-    if isinstance(obj, list):
-        return obj  
-    if isinstance(obj, float):
-        return round(obj, 6)  
-    return str(obj)  
+def json_process_utf8(result):
+	result = Response(json.dumps(result, ensure_ascii = False),content_type ='application/json;charset=utf-8')
+	return result
 
 # Pages
 @app.route("/")
@@ -108,12 +105,11 @@ def api_attractions():
 			"nextPage": nextPage if nextPage < 5 else None, 
 			"data": data}
 
-		result = Response(json.dumps(result, ensure_ascii = False),content_type ='application/json;charset=utf-8')
-		return result
-		#return jsonify(result), 200
+		result = json_process_utf8(result)
+		return result, 200
 	
 	except ValueError as error:
-		return jsonify({"error": True, "message": "伺服器內部錯誤"}), 500
+		return json_process_utf8({"error": True, "message": "伺服器內部錯誤"}), 500
 
 @app.route("/api/attraction/<int:attractionId>")
 def api_attraction_id(attractionId):
@@ -140,7 +136,7 @@ def api_attraction_id(attractionId):
 		connection.close()
 
 		if not attractions:
-			return jsonify({"error": True, "message": "景點編號不正確"}), 400
+			return json_process_utf8({"error": True, "message": "景點編號不正確"}), 400
 		
 		data = []
 		for data_info in attractions:
@@ -158,10 +154,12 @@ def api_attraction_id(attractionId):
 				}
 			data.append(info)
 		result = {"data": data}
-		return jsonify(result), 200
+		
+		result = json_process_utf8(result)
+		return result, 200
 
 	except ValueError as error:
-		return jsonify({"error": True, "message": "伺服器內部錯誤"}), 500
+		return json_process_utf8({"error": True, "message": "伺服器內部錯誤"}), 500
 
 @app.route('/api/mrts')
 def api_mrts():
@@ -183,11 +181,12 @@ def api_mrts():
 		connection.close()
 
 		mrts = [row['station_name'] for row in result]
-		response = {"data": mrts}
-		return jsonify(response), 200
+		result = {"data": mrts}
+
+		return json_process_utf8(result), 200
 		
 	except ValueError as error:
-		return jsonify({"error": True, "message": "伺服器內部錯誤:"}), 500
+		return json_process_utf8({"error": True, "message": "伺服器內部錯誤"}), 500
 
 
 if __name__ == "__main__":
