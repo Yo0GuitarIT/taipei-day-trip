@@ -72,7 +72,7 @@ def api_attractions():
 		
 	
 		start_index = page * 12
-		index_number = 12
+		index_number = 13
 		query += "GROUP BY a.id LIMIT %s, %s;"
 		params += (start_index, index_number)
 
@@ -93,9 +93,9 @@ def api_attractions():
 				"images": data_info['images'].split(',')
 				}
 			data.append(info)
-		nextPage = page + 1 
+		nextPage = None if len(data) < 13 else page + 1
 		result = {
-			"nextPage": nextPage if nextPage < 5 else None, 
+			"nextPage": nextPage, 
 			"data": data}
 
 		result = json_process_utf8(result)
