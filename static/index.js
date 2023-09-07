@@ -1,33 +1,61 @@
-function scrollLeft() {
+const mainContainerAttractions = document.querySelector(
+  ".main-container-attractions"
+);
+
+//use buttons for list
+let scrollLeft = () => {
   const middleContainer = document.querySelector(".middle-container");
   middleContainer.scrollLeft -= 200;
-}
+};
 
-function scrollRight() {
+let scrollRight = () => {
   const middleContainer = document.querySelector(".middle-container");
   middleContainer.scrollLeft += 200;
-}
+};
 
-const scrollLeftButton = document.getElementById("scroll-left-button");
-if (scrollLeftButton) {
-  scrollLeftButton.addEventListener("click", () => {
-    console.log("scrollLeftButton");
-    scrollLeft();
-  });
-}
+let addButtonClickListener = (buttonId, clickHandler) => {
+  const button = document.getElementById(buttonId);
+  if (button) {
+    button.addEventListener("click", clickHandler);
+  }
+};
 
-const scrollRightButton = document.getElementById("scroll-right-button");
-if (scrollRightButton) {
-  scrollRightButton.addEventListener("click", () => {
-    console.log("scrollRightButton");
-    scrollRight();
-  });
-}
+addButtonClickListener("scroll-left-button", () => {
+  scrollLeft();
+});
 
-function createAttractionContainers(containerSelector, numContainers) {
-  const mainContainer = document.querySelector(containerSelector);
+addButtonClickListener("scroll-right-button", () => {
+  scrollRight();
+});
 
-  for (let i = 1; i <= numContainers; i++) {
+const inputField = document.querySelector(".search-input-text");
+const searchButton = document.querySelector(".search-button-box");
+let isSearchMode = false;
+
+let handleSearch = () => {
+  const searchText = inputField.value;
+  isSearchMode = true;
+  currentPage = 0;
+  nextPageAvailable = true;
+  mainContainerAttractions.style.display = "grid";
+
+  while (mainContainerAttractions.firstChild) {
+    mainContainerAttractions.removeChild(mainContainerAttractions.firstChild);
+  }
+
+  fetchAndFillAttractions(currentPage, searchText);
+};
+
+searchButton.addEventListener("click", handleSearch);
+inputField.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    handleSearch();
+  }
+});
+
+// create Attractions Element
+let createAttractionContainers = (numContainers, startIndex) => {
+  for (let i = 1 + startIndex; i <= numContainers + startIndex; i++) {
     const attractionContainer = document.createElement("div");
     attractionContainer.className = "attraction-container";
 
@@ -78,11 +106,14 @@ function createAttractionContainers(containerSelector, numContainers) {
     attractionContainer.appendChild(imgContainer);
     attractionContainer.appendChild(textContainer);
 
-    mainContainer.appendChild(attractionContainer);
+    mainContainerAttractions.appendChild(attractionContainer);
   }
-}
+};
 
-function fetchAndFillAttractions(apiUrl) {
+//fetch Api and fill information
+let startIndex = 0;
+let fetchAndFillAttractions = (page, keyword) => {
+  const apiUrl = `http://127.0.0.1:3000/api/attractions?page=${page}&keyword=${keyword}`;
   fetch(apiUrl)
     .then((response) => response.json())
     .then((result) => {
@@ -90,27 +121,37 @@ function fetchAndFillAttractions(apiUrl) {
       const nextPage = result.nextPage;
       let numContainers = data.length;
 
-      if (nextPage !== null) {
-        numContainers -=1;
+      if (data.length === 0) {
+        notFoundData();
       }
 
-      console.log(numContainers);
+      if (nextPage !== null) {
+        numContainers -= 1;
+      } else {
+        nextPageAvailable = false;
+      }
+      startIndex = 12 * page;
 
-      createAttractionContainers(".main-container-attractions", numContainers);
+      createAttractionContainers(numContainers, startIndex);
 
       for (let i = 0; i < numContainers; i++) {
         const name = data[i]["name"];
         const mrt = data[i]["mrt"];
         const category = data[i]["category"];
         const imageUrl = data[i]["images"][0];
+        let classNumber = i + 1;
 
         const attractionName = document.getElementById(
-          `attraction-name${i + 1}`
+          `attraction-name${classNumber + startIndex}`
         );
-        const attractionMrt = document.getElementById(`mrt${i + 1}`);
-        const attractionCategory = document.getElementById(`category${i + 1}`);
+        const attractionMrt = document.getElementById(
+          `mrt${classNumber + startIndex}`
+        );
+        const attractionCategory = document.getElementById(
+          `category${classNumber + startIndex}`
+        );
         const attractionImage = document.getElementById(
-          `attraction-image${i + 1}`
+          `attraction-image${classNumber + startIndex}`
         );
 
         attractionName.textContent = name;
@@ -122,29 +163,102 @@ function fetchAndFillAttractions(apiUrl) {
     .catch((error) => {
       console.error("發生錯誤：", error);
     });
-}
+};
 
-function apiUrl(page) {
-  return `http://127.0.0.1:3000/api/attractions?page=${page}`;
-}
+let notFoundData = () => {
+  const notFoundBox = document.createElement("div");
+  notFoundBox.className = "not-found-box";
+  notFoundBox.style.color = "var(--grayColor)";
 
-fetchAndFillAttractions(apiUrl(0));
+  const notFoundText = document.createElement("p");
+  notFoundText.className = "slogan-title";
+  notFoundText.textContent = "查無資料...";
 
-// 添加滚动事件监听器
-window.addEventListener('scroll', () => {
-  // 获取页面的滚动位置
+  notFoundBox.appendChild(notFoundText);
+
+  while (mainContainerAttractions.firstChild) {
+    mainContainerAttractions.removeChild(mainContainerAttractions.firstChild);
+  }
+  mainContainerAttractions.style.display = "flex";
+  mainContainerAttractions.style.justifyContent = "center";
+  mainContainerAttractions.appendChild(notFoundBox);
+};
+
+// if scroll to bottom ,load more
+let currentPage = 0;
+let nextPageAvailable = true;
+let scrollListener = () => {
+  console.log(
+    "SearchMode: ",
+    isSearchMode,
+    "currentPage:",
+    currentPage,
+    "pageAvailable",
+    nextPageAvailable
+  );
   const scrollHeight = document.documentElement.scrollHeight;
   const scrollTop = window.scrollY;
   const clientHeight = document.documentElement.clientHeight;
-  let count = 0;
+  if (scrollTop + clientHeight >= scrollHeight && nextPageAvailable) {
+    currentPage++;
 
-  // 判断是否已经滚动到了页面底部
-  if (count == 0) {
-    if (scrollTop + clientHeight >= scrollHeight) {
-      fetchAndFillAttractions(apiUrl(1));
-      count++;
+    if (isSearchMode) {
+      const searchText = inputField.value;
+      fetchAndFillAttractions(currentPage, searchText);
+    } else {
+      fetchAndFillAttractions(currentPage, "");
     }
   }
-  
+};
+
+window.addEventListener("scroll", scrollListener);
+
+//page initial
+fetchAndFillAttractions(currentPage, "");
+
+let createListItems = (mrtData) => {
+  const middleContainer = document.querySelector(".middle-container");
+  mrtData.forEach((stationName, index) => {
+    const listItem = document.createElement("div");
+    listItem.className = "list-item";
+
+    const button = document.createElement("button");
+    button.className = `list-text`;
+    button.id = `station${index + 1}`;
+    button.textContent = stationName;
+    button.value = stationName;
+
+    listItem.appendChild(button);
+    middleContainer.appendChild(listItem);
+  });
+};
+
+let fetchMrtInfo = () => {
+  const apiUrl = "http://127.0.0.1:3000/api/mrts";
+  fetch(apiUrl)
+    .then((response) => response.json())
+    .then((result) => {
+      let mrtData = result.data;
+      mrtData = mrtData.filter((element) => element !== "None");
+      createListItems(mrtData);
+    })
+    .catch((error) => {
+      console.error("发生错误：", error);
+    });
+};
+
+fetchMrtInfo();
+
+document.addEventListener("DOMContentLoaded", () => {
+  // 在DOM准备就绪后执行此代码
+  console.log("DOMContentLoaded");
+  const station1Button = document.getElementById("station1");
+  console.log(station1Button);
+  // station1Button.addEventListener("click", () => {
+  //   const stationName = station1Button.value;
+  //   console.log("click", stationName);
+  //   fetchAndFillAttractions(currentPage, stationName);
+  // });
 });
 
+// 在这里可以添加其他初始化操作

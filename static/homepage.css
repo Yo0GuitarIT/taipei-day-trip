@@ -177,6 +177,7 @@
 }
 
 .search-input-text {
+  width: 100%;
   border: 0;
   outline: none;
 }
@@ -328,7 +329,7 @@
 
 .attraction-name {
   height: 20px;
-  width: 250px;
+  width: auto;
   padding: 10px;
   display: flex;
   flex-direction: column;
@@ -337,6 +338,7 @@
 
 .name-text {
   color: var(--additional);
+
 }
 
 .attraction-text-container {
