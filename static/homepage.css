@@ -375,12 +375,12 @@
 
 
 /* not found box-----------------------------------*/
-.not-found-box{
+.not-found-box {
   color: var(--grayColor);
   display: flex;
   justify-content: center;
   align-items: center;
-  height:40px;
+  height: 40px;
 }
 
 /* footer----------------------------------------- */
@@ -401,8 +401,12 @@
 @media screen and (max-width: 1199px) {
   .nav-container {
     height: 100%;
-    width: 100%;
+    width: 100% - 10px;
     padding: 10px 0 10px 10px;
+  }
+
+  .nav-container-slogan {
+    width: auto;
   }
 
   .hero-selection-container {
@@ -426,31 +430,31 @@
   }
 
   .main-container-attractions {
-    grid-template-columns: repeat(2,1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 15px;
     width: 95%;
-    
+
   }
 
   .attraction-container {
-    
     width: 100%;
-    height:auto;
+    height: auto;
   }
 }
 
-@media screen and (max-width: 599px){
+@media screen and (max-width: 599px) {
 
   .main-container-attractions {
-    grid-template-columns:4px 1fr 4px;
-    gap: 15px;
-    /* width: 322px; */
-    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    width: 95%;
+    padding: 0;
   }
 
   .attraction-container {
     grid-column: 2;
     width: 100%;
-    height:auto;
+    height: auto;
   }
 }

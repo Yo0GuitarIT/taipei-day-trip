@@ -19,7 +19,8 @@ let createListItems = (mrtData) => {
 
     button.addEventListener('click', function () {
       console.log(button.value);
-
+      
+      inputField.value = button.value;
       while (mainContainerAttractions.firstChild) {
         mainContainerAttractions.removeChild(mainContainerAttractions.firstChild);
       }
