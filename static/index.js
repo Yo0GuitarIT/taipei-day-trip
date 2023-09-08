@@ -1,6 +1,51 @@
 const mainContainerAttractions = document.querySelector(
   ".main-container-attractions"
 );
+const mainContainer = document.querySelector(".main-container");
+
+
+// create mrt list elements
+let createListItems = (mrtData) => {
+  const middleContainer = document.querySelector(".middle-container");
+  mrtData.forEach((stationName, index) => {
+    const listItem = document.createElement("div");
+    listItem.className = "list-item";
+
+    const button = document.createElement("button");
+    button.className = `list-text `;
+    button.id = `station${index + 1}`;
+    button.textContent = stationName;
+    button.value = stationName;
+
+    button.addEventListener('click', function () {
+      console.log(button.value);
+
+      while (mainContainerAttractions.firstChild) {
+        mainContainerAttractions.removeChild(mainContainerAttractions.firstChild);
+      }
+      fetchAndFillAttractions(0, button.value);
+    })
+
+    listItem.appendChild(button);
+    middleContainer.appendChild(listItem);
+  });
+};
+
+//fetch mrt data
+let fetchMrtInfo = () => {
+  const apiUrl = "http://127.0.0.1:3000/api/mrts";
+  fetch(apiUrl)
+    .then((response) => response.json())
+    .then((result) => {
+      let mrtData = result.data;
+      mrtData = mrtData.filter((element) => element !== "None");
+      createListItems(mrtData);
+    })
+    .catch((error) => {
+      console.error("發生錯誤：", error);
+    });
+};
+
 
 //use buttons for list
 let scrollLeft = () => {
@@ -28,21 +73,18 @@ addButtonClickListener("scroll-right-button", () => {
   scrollRight();
 });
 
+// search function
 const inputField = document.querySelector(".search-input-text");
 const searchButton = document.querySelector(".search-button-box");
 let isSearchMode = false;
-
 let handleSearch = () => {
   const searchText = inputField.value;
   isSearchMode = true;
   currentPage = 0;
   nextPageAvailable = true;
-  mainContainerAttractions.style.display = "grid";
-
   while (mainContainerAttractions.firstChild) {
     mainContainerAttractions.removeChild(mainContainerAttractions.firstChild);
   }
-
   fetchAndFillAttractions(currentPage, searchText);
 };
 
@@ -120,9 +162,10 @@ let fetchAndFillAttractions = (page, keyword) => {
       const data = result.data;
       const nextPage = result.nextPage;
       let numContainers = data.length;
+      toggleNotFound(false);
 
       if (data.length === 0) {
-        notFoundData();
+        toggleNotFound(true);
       }
 
       if (nextPage !== null) {
@@ -165,24 +208,6 @@ let fetchAndFillAttractions = (page, keyword) => {
     });
 };
 
-let notFoundData = () => {
-  const notFoundBox = document.createElement("div");
-  notFoundBox.className = "not-found-box";
-  notFoundBox.style.color = "var(--grayColor)";
-
-  const notFoundText = document.createElement("p");
-  notFoundText.className = "slogan-title";
-  notFoundText.textContent = "查無資料...";
-
-  notFoundBox.appendChild(notFoundText);
-
-  while (mainContainerAttractions.firstChild) {
-    mainContainerAttractions.removeChild(mainContainerAttractions.firstChild);
-  }
-  mainContainerAttractions.style.display = "flex";
-  mainContainerAttractions.style.justifyContent = "center";
-  mainContainerAttractions.appendChild(notFoundBox);
-};
 
 // if scroll to bottom ,load more
 let currentPage = 0;
@@ -211,54 +236,16 @@ let scrollListener = () => {
   }
 };
 
-window.addEventListener("scroll", scrollListener);
+
+let toggleNotFound = (isVisible) => {
+  var element = document.querySelector(".not-found-box");
+
+  if (element) {
+    element.style.display = isVisible ? "flex" : "none";
+  }
+}
 
 //page initial
-fetchAndFillAttractions(currentPage, "");
-
-let createListItems = (mrtData) => {
-  const middleContainer = document.querySelector(".middle-container");
-  mrtData.forEach((stationName, index) => {
-    const listItem = document.createElement("div");
-    listItem.className = "list-item";
-
-    const button = document.createElement("button");
-    button.className = `list-text`;
-    button.id = `station${index + 1}`;
-    button.textContent = stationName;
-    button.value = stationName;
-
-    listItem.appendChild(button);
-    middleContainer.appendChild(listItem);
-  });
-};
-
-let fetchMrtInfo = () => {
-  const apiUrl = "http://127.0.0.1:3000/api/mrts";
-  fetch(apiUrl)
-    .then((response) => response.json())
-    .then((result) => {
-      let mrtData = result.data;
-      mrtData = mrtData.filter((element) => element !== "None");
-      createListItems(mrtData);
-    })
-    .catch((error) => {
-      console.error("发生错误：", error);
-    });
-};
-
 fetchMrtInfo();
-
-document.addEventListener("DOMContentLoaded", () => {
-  // 在DOM准备就绪后执行此代码
-  console.log("DOMContentLoaded");
-  const station1Button = document.getElementById("station1");
-  console.log(station1Button);
-  // station1Button.addEventListener("click", () => {
-  //   const stationName = station1Button.value;
-  //   console.log("click", stationName);
-  //   fetchAndFillAttractions(currentPage, stationName);
-  // });
-});
-
-// 在这里可以添加其他初始化操作
+fetchAndFillAttractions(currentPage, "");
+window.addEventListener("scroll", scrollListener);
