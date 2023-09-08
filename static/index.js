@@ -33,7 +33,7 @@ let createListItems = (mrtData) => {
 
 //fetch mrt data
 let fetchMrtInfo = () => {
-  const apiUrl = "http://127.0.0.1:3000/api/mrts";
+  const apiUrl = "/api/mrts";
   fetch(apiUrl)
     .then((response) => response.json())
     .then((result) => {
@@ -155,7 +155,7 @@ let createAttractionContainers = (numContainers, startIndex) => {
 //fetch Api and fill information
 let startIndex = 0;
 let fetchAndFillAttractions = (page, keyword) => {
-  const apiUrl = `http://127.0.0.1:3000/api/attractions?page=${page}&keyword=${keyword}`;
+  const apiUrl = `/api/attractions?page=${page}&keyword=${keyword}`;
   fetch(apiUrl)
     .then((response) => response.json())
     .then((result) => {
