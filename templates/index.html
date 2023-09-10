@@ -1,62 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>台北一日遊</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='homepage.css') }}"
+    />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>台北一日遊</title>
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='homepage.css') }}" />
-</head>
+  <body>
+    <nav class="nav">
+      <div class="nav-container">
+        <p class="nav-container-slogan headline">台北一日遊</p>
 
-<body>
-  <nav class="nav">
-    <div class="nav-container">
-      <p class="nav-container-slogan headline">台北一日遊</p>
-
-      <div class="nav-container-button">
-        <button class="container-link-button body-regular">預定行程</button>
-        <button class="container-link-button body-regular">登入/註冊</button>
+        <div class="nav-container-button">
+          <button class="container-link-button body-regular">預定行程</button>
+          <button class="container-link-button body-regular">登入/註冊</button>
+        </div>
       </div>
-    </div>
-  </nav>
-  <section class="section">
-    <div class="hero-selection">
-      <div class="hero-selection-container">
-        <div class="hero-selection-item">
-          <p class="hero-selection-space slogan-title">
-            輕鬆享受台北一日悠閒
-          </p>
-          <p class="hero-selection-space body-bold">
-            探索每個角落，體驗城市的深度旅遊行程
-          </p>
-          <div class="hero-selection-space search-box-item">
-            <div class="search-input-box">
-              <input class="search-input-text body-bold" type="text" placeholder="輸入景點名稱查詢" />
-            </div>
+    </nav>
+    <section class="section">
+      <div class="hero-selection">
+        <div class="hero-selection-container">
+          <div class="hero-selection-item">
+            <p class="hero-selection-space slogan-title">
+              輕鬆享受台北一日悠閒
+            </p>
+            <p class="hero-selection-space body-bold">
+              探索每個角落，體驗城市的深度旅遊行程
+            </p>
+            <div class="hero-selection-space search-box-item">
+              <div class="search-input-box">
+                <input
+                  class="search-input-text body-bold"
+                  type="text"
+                  placeholder="輸入景點名稱查詢"
+                />
+              </div>
 
-            <button class="search-button-box">
-              <img class="search-icon" src="/static/images/search.png" alt="" />
-            </button>
+              <button class="search-button-box">
+                <img
+                  class="search-icon"
+                  src="/static/images/search.png"
+                  alt=""
+                />
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
-  <main>
-    <div class="main-container">
-      <div class="main-containter-list">
-        <div class="left-container">
-          <button id="scroll-left-button" class="list-button">
-            <img class="list-button-img" src="/static/images/left arrow.png" alt="" />
-          </button>
-        </div>
-        <div class="right-container">
-          <button id="scroll-right-button" class="list-button">
-            <img class="list-button-img" src="/static/images/right arrow.png" alt="" />
-          </button>
-        </div>
-        <div class="middle-container">
-          <!-- <div class="list-item">
+    </section>
+    <main>
+      <div class="main-container">
+        <div class="main-containter-list">
+          <div class="left-container">
+            <button id="scroll-left-button" class="list-button">
+              <img
+                class="list-button-img"
+                src="/static/images/left arrow.png"
+                alt=""
+              />
+            </button>
+          </div>
+          <div class="right-container">
+            <button id="scroll-right-button" class="list-button">
+              <img
+                class="list-button-img"
+                src="/static/images/right arrow.png"
+                alt=""
+              />
+            </button>
+          </div>
+          <div class="middle-container">
+            <!-- <div class="list-item">
               <button class="list-text">劍潭</button>
             </div>
             <div class="list-item">
@@ -68,10 +87,10 @@
             <div class="list-item">
               <button class="list-text">新北投</button>
             </div> -->
+          </div>
         </div>
-      </div>
-      <div class="main-container-attractions">
-        <!-- <div class="attraction-container">
+        <div class="main-container-attractions">
+          <!-- <div class="attraction-container">
           <div class="attraction-img-container">
             <img id="attraction-image" class="attraction-img" src="" alt="" />
              <div class="attraction-name-box">
@@ -89,29 +108,17 @@
             </div>
           </div>
         </div>
-        <div class="attraction-container"></div>
-        <div class="attraction-container"></div>
-        <div class="attraction-container"></div>
-        <div class="attraction-container"></div>
-        <div class="attraction-container"></div>
-        <div class="attraction-container"></div>
-        <div class="attraction-container"></div>
-        <div class="attraction-container"></div>
-        <div class="attraction-container"></div>
-        <div class="attraction-container"></div>
-        <div class="attraction-container"></div> -->
+        --></div>
       </div>
-    </div>
-    <div class="not-found-box">
-      <p class=" body-bold">查無資料...</p>
-    </div>
-  </main>
-  <footer class="footer">
-    <div class="footer-content">
-      <p class="footer-text body-bold">COPYRIGHT © 2021 台北一日遊</p>
-    </div>
-  </footer>
-  <script src="{{ url_for('static', filename='index.js') }}"></script>
-</body>
-
+      <div class="not-found-box">
+        <p class="body-bold">查無資料...</p>
+      </div>
+    </main>
+    <footer class="footer">
+      <div class="footer-content">
+        <p class="footer-text body-bold">COPYRIGHT © 2021 台北一日遊</p>
+      </div>
+    </footer>
+    <script src="{{ url_for('static', filename='index.js') }}"></script>
+  </body>
 </html>
