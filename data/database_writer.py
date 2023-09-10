@@ -1,7 +1,7 @@
-''' database_writer.py '''
+""" database_writer.py """
 import mysql.connector
-from json_processing import main  
 from mysql.connector import pooling
+from json_processing import main 
 
 db_config = {
     "host": "localhost",
@@ -9,7 +9,6 @@ db_config = {
     "password": "12345678",
     "database": "taipei_day_trip"
 }
-
 
 connection_pool = pooling.MySQLConnectionPool(
     pool_name = "my_pool",
@@ -37,24 +36,21 @@ def write_to_images_table():
         connection.commit()
         id_counters+=1
 
-
 def write_to_attractions_table():
     for result in attraction_list:
-        info_id = result['id']
-        name = result['name']
-        category_id = result['category']
-        description = result['description']
-        address = result['address']
-        transport = result['transport']
-        mrt_id = result['mrt']
-        lat = result['lat']
-        lng = result['lng']
+        info_id = result["id"]
+        name = result["name"]
+        category_id = result["category"]
+        description = result["description"]
+        address = result["address"]
+        transport = result["transport"]
+        mrt_id = result["mrt"]
+        lat = result["lat"]
+        lng = result["lng"]
         
         insert_attractions_query = "INSERT INTO attractions (id, name, category_id, description, address, transport, mrt_id, lat, lng) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
         cursor.execute(insert_attractions_query, (info_id, name, category_id, description, address, transport, mrt_id, lat, lng))
         connection.commit()
-
-        
 
 def clear_table(table_name):      
     cursor = connection.cursor()
@@ -63,12 +59,9 @@ def clear_table(table_name):
     connection.commit()
     print(f"Data in table {table_name} has been cleared.")
         
-
-
 if __name__ == "__main__":
     attraction_list, mrt_dict, category_dict, url_dict = main()
     
-
     connection = connection_pool.get_connection()
     cursor = connection.cursor()
 

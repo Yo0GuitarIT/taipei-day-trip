@@ -4,7 +4,7 @@ import mysql.connector
 from mysql.connector import pooling
 import json
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static')
 app.config["JSON_AS_ASCII"]=False
 app.config["TEMPLATES_AUTO_RELOAD"]=True
 app.config["JSON_SORT_KEYS"] = False
@@ -23,13 +23,11 @@ connection_pool = pooling.MySQLConnectionPool(
     **db_config
 )
 
-def json_process_utf8(result):
-	result = Response(json.dumps(result, ensure_ascii = False),content_type ='application/json;charset=utf-8')
-	return result
 
 # Pages
 @app.route("/")
 def index():
+	
 	return render_template("index.html")
 
 @app.route("/attraction/<id>")
@@ -44,6 +42,7 @@ def booking():
 def thankyou():
 	return render_template("thankyou.html")
 
+"""Api methods"""
 @app.route("/api/attractions")
 def api_attractions():
 	try:
@@ -53,8 +52,6 @@ def api_attractions():
 		if keyword == "test_error":
 			raise ValueError("This is a test error")
 		
-		connection = connection_pool.get_connection()
-		cursor = connection.cursor(dictionary=True)
 		query = """
 		SELECT a.id, a.name, c.category_style, a.description, a.address, a.transport,
 			m.station_name AS mrt, a.lat, a.lng, GROUP_CONCAT(i.url) AS images
@@ -75,15 +72,11 @@ def api_attractions():
 		
 	
 		start_index = page * 12
-		index_number = 12
+		index_number = 13
 		query += "GROUP BY a.id LIMIT %s, %s;"
 		params += (start_index, index_number)
-	
-		cursor.execute(query,params)
-		attractions = cursor.fetchall()
 
-		cursor.close()
-		connection.close()
+		attractions = execute_query(query, params)
 
 		data = []
 		for data_info in attractions:
@@ -100,16 +93,16 @@ def api_attractions():
 				"images": data_info['images'].split(',')
 				}
 			data.append(info)
-		nextPage = page + 1 
+		nextPage = None if len(data) < 13 else page + 1
 		result = {
-			"nextPage": nextPage if nextPage < 5 else None, 
+			"nextPage": nextPage, 
 			"data": data}
 
 		result = json_process_utf8(result)
-		return result, 200
+		return result
 	
 	except ValueError as error:
-		return json_process_utf8({"error": True, "message": "伺服器內部錯誤"}), 500
+		return handle_error("伺服器內部錯誤")
 
 @app.route("/api/attraction/<int:attractionId>")
 def api_attraction_id(attractionId):
@@ -117,8 +110,6 @@ def api_attraction_id(attractionId):
 		if attractionId == 12345678:
 			raise ValueError("This is a test error")
 		
-		connection = connection_pool.get_connection()
-		cursor = connection.cursor(dictionary=True)
 		query = """
          SELECT a.id, a.name, c.category_style, a.description, a.address, a.transport,
              m.station_name AS mrt, a.lat, a.lng, GROUP_CONCAT(i.url) AS images
@@ -129,11 +120,8 @@ def api_attraction_id(attractionId):
         WHERE a.id = %s
         GROUP BY a.id;
         """
-		cursor.execute(query, (attractionId,))
-		attractions = cursor.fetchall()
-		
-		cursor.close()
-		connection.close()
+
+		attractions = execute_query(query,(attractionId,))
 
 		if not attractions:
 			return json_process_utf8({"error": True, "message": "景點編號不正確"}), 400
@@ -156,16 +144,14 @@ def api_attraction_id(attractionId):
 		result = {"data": data}
 		
 		result = json_process_utf8(result)
-		return result, 200
+		return result
 
 	except ValueError as error:
-		return json_process_utf8({"error": True, "message": "伺服器內部錯誤"}), 500
+		return handle_error("伺服器內部錯誤")
 
 @app.route('/api/mrts')
 def api_mrts():
 	try:
-		connection = connection_pool.get_connection()
-		cursor = connection.cursor(dictionary=True)
 		query = """
             SELECT m.station_name
             FROM mrt AS m
@@ -174,20 +160,30 @@ def api_mrts():
             ORDER BY COUNT(a.id) DESC;
         """
 
-		cursor.execute(query)
-		result = cursor.fetchall()
+		mrt_result = execute_query(query)
 
-		cursor.close()
-		connection.close()
-
-		mrts = [row['station_name'] for row in result]
+		mrts = [row['station_name'] for row in mrt_result]
 		result = {"data": mrts}
-
-		return json_process_utf8(result), 200
+		return json_process_utf8(result)
 		
 	except ValueError as error:
-		return json_process_utf8({"error": True, "message": "伺服器內部錯誤"}), 500
+		return handle_error("伺服器內部錯誤")
 
+def execute_query(query, params=None):
+    connection = connection_pool.get_connection()
+    cursor = connection.cursor(dictionary=True)
+    cursor.execute(query, params)
+    result = cursor.fetchall()
+    cursor.close()
+    connection.close()
+    return result
+
+def json_process_utf8(result):
+	result = Response(json.dumps(result, ensure_ascii = False),content_type ='application/json;charset=utf-8'), 200
+	return result
+
+def handle_error(message):
+    return json_process_utf8({"error": True, "message": message}), 500
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=3000, debug=True)
