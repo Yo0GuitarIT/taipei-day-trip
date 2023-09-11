@@ -417,7 +417,7 @@
 
   .hero-selection-container {
     width: 100%;
-    background-size: cover;
+    background-size: auto;
   }
 
   .hero-selection-item {
@@ -436,24 +436,41 @@
   }
 
   .main-container-attractions {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
+    grid-template-columns: repeat(3, 1fr);
+    /* gap: 15px; */
     width: 95%;
+    gap: 30px;
   }
 
   .attraction-container {
     width: 100%;
     height: auto;
   }
+
+  .attraction-img-container{
+    height: 220px;
+  }
 }
 
-@media screen and (max-width: 599px) {
+@media screen and (max-width: 799px) {
+
+  .main-container-attractions {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .attraction-img-container{
+    height: 200px;
+  }
+
+}
+
+@media screen and (max-width: 399px) {
   .main-container-attractions {
     display: flex;
     flex-direction: column;
     justify-items: center;
     width: 95%;
     padding: 0;
+    gap: 15px;
   }
 
   .attraction-container {
