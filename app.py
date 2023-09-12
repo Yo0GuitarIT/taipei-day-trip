@@ -15,7 +15,7 @@ def index():
 
 @app.route("/attraction/<id>")
 def attraction(id):
-	return render_template("attraction.html")
+	return render_template("attraction.html",id=id)
 
 @app.route("/booking")
 def booking():

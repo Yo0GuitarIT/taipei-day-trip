@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>台北一日遊</title>
+    <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='attraction.css') }}"
+    />
+  </head>
+
+  <body class="body">
+    <nav class="nav">
+      <div class="nav-container">
+        <a href="/" class="nav-container-slogan headline">台北一日遊</a>
+
+        <div class="nav-container-button">
+          <button class="container-link-button body-regular">預定行程</button>
+          <button class="container-link-button body-regular">登入/註冊</button>
+        </div>
+      </div>
+    </nav>
+    <div class="wrapper">
+      <selection class="selection">
+        <div class="selection-container">
+          <div class="selection-img-container">
+            <div class="selection-img-box">
+              <img
+                class="selection-img"
+                src="https://www.travel.taipei/d_upload_ttn/sceneadmin/image/A0/B0/C1/D988/E745/F29/cc1e0a3a-0e3c-47dc-88b8-9c7a9ddc606e.jpg"
+                alt=""
+              />
+              <img
+                class="selection-img"
+                src="https://www.travel.taipei/d_upload_ttn/sceneadmin/pic/11001498.jpg"
+                alt=""
+              />
+            </div>
+            <div class="img-button">
+              <img
+                class="img-button-style"
+                src="/static/images/left arrow.png"
+                alt=""
+                onclick="changeImage(-1)"
+              />
+              <img
+                class="img-button-style"
+                src="/static/images/right arrow.png"
+                alt=""
+                onclick="changeImage(1)"
+              />
+            </div>
+          </div>
+          <div class="selection-info-container">
+            <div class="selection-info-profile">
+              <p class="dialog-title dialog-title-bold">平安鐘</p>
+              <p class="category-and-mrt">公共藝術 at 忠孝復興</p>
+            </div>
+            <div class="booking-container">
+              <p class="booking-title body-bold">訂購導覽行程</p>
+              <p class="booking-title-content body-regular">
+                以此景點為中心的一日行程，帶您探索城市角落故事
+              </p>
+              <form class="booking-list" action="#">
+                <div class="booking-date">
+                  <p class="booking-date-text body-bold">選擇日期：</p>
+                  <label class="date-input-box">
+                    <input
+                      class="date-input"
+                      type="date"
+                      id="custom-date-input"
+                    />
+                    <img
+                      class="booking-input-img"
+                      src="/static/images/icon_calendar.png"
+                    />
+                  </label>
+                </div>
+                <div class="booking-time">
+                  <p class="body-bold">選擇時間：</p>
+                  <div class="radio-button">
+                    <input
+                      type="button"
+                      class="select-item"
+                      id="morning"
+                      name="time"
+                    />
+                    <label for="morning">上半天</label>
+                  </div>
+                  <div class="radio-button">
+                    <input
+                      type="button"
+                      class="select-item"
+                      id="afternoon"
+                      name="time"
+                    />
+                    <label for="afternoon">下半天</label>
+                  </div>
+                </div>
+                <div class="booking-cost body-bold">
+                  導覽費用：
+                  <p class="body-regular">新台幣2000元</p>
+                </div>
+                <button type="submit" class="booking-button button-regular">
+                  開始預約行程
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </selection>
+      <main class="main">
+        <div class="main-container">
+          <svg class="hr-line" height="2" width="100%">
+            <line
+              x1="0"
+              y1="0"
+              x2="100%"
+              y2="0"
+              style="stroke: var(--bookingBackgroundColor); stroke-width: 1"
+            />
+          </svg>
+
+          <div class="main-description">
+            <p>
+              平安鐘祈求大家的平安，這是為了紀念921地震週年的設計，在喧鬧的廣場上每個小時鳴鐘，保佑平安，祈禱臺灣不會再發生這樣的天災。雙手合十加上108個黃色的琉璃乳丁，隨著緩緩流下的水，在底下的一個小噴泉噴出。雙手合十的意義，一個是祈福，一個是包容，教我們要包容這樣的改變，撫平這樣的傷口。下面的水緩緩流出，代表著人的生命力是不斷地延續下去。緩緩地鐘聲，卻帶來心中的寧靜。
+              這個平安鐘是由建築師姚仁喜與琉璃創作家王俠軍共同設計，長6公尺、寬5公尺，以鑄銅製成，由法鼓山文教基金會全額出資。平安鐘點綴都市景觀，不時提醒大家，面對刻骨銘心的災難痛苦，更應該有謙卑的一顆心。
+            </p>
+          </div>
+
+          <div class="attraction-address">
+            <p class="info-title body-bold">景點地址：</p>
+            <p class="info-title-text">臺北市 大安區忠孝東路4段</p>
+          </div>
+
+          <div class="transport">
+            <p class="info-title body-bold">交通方式：</p>
+            <p>
+              捷運站名：忠孝復興站4號出口1.公車：204、212、212直、232、232副、262、262(區間)、278、299、521、605、605(副)、605(新台五線)、667、903、忠孝新幹線至頂好市場站
+              2.車位：太平洋崇光百貨地下停車場或市民大道附近地下停車場
+            </p>
+          </div>
+        </div>
+      </main>
+
+      <footer class="footer">
+        <div class="footer-content">
+          <p class="footer-text body-bold">COPYRIGHT © 2021 台北一日遊</p>
+        </div>
+      </footer>
+    </div>
+    <script>
+      const id = {{ id }};
+    </script>
+    <script src="{{ url_for('static', filename='attraction.js') }}"></script>
+  </body>
+</html>

@@ -116,7 +116,6 @@ let createAttractionContainers = (numContainers, startIndex) => {
     img.alt = "";
 
     const loadingImg = document.createElement("div");
-    // loadingImg.textContent = "載入中";
     loadingImg.className = "loading-img";
 
     const nameBox = document.createElement("div");
