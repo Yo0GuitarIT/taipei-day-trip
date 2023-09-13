@@ -108,7 +108,7 @@ let createAttractionContainers = (numContainers, startIndex) => {
 
     const attractionLink = document.createElement("a");
     attractionLink.className = "attraction-link";
-    attractionLink.href = `/attraction/${i}`;
+    attractionLink.id = `attraction${i}`;
 
     const imgContainer = document.createElement("div");
     imgContainer.className = "attraction-img-container";
@@ -152,7 +152,7 @@ let createAttractionContainers = (numContainers, startIndex) => {
     name.appendChild(p);
     nameBox.appendChild(name);
 
-    imgContainer.appendChild(loadingImg); 
+    imgContainer.appendChild(loadingImg);
 
     imgContainer.appendChild(img);
     imgContainer.appendChild(nameBox);
@@ -166,7 +166,7 @@ let createAttractionContainers = (numContainers, startIndex) => {
 
     mainContainerAttractions.appendChild(attractionContainer);
 
-    img.addEventListener("load", () =>{
+    img.addEventListener("load", () => {
       if (loadingImg) {
         imgContainer.removeChild(loadingImg);
       }
@@ -205,7 +205,6 @@ let fetchAndFillAttractions = (page, keyword) => {
         const mrt = data[i]["mrt"];
         const category = data[i]["category"];
         const imageUrl = data[i]["images"][0];
-        
 
         let classNumber = i + 1;
         const attractionName = document.getElementById(
@@ -220,7 +219,11 @@ let fetchAndFillAttractions = (page, keyword) => {
         const attractionImage = document.getElementById(
           `attraction-image${classNumber + startIndex}`
         );
+        const attractionLink = document.getElementById(
+          `attraction${classNumber + startIndex}`
+        );
 
+        attractionLink.href = `/attraction/${attractionId}`;
         attractionName.textContent = name;
         attractionMrt.textContent = mrt;
         attractionCategory.textContent = category;

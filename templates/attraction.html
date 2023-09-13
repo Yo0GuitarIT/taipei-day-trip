@@ -72,10 +72,7 @@
                       class="date-input"
                       type="date"
                       id="custom-date-input"
-                    />
-                    <img
-                      class="booking-input-img"
-                      src="/static/images/icon_calendar.png"
+                      required
                     />
                   </label>
                 </div>
@@ -83,26 +80,27 @@
                   <p class="body-bold">選擇時間：</p>
                   <div class="radio-button">
                     <input
-                      type="button"
+                      type="radio"
                       class="select-item"
                       id="morning"
                       name="time"
+                      required
                     />
-                    <label for="morning">上半天</label>
+                    <label class="body-regular" for="morning">上半天</label>
                   </div>
                   <div class="radio-button">
                     <input
-                      type="button"
+                      type="radio"
                       class="select-item"
                       id="afternoon"
                       name="time"
                     />
-                    <label for="afternoon">下半天</label>
+                    <label class="body-regular" for="afternoon">下半天</label>
                   </div>
                 </div>
                 <div class="booking-cost body-bold">
                   導覽費用：
-                  <p class="body-regular">新台幣2000元</p>
+                  <p class="body-regular" id="tour-cost"></p>
                 </div>
                 <button type="submit" class="booking-button button-regular">
                   開始預約行程
@@ -152,9 +150,6 @@
         </div>
       </footer>
     </div>
-    <script>
-      const id = {{ id }};
-    </script>
     <script src="{{ url_for('static', filename='attraction.js') }}"></script>
   </body>
 </html>
