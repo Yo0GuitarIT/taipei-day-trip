@@ -65,15 +65,18 @@ if __name__ == "__main__":
     connection = connection_pool.get_connection()
     cursor = connection.cursor()
 
-    clear_table("image_urls")
-    clear_table("attractions")
-    clear_table("mrt")
-    clear_table("category")
+    for url,item in url_dict.items():
+        print(item,url)
 
-    write_to_mrt_table()
-    write_to_category_table()
-    write_to_attractions_table()
-    write_to_images_table()
+    # clear_table("image_urls")
+    # clear_table("attractions")
+    # clear_table("mrt")
+    # clear_table("category")
+
+    # write_to_mrt_table()
+    # write_to_category_table()
+    # write_to_attractions_table()
+    # write_to_images_table()
 
     cursor.close()
     connection.close()

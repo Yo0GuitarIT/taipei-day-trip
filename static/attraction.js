@@ -2,6 +2,7 @@ let currentImageIndex = 0;
 function changeImage(step) {
   const imageSlider = document.querySelector(".selection-img-box");
   const selectionImages = document.querySelectorAll(".selection-img");
+  console.log(selectionImages);
   currentImageIndex += step;
   if (currentImageIndex < 0) {
     currentImageIndex = selectionImages.length - 1;

@@ -307,6 +307,11 @@
   overflow: hidden;
 }
 
+.attraction-link:hover .attraction-img {
+  filter: brightness(1.2); /* 这里可以使用任何您想要的滤镜效果，这是一个示例 */
+  transition: filter 0.3s; /* 添加过渡效果以使效果平滑 */
+}
+
 .attraction-img-container {
   height: 195px;
   width: 100%;
@@ -349,7 +354,7 @@
 
 .name-text {
   color: var(--additional);
-  
+
 }
 
 .attraction-text-container {
@@ -459,6 +464,7 @@
   .main-container-attractions {
     grid-template-columns: repeat(2, 1fr);
   }
+
   .attraction-img-container {
     height: 200px;
   }
