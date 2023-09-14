@@ -65,6 +65,7 @@ def api_attractions():
 				"lng": float(data_info['lng']),
 				"images": data_info['images'].split(',')
 				}
+			
 			data.append(info)
 		nextPage = None if len(data) < 13 else page + 1
 		result = {
