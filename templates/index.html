@@ -5,13 +5,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>台北一日遊</title>
+  <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico">
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='homepage.css') }}" />
 </head>
 
 <body>
   <nav class="nav">
     <div class="nav-container">
-      <p class="nav-container-slogan headline">台北一日遊</p>
+      <a href="/" class="nav-container-slogan headline">台北一日遊</a>
 
       <div class="nav-container-button">
         <button class="container-link-button body-regular">預定行程</button>
@@ -72,14 +73,16 @@
       </div>
       <div class="main-container-attractions">
         <!-- <div class="attraction-container">
-          <div class="attraction-img-container">
-            <img id="attraction-image" class="attraction-img" src="" alt="" />
-             <div class="attraction-name-box">
-              <div class="attraction-name">
-                <p id="attraction-name" class="name-text body-bold"></p>
+          <a href="/attraction/1">
+            <div class="attraction-img-container">
+              <img id="attraction-image" class="attraction-img" src="" alt="" />
+              <div class="attraction-name-box">
+                <div class="attraction-name">
+                  <p id="attraction-name" class="name-text body-bold"></p>
+                </div>
               </div>
             </div>
-          </div>
+          </a>
           <div class="attraction-text-container">
             <div class="mrt-box">
               <p id="mrt" class="mrt-text "></p>
@@ -88,22 +91,11 @@
               <p id="category" class="category-text"></p>
             </div>
           </div>
-        </div>
-        <div class="attraction-container"></div>
-        <div class="attraction-container"></div>
-        <div class="attraction-container"></div>
-        <div class="attraction-container"></div>
-        <div class="attraction-container"></div>
-        <div class="attraction-container"></div>
-        <div class="attraction-container"></div>
-        <div class="attraction-container"></div>
-        <div class="attraction-container"></div>
-        <div class="attraction-container"></div>
-        <div class="attraction-container"></div> -->
+        </div> -->
       </div>
     </div>
     <div class="not-found-box">
-      <p class=" body-bold">查無資料...</p>
+      <p class="body-bold">查無資料...</p>
     </div>
   </main>
   <footer class="footer">

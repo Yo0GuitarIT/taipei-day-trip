@@ -3,6 +3,28 @@ const mainContainerAttractions = document.querySelector(
 );
 const mainContainer = document.querySelector(".main-container");
 
+// clean current container elements
+let clearChildren = (element) => {
+  while (element.firstChild) {
+    element.removeChild(element.firstChild);
+  }
+};
+
+// add funtion foreach mrt station buttons
+let createButtonAndFunction = (stationName, index) => {
+  const button = document.createElement("button");
+  button.className = `list-text `;
+  button.id = `station${index + 1}`;
+  button.textContent = stationName;
+  button.value = stationName;
+
+  button.addEventListener("click", () => {
+    inputField.value = button.value;
+    clearChildren(mainContainerAttractions);
+    fetchAndFillAttractions(0, button.value);
+  });
+  return button;
+};
 
 // create mrt list elements
 let createListItems = (mrtData) => {
@@ -11,22 +33,7 @@ let createListItems = (mrtData) => {
     const listItem = document.createElement("div");
     listItem.className = "list-item";
 
-    const button = document.createElement("button");
-    button.className = `list-text `;
-    button.id = `station${index + 1}`;
-    button.textContent = stationName;
-    button.value = stationName;
-
-    button.addEventListener('click', function () {
-      console.log(button.value);
-      
-      inputField.value = button.value;
-      while (mainContainerAttractions.firstChild) {
-        mainContainerAttractions.removeChild(mainContainerAttractions.firstChild);
-      }
-      fetchAndFillAttractions(0, button.value);
-    })
-
+    const button = createButtonAndFunction(stationName, index);
     listItem.appendChild(button);
     middleContainer.appendChild(listItem);
   });
@@ -46,7 +53,6 @@ let fetchMrtInfo = () => {
       console.error("發生錯誤：", error);
     });
 };
-
 
 //use buttons for list
 let scrollLeft = () => {
@@ -83,9 +89,7 @@ let handleSearch = () => {
   isSearchMode = true;
   currentPage = 0;
   nextPageAvailable = true;
-  while (mainContainerAttractions.firstChild) {
-    mainContainerAttractions.removeChild(mainContainerAttractions.firstChild);
-  }
+  clearChildren(mainContainerAttractions);
   fetchAndFillAttractions(currentPage, searchText);
 };
 
@@ -102,6 +106,10 @@ let createAttractionContainers = (numContainers, startIndex) => {
     const attractionContainer = document.createElement("div");
     attractionContainer.className = "attraction-container";
 
+    const attractionLink = document.createElement("a");
+    attractionLink.className = "attraction-link";
+    attractionLink.id = `attraction${i}`;
+
     const imgContainer = document.createElement("div");
     imgContainer.className = "attraction-img-container";
 
@@ -110,6 +118,9 @@ let createAttractionContainers = (numContainers, startIndex) => {
     img.className = "attraction-img";
     img.src = "";
     img.alt = "";
+
+    const loadingImg = document.createElement("div");
+    loadingImg.className = "loading-img";
 
     const nameBox = document.createElement("div");
     nameBox.className = "attraction-name-box";
@@ -140,16 +151,26 @@ let createAttractionContainers = (numContainers, startIndex) => {
 
     name.appendChild(p);
     nameBox.appendChild(name);
+
+    imgContainer.appendChild(loadingImg);
+
     imgContainer.appendChild(img);
     imgContainer.appendChild(nameBox);
     mrtBox.appendChild(mrtP);
     categoryBox.appendChild(categoryP);
     textContainer.appendChild(mrtBox);
     textContainer.appendChild(categoryBox);
-    attractionContainer.appendChild(imgContainer);
+    attractionLink.appendChild(imgContainer);
+    attractionContainer.appendChild(attractionLink);
     attractionContainer.appendChild(textContainer);
 
     mainContainerAttractions.appendChild(attractionContainer);
+
+    img.addEventListener("load", () => {
+      if (loadingImg) {
+        imgContainer.removeChild(loadingImg);
+      }
+    });
   }
 };
 
@@ -179,12 +200,13 @@ let fetchAndFillAttractions = (page, keyword) => {
       createAttractionContainers(numContainers, startIndex);
 
       for (let i = 0; i < numContainers; i++) {
+        const attractionId = data[i]["id"];
         const name = data[i]["name"];
         const mrt = data[i]["mrt"];
         const category = data[i]["category"];
         const imageUrl = data[i]["images"][0];
-        let classNumber = i + 1;
 
+        let classNumber = i + 1;
         const attractionName = document.getElementById(
           `attraction-name${classNumber + startIndex}`
         );
@@ -197,7 +219,11 @@ let fetchAndFillAttractions = (page, keyword) => {
         const attractionImage = document.getElementById(
           `attraction-image${classNumber + startIndex}`
         );
+        const attractionLink = document.getElementById(
+          `attraction${classNumber + startIndex}`
+        );
 
+        attractionLink.href = `/attraction/${attractionId}`;
         attractionName.textContent = name;
         attractionMrt.textContent = mrt;
         attractionCategory.textContent = category;
@@ -209,25 +235,15 @@ let fetchAndFillAttractions = (page, keyword) => {
     });
 };
 
-
 // if scroll to bottom ,load more
 let currentPage = 0;
 let nextPageAvailable = true;
 let scrollListener = () => {
-  console.log(
-    "SearchMode: ",
-    isSearchMode,
-    "currentPage:",
-    currentPage,
-    "pageAvailable",
-    nextPageAvailable
-  );
   const scrollHeight = document.documentElement.scrollHeight;
   const scrollTop = window.scrollY;
   const clientHeight = document.documentElement.clientHeight;
   if (scrollTop + clientHeight >= scrollHeight && nextPageAvailable) {
     currentPage++;
-
     if (isSearchMode) {
       const searchText = inputField.value;
       fetchAndFillAttractions(currentPage, searchText);
@@ -237,14 +253,12 @@ let scrollListener = () => {
   }
 };
 
-
 let toggleNotFound = (isVisible) => {
-  var element = document.querySelector(".not-found-box");
-
+  let element = document.querySelector(".not-found-box");
   if (element) {
     element.style.display = isVisible ? "flex" : "none";
   }
-}
+};
 
 //page initial
 fetchMrtInfo();

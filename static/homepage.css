@@ -96,6 +96,7 @@
   height: 34px;
   width: 150px;
   color: var(--cyanColor);
+  text-decoration: none;
 }
 
 .nav-container-button {
@@ -292,7 +293,6 @@
   width: auto;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  /* grid-template-rows: repeat(3, 1fr); */
   grid-gap: 30px 30px;
   padding: 15px;
 }
@@ -306,6 +306,11 @@
   overflow: hidden;
 }
 
+.attraction-link:hover .attraction-img {
+  filter: brightness(1.2); 
+  transition: filter 0.3s; 
+}
+
 .attraction-img-container {
   height: 195px;
   width: 100%;
@@ -316,6 +321,15 @@
   height: 100%;
   width: 100%;
   object-fit: cover;
+}
+
+.loading-img {
+  height: 75%;
+  width: 100%;
+  background-image: url("/static/images/Loading-img.svg");
+  background-size: 30%;
+  background-repeat: no-repeat;
+  background-position: center center;
 }
 
 .attraction-name-box {
@@ -334,6 +348,7 @@
   display: flex;
   flex-direction: column;
   justify-content: end;
+  white-space: nowrap;
 }
 
 .name-text {
@@ -373,7 +388,6 @@
   bottom: 0;
 }
 
-
 /* not found box-----------------------------------*/
 .not-found-box {
   color: var(--grayColor);
@@ -397,7 +411,6 @@
   color: var(--additional);
 }
 
-
 @media screen and (max-width: 1199px) {
   .nav-container {
     height: 100%;
@@ -411,7 +424,7 @@
 
   .hero-selection-container {
     width: 100%;
-    background-size: cover;
+    background-size: auto;
   }
 
   .hero-selection-item {
@@ -430,26 +443,40 @@
   }
 
   .main-container-attractions {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
+    grid-template-columns: repeat(3, 1fr);
+    /* gap: 15px; */
     width: 95%;
-
+    gap: 30px;
   }
 
   .attraction-container {
     width: 100%;
     height: auto;
   }
+
+  .attraction-img-container {
+    height: 220px;
+  }
 }
 
-@media screen and (max-width: 599px) {
+@media screen and (max-width: 799px) {
+  .main-container-attractions {
+    grid-template-columns: repeat(2, 1fr);
+  }
 
+  .attraction-img-container {
+    height: 200px;
+  }
+}
+
+@media screen and (max-width: 399px) {
   .main-container-attractions {
     display: flex;
     flex-direction: column;
     justify-items: center;
     width: 95%;
     padding: 0;
+    gap: 15px;
   }
 
   .attraction-container {

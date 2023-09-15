@@ -1,6 +1,6 @@
 """ json_processing.py """
 import json
-json_file_path = "/Users/yo0.guitar27/Desktop/WeHelp Bootcamp/Week 9/taipei-day-trip/data/taipei-attractions.json"
+json_file_path = "/Users/mac/Desktop/taipei-day-trip/data/taipei-attractions.json"
 
 def process_metadata(json_results, key):
     data_set = set()
