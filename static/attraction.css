@@ -489,6 +489,10 @@ body {
     padding: 0 10px;
     margin-bottom: 30px;
   }
+
+  .transport {
+    height: auto;
+  }
 }
 
 @media screen and (max-width: 650px) {
