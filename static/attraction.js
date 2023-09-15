@@ -160,3 +160,5 @@ morningRadio.addEventListener("change", () => {
 afternoonRadio.addEventListener("change", () => {
   updateTourCost(afternoonRadio, tourCostText);
 });
+
+

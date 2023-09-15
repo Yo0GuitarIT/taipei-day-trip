@@ -15,9 +15,9 @@ connection_pool = pooling.MySQLConnectionPool(
     **db_config
 )
 
-select_mrt = Blueprint("mrt_api",__name__)
+attraction_info = Blueprint("attraction_api",__name__)
 
-@select_mrt.route("/api/attractions")
+@attraction_info.route("/api/attractions")
 def api_attractions():
 	try:
 		page = int(request.args.get("page", 0)) 
@@ -78,7 +78,7 @@ def api_attractions():
 	except ValueError as error:
 		return handle_error("伺服器內部錯誤")
 
-@select_mrt.route("/api/attraction/<int:attractionId>")
+@attraction_info.route("/api/attraction/<int:attractionId>")
 def api_attraction_id(attractionId):
 	try:
 		if attractionId == 12345678:
@@ -120,26 +120,6 @@ def api_attraction_id(attractionId):
 		result = json_process_utf8(result)
 		return result
 
-	except ValueError as error:
-		return handle_error("伺服器內部錯誤")
-
-@select_mrt.route('/api/mrts')
-def api_mrts():
-	try:
-		query = """
-            SELECT m.station_name
-            FROM mrt AS m
-            LEFT JOIN attractions AS a ON m.id = a.mrt_id
-            GROUP BY m.station_name
-            ORDER BY COUNT(a.id) DESC;
-        """
-
-		mrt_result = execute_query(query)
-
-		mrts = [row['station_name'] for row in mrt_result]
-		result = {"data": mrts}
-		return json_process_utf8(result)
-		
 	except ValueError as error:
 		return handle_error("伺服器內部錯誤")
 

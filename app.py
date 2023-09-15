@@ -1,12 +1,16 @@
 from flask import *
-from api.attractions_api import select_mrt
+from api.attractions_api import attraction_info
+from api.mrt_api import mrt_info
+from api.booking_api import booking_info
 
 app = Flask(__name__, static_folder='static')
 app.config["JSON_AS_ASCII"]=False
 app.config["TEMPLATES_AUTO_RELOAD"]=True
 app.config["JSON_SORT_KEYS"] = False
 
-app.register_blueprint(select_mrt)
+app.register_blueprint(attraction_info)
+app.register_blueprint(mrt_info)
+app.register_blueprint(booking_info)
 
 # Pages
 @app.route("/")
