@@ -66,11 +66,14 @@ def api_attractions():
 				"images": data_info['images'].split(',')
 				}
 			
+			
 			data.append(info)
 		nextPage = None if len(data) < 13 else page + 1
 		result = {
 			"nextPage": nextPage, 
 			"data": data}
+		
+		print(data[4])
 
 		result = json_process_utf8(result)
 		return result
@@ -83,6 +86,8 @@ def api_attraction_id(attractionId):
 	try:
 		if attractionId == 12345678:
 			raise ValueError("This is a test error")
+		
+		
 		
 		query = """
          SELECT a.id, a.name, c.category_style, a.description, a.address, a.transport,
@@ -146,6 +151,9 @@ def api_mrts():
 def execute_query(query, params=None):
     connection = connection_pool.get_connection()
     cursor = connection.cursor(dictionary=True)
+
+    cursor.execute("SET GLOBAL group_concat_max_len = 102400;")
+	
     cursor.execute(query, params)
     result = cursor.fetchall()
     cursor.close()

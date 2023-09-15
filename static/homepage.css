@@ -293,7 +293,6 @@
   width: auto;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  /* grid-template-rows: repeat(3, 1fr); */
   grid-gap: 30px 30px;
   padding: 15px;
 }
@@ -308,8 +307,8 @@
 }
 
 .attraction-link:hover .attraction-img {
-  filter: brightness(1.2); /* 这里可以使用任何您想要的滤镜效果，这是一个示例 */
-  transition: filter 0.3s; /* 添加过渡效果以使效果平滑 */
+  filter: brightness(1.2); 
+  transition: filter 0.3s; 
 }
 
 .attraction-img-container {
