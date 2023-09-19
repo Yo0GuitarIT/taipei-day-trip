@@ -1,63 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>台北一日遊</title>
+    <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='homepage.css') }}"
+    />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>台北一日遊</title>
-  <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico">
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='homepage.css') }}" />
-</head>
+  <body>
+    <nav class="nav">
+      <div class="nav-container">
+        <a href="/" class="nav-container-slogan headline">台北一日遊</a>
 
-<body>
-  <nav class="nav">
-    <div class="nav-container">
-      <a href="/" class="nav-container-slogan headline">台北一日遊</a>
+        <div class="nav-container-button">
+          <button class="container-link-button body-regular">預定行程</button>
+          <button id="signin-screen" class="container-link-button body-regular">
+            登入/註冊
+          </button>
+        </div>
+      </div>
+    </nav>
 
-      <div class="nav-container-button">
-        <button class="container-link-button body-regular">預定行程</button>
-        <button class="container-link-button body-regular">登入/註冊</button>
+    <div class="signin-background">
+      <div class="signin-main-container" >
+        <div class="singnin-decorator-bar"></div>
+        <div class="signin-container">
+          <div class="exit-button-box">
+            <img class="exit-img" src="/static/images/cross-img.png" alt="">
+          </div>
+          <div class="signin-title-box">
+            <p class="signin-title dialog-title-bold">登入會員帳號</p>
+            
+          </div>
+          <div class="signin-input-box">
+            <input class="info-input" placeholder="輸入電子信箱" />
+          </div>
+          <div class="signin-input-box">
+            <input class="info-input" placeholder="輸入密碼" />
+          </div>
+          <button class="signin-button button-regular">登入帳戶</button>
+          <button class="switch-signup-mode">還沒有帳戶？點此註冊</button>
+        </div>
+      </div>
+
+      <div class="signup-main-container" >
+        <div class="singnin-decorator-bar"></div>
+        <div class="signup-container">
+          <div class="exit-button-box">
+            <img class="exit-img" src="/static/images/cross-img.png" alt="">
+          </div>
+          <div class="signin-title-box">
+            <p class="signin-title dialog-title-bold">註冊會員帳號</p>
+            
+          </div>
+          <div class="signin-input-box">
+            <input class="info-input" placeholder="輸入姓名" />
+          </div>
+          <div class="signin-input-box">
+            <input class="info-input" placeholder="輸入電子郵件" />
+          </div>
+          <div class="signin-input-box">
+            <input class="info-input" placeholder="輸入密碼" />
+          </div>
+          <button class="signin-button button-regular">註冊新帳戶</button>
+          <button class="switch-signin-mode">已經有帳戶了？點此登入</button>
+        </div>
       </div>
     </div>
-  </nav>
-  <section class="section">
-    <div class="hero-selection">
-      <div class="hero-selection-container">
-        <div class="hero-selection-item">
-          <p class="hero-selection-space slogan-title">
-            輕鬆享受台北一日悠閒
-          </p>
-          <p class="hero-selection-space body-bold">
-            探索每個角落，體驗城市的深度旅遊行程
-          </p>
-          <div class="hero-selection-space search-box-item">
-            <div class="search-input-box">
-              <input class="search-input-text body-bold" type="text" placeholder="輸入景點名稱查詢" />
-            </div>
 
-            <button class="search-button-box">
-              <img class="search-icon" src="/static/images/search.png" alt="" />
-            </button>
+    <section class="section">
+      <div class="hero-selection">
+        <div class="hero-selection-container">
+          <div class="hero-selection-item">
+            <p class="hero-selection-space slogan-title">
+              輕鬆享受台北一日悠閒
+            </p>
+            <p class="hero-selection-space body-bold">
+              探索每個角落，體驗城市的深度旅遊行程
+            </p>
+            <div class="hero-selection-space search-box-item">
+              <div class="search-input-box">
+                <input
+                  class="search-input-text body-bold"
+                  type="text"
+                  placeholder="輸入景點名稱查詢"
+                />
+              </div>
+
+              <button class="search-button-box">
+                <img
+                  class="search-icon"
+                  src="/static/images/search.png"
+                  alt=""
+                />
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
-  <main>
-    <div class="main-container">
-      <div class="main-containter-list">
-        <div class="left-container">
-          <button id="scroll-left-button" class="list-button">
-            <img class="list-button-img" src="/static/images/left arrow.png" alt="" />
-          </button>
-        </div>
-        <div class="right-container">
-          <button id="scroll-right-button" class="list-button">
-            <img class="list-button-img" src="/static/images/right arrow.png" alt="" />
-          </button>
-        </div>
-        <div class="middle-container">
-          <!-- <div class="list-item">
+    </section>
+    <main>
+      <div class="main-container">
+        <div class="main-containter-list">
+          <div class="left-container">
+            <button id="scroll-left-button" class="list-button">
+              <img
+                class="list-button-img"
+                src="/static/images/left arrow.png"
+                alt=""
+              />
+            </button>
+          </div>
+          <div class="right-container">
+            <button id="scroll-right-button" class="list-button">
+              <img
+                class="list-button-img"
+                src="/static/images/right arrow.png"
+                alt=""
+              />
+            </button>
+          </div>
+          <div class="middle-container">
+            <!-- <div class="list-item">
               <button class="list-text">劍潭</button>
             </div>
             <div class="list-item">
@@ -69,10 +139,10 @@
             <div class="list-item">
               <button class="list-text">新北投</button>
             </div> -->
+          </div>
         </div>
-      </div>
-      <div class="main-container-attractions">
-        <!-- <div class="attraction-container">
+        <div class="main-container-attractions">
+          <!-- <div class="attraction-container">
           <a href="/attraction/1">
             <div class="attraction-img-container">
               <img id="attraction-image" class="attraction-img" src="" alt="" />
@@ -92,18 +162,17 @@
             </div>
           </div>
         </div> -->
+        </div>
       </div>
-    </div>
-    <div class="not-found-box">
-      <p class="body-bold">查無資料...</p>
-    </div>
-  </main>
-  <footer class="footer">
-    <div class="footer-content">
-      <p class="footer-text body-bold">COPYRIGHT © 2021 台北一日遊</p>
-    </div>
-  </footer>
-  <script src="{{ url_for('static', filename='index.js') }}"></script>
-</body>
-
+      <div class="not-found-box">
+        <p class="body-bold">查無資料...</p>
+      </div>
+    </main>
+    <footer class="footer">
+      <div class="footer-content">
+        <p class="footer-text body-bold">COPYRIGHT © 2021 台北一日遊</p>
+      </div>
+    </footer>
+    <script src="{{ url_for('static', filename='index.js') }}"></script>
+  </body>
 </html>
