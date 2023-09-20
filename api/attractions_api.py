@@ -126,7 +126,6 @@ def api_attraction_id(attractionId):
 def execute_query(query, params=None):
     connection = connection_pool.get_connection()
     cursor = connection.cursor(dictionary=True)
-
     cursor.execute("SET GLOBAL group_concat_max_len = 102400;")
 	
     cursor.execute(query, params)
