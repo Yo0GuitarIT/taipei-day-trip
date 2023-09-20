@@ -10,7 +10,7 @@ app.config["TEMPLATES_AUTO_RELOAD"]=True
 app.config["JSON_SORT_KEYS"] = False
 
 app.register_blueprint(attraction_info)
-app.register_blueprint(mrt_info)
+app.register_blueprint(mrt_info,url_prefix="/api")
 app.register_blueprint(booking_info)
 app.register_blueprint(user_info)
 

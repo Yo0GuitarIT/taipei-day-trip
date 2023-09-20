@@ -17,7 +17,7 @@ connection_pool = pooling.MySQLConnectionPool(
 
 mrt_info = Blueprint("mrt_api",__name__)
 
-@mrt_info.route('/api/mrts')
+@mrt_info.route('/mrts')
 def api_mrts():
 	try:
 		query = """

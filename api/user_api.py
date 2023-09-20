@@ -35,11 +35,6 @@ def json_process_utf8(result):
 
 
 
-
-
-
-
-
 @user_info.route("/api/user", methods=["POST"])
 def register_user():
     try:
@@ -69,8 +64,6 @@ def generate_token():
     taipei_timezone = pytz.timezone('Asia/Taipei')
     expiration_time = datetime.datetime.utcnow().now(taipei_timezone) + datetime.timedelta(minutes=1)
 
-    print(expiration_time)
-
     # 構建payload
     payload = {
         "user_id": 123,
@@ -83,6 +76,7 @@ def generate_token():
     # 生成JWT Token
     token = jwt.encode(payload, secret_key, algorithm="HS256")
 
+    print(expiration_time)
     return jsonify({"token": token}), 200
 
 

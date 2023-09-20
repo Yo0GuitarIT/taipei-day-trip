@@ -266,7 +266,8 @@ fetchAndFillAttractions(currentPage, "");
 window.addEventListener("scroll", scrollListener);
 
 const loginButton = document.getElementById("signin-screen");
-const exitButton = document.querySelector(".exit-img");
+const exitButton1 = document.querySelector(".exit-img1");
+const exitButton2 = document.querySelector(".exit-img2");
 const signinBackground = document.querySelector(".signin-background");
 const signinContainer = document.querySelector(".signin-main-container");
 const signupContainer = document.querySelector(".signup-main-container");
@@ -280,8 +281,17 @@ loginButton.addEventListener("click", () => {
   }, 1);
 });
 
-exitButton.addEventListener("click", () => {
+exitButton1.addEventListener("click", () => {
   signinContainer.style.top = "-350px";
+  console.log("exiting...");
+  setTimeout(() => {
+    signinBackground.style.display = "none";
+  }, 400);
+});
+
+exitButton2.addEventListener("click", () => {
+  signupContainer.style.top = "-350px";
+  console.log("exiting...");
   setTimeout(() => {
     signinBackground.style.display = "none";
   }, 400);
