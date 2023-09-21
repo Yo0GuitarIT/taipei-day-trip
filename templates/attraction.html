@@ -8,12 +8,12 @@
     <link
       rel="stylesheet"
       type="text/css"
-      href="{{ url_for('static', filename='attraction.css') }}"
+      href="{{ url_for('static', filename='style/attraction.css') }}"
     />
   </head>
 
   <body class="body">
-    <nav class="nav">
+    <!-- <nav class="nav">
       <div class="nav-container">
         <a href="/" class="nav-container-slogan headline">台北一日遊</a>
 
@@ -69,8 +69,9 @@
           <button class="switch-signin-mode">已經有帳戶了？點此登入</button>
         </div>
       </div>
-    </div>
-
+    </div> -->
+    {% include 'navbar.html' %}
+    {% include 'login_system.html' %}
     <div class="wrapper">
       <selection class="selection">
         <div class="selection-container">
@@ -199,5 +200,6 @@
       </footer>
     </div>
     <script src="{{ url_for('static', filename='attraction.js') }}"></script>
+    <script src="{{ url_for('static', filename='member.js') }}"></script>
   </body>
 </html>

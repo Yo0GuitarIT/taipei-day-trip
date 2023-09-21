@@ -458,8 +458,130 @@ body {
   width: 100%;
 }
 
-
 /* signin Area----------------------------------------- */
+.signin-background {
+  display: none;
+  position: fixed;
+  z-index: 1500;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.25);
+  justify-content: center;
+}
+
+.signin-main-container,
+.signup-main-container {
+  position: absolute;
+  width: 340px;
+  height: auto;
+  background-color: var(--additional);
+  border: 0;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0px 4px 60px 0px #aaa;
+  top: -350px;
+  transition: top 0.5s ease;
+}
+
+.singnin-decorator-bar {
+  display: block;
+  width: 100%;
+  height: 10px;
+  background-image: linear-gradient(270deg, #378 0%, #6ab 100%);
+}
+
+.signin-container,
+.signup-container {
+  width: 310px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 15px;
+  position: relative;
+}
+
+
+.exit-button-box {
+  position: absolute;
+  z-index: inherit;
+  width: 16px;
+  height: 16px;
+  right: 10px;
+  top: 10px;
+  padding: 7px;
+}
+
+.exit-img1,
+.exit-img2 {
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
+
+.signin-title-box {
+  color: var(--grayColor);
+  display: flex;
+  justify-content: center;
+  margin-bottom: 5px;
+}
+
+.signin-title {
+  width: 310px;
+  height: 27px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.signin-input-box {
+  box-sizing: border-box;
+  height: 47px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.info-input {
+  width: 280px;
+  height: 17px;
+  border: 0;
+}
+
+.info-input:focus {
+  outline: none;
+}
+
+.signin-button {
+  border: 0;
+  height: 47px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  background-color: var(--cyanColor);
+  color: var(--additional);
+  cursor: pointer;
+}
+
+.switch-signup-mode,
+.switch-signin-mode {
+  height: 22px;
+  border: 0;
+  color: var(--grayColor);
+  background-color: var(--additional);
+  cursor: pointer;
+}
+
+.alert-container{
+  color: red;
+  display: flex;
+  justify-content: center;
+  font-size: 10px;
+}
+/* signin Area-----------------------------------------
 .signin-background {
   display: none;
   position: fixed;
@@ -581,7 +703,7 @@ body {
   color: var(--grayColor);
   background-color: var(--additional);
   cursor: pointer;
-}
+} */
 
 @media screen and (max-width: 1199px) {
   .nav-container {
