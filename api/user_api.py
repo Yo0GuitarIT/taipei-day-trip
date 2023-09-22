@@ -62,14 +62,15 @@ def register_user():
         if result:
             return json_process_utf8({"error": True, "message": "註冊失敗，重複的 Email 或其他原因"}), 400
         
-        # connection = connection_pool.get_connection()
-        # cursor = connection.cursor()
-        # register_query = """INSERT INTO member (name, email, password) VALUES (%s, %s, %s)"""
-        # cursor.execute(register_query, (data['name'], data['email'], data['password']))
-        # connection.commit()
+        connection = connection_pool.get_connection()
+        cursor = connection.cursor()
+        register_query = """INSERT INTO member (name, email, password) VALUES (%s, %s, %s)"""
+        cursor.execute(register_query, (data['name'], data['email'], data['password']))
+        connection.commit()
         
-        # cursor.close()
-        # connection.close()
+        cursor.close()
+        connection.close()
+        
         print("connection")
         return jsonify({"ok": True}), 200
     
