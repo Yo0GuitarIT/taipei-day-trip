@@ -19,33 +19,59 @@ const signupButton = document.getElementById("register-button");
 const signinSwitchButton = document.querySelector(".switch-signin-mode");
 const alertContainer2 = document.getElementById("alert-container2");
 
-exitButton1.addEventListener("click", () => {
-  signinContainer.style.top = "-400px";
+let handleResize = () => {
+  let windowWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+  if (windowWidth < 500) {
+    userWelcome.style.display = 'none';
+  } else {
+    userWelcome.style.display = 'block';
+  }
+}
+
+let elementAnimation = (element) => {
+  element.style.top = "-400px";
+  console.log("PPP");
   setTimeout(() => {
     signinBackground.style.display = "none";
   }, 400);
+};
+
+let switchAnimation = (fade_out_element, fade_in_element) => {
+  fade_out_element.style.top = "-400px";
+  setTimeout(() => {
+    fade_in_element.style.top = "80px";
+  }, 400);
+};
+
+exitButton1.addEventListener("click", () => {
+  elementAnimation(signinContainer);
 });
 
 exitButton2.addEventListener("click", () => {
-  signupContainer.style.top = "-400px";
-  setTimeout(() => {
-    signinBackground.style.display = "none";
-  }, 400);
+  elementAnimation(signupContainer);
 });
 
 signupSwitchButton.addEventListener("click", () => {
-  signinContainer.style.top = "-400px";
-  setTimeout(() => {
-    signupContainer.style.top = "80px";
-  }, 400);
+  switchAnimation(signinContainer, signupContainer);
 });
 
 signinSwitchButton.addEventListener("click", () => {
-  signupContainer.style.top = "-400px";
-  setTimeout(() => {
-    signinContainer.style.top = "80px";
-  }, 400);
+  switchAnimation(signupContainer, signinContainer);
 });
+
+let isValidEmail = (email) => {
+  let emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+  return emailPattern.test(email);
+}
+
+// // 使用示例
+// var emailToCheck = "example@example.com";
+// if (isValidEmail(emailToCheck)) {
+//   console.log(emailToCheck + " 是有效的电子邮件地址");
+// } else {
+//   console.log(emailToCheck + " 不是有效的电子邮件地址");
+// }
+
 
 signupButton.addEventListener("click", () => {
   const registerData = {
@@ -53,6 +79,18 @@ signupButton.addEventListener("click", () => {
     email: signupEmail.value,
     password: signupPassword.value,
   };
+
+  console.log(registerData);
+
+  if (registerData["name"] === "" || registerData["email"] === "" || registerData["password"] === "") {
+    alertContainer2.textContent = "請完整填寫欄位";
+    return;
+  };
+
+  if (!isValidEmail(registerData["email"])) {
+    alertContainer2.textContent = "請完整填寫正確E-mail";
+    return;
+  }
 
   fetch("/api/user", {
     method: "POST",
@@ -72,6 +110,9 @@ signupButton.addEventListener("click", () => {
         signupName.value = "";
         signupEmail.value = "";
         signupPassword.value = "";
+        signinEmail.value = "";
+        signinPassword.value = "";
+        alertContainer1.textContent = "";
 
         setTimeout(() => {
           signupContainer.style.top = "-400px";
@@ -116,7 +157,7 @@ signinButton.addEventListener("click", () => {
         signinEmail.value = "";
         signinPassword.value = "";
 
-        location.reload();
+        setTimeout(() => { location.reload(); }, 800);
       }
     })
     .catch((error) => {
@@ -169,6 +210,8 @@ let getCurrentUser = () => {
     });
 };
 
+window.addEventListener('resize', handleResize);
 window.addEventListener("load", () => {
   getCurrentUser();
+  handleResize();
 });

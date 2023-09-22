@@ -62,15 +62,15 @@ def register_user():
         if result:
             return json_process_utf8({"error": True, "message": "註冊失敗，重複的 Email 或其他原因"}), 400
         
-        connection = connection_pool.get_connection()
-        cursor = connection.cursor()
-        register_query = """INSERT INTO member (name, email, password) VALUES (%s, %s, %s)"""
-        cursor.execute(register_query, (data['name'], data['email'], data['password']))
-        connection.commit()
+        # connection = connection_pool.get_connection()
+        # cursor = connection.cursor()
+        # register_query = """INSERT INTO member (name, email, password) VALUES (%s, %s, %s)"""
+        # cursor.execute(register_query, (data['name'], data['email'], data['password']))
+        # connection.commit()
         
-        cursor.close()
-        connection.close()
-        
+        # cursor.close()
+        # connection.close()
+        print("connection")
         return jsonify({"ok": True}), 200
     
     except Exception as error:
@@ -93,7 +93,7 @@ def auth_user():
                 "user_id": user_info["id"],
                 "user_name": user_info["name"],
                 "user_email": user_info["email"],
-                "exp": datetime.datetime.utcnow() + datetime.timedelta(minutes=10)
+                "exp": datetime.datetime.utcnow() + datetime.timedelta(weeks=1)
             }
             token = generate_jwt_token(payload)
             return jsonify({"token": token}), 200
