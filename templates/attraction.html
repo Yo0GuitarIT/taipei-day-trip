@@ -8,21 +8,70 @@
     <link
       rel="stylesheet"
       type="text/css"
-      href="{{ url_for('static', filename='attraction.css') }}"
+      href="{{ url_for('static', filename='style/attraction.css') }}"
     />
   </head>
 
   <body class="body">
-    <nav class="nav">
+    <!-- <nav class="nav">
       <div class="nav-container">
         <a href="/" class="nav-container-slogan headline">台北一日遊</a>
 
         <div class="nav-container-button">
-          <button class="container-link-button body-regular">預定行程</button>
-          <button class="container-link-button body-regular">登入/註冊</button>
+          <button class="container-link-button body-regular">預定行程</buttonid>
+          <button id="signin-screen" class="container-link-button body-regular">登入/註冊</button>
         </div>
       </div>
     </nav>
+
+    <div class="signin-background">
+      <div class="signin-main-container">
+        <div class="singnin-decorator-bar"></div>
+        <div class="signin-container">
+          <div class="exit-button-box">
+            <img class="exit-img1" src="/static/images/cross-img.png" alt="">
+          </div>
+          <div class="signin-title-box">
+            <p class="signin-title dialog-title-bold">登入會員帳號</p>
+    
+          </div>
+          <div class="signin-input-box">
+            <input class="info-input" placeholder="輸入電子信箱" />
+          </div>
+          <div class="signin-input-box">
+            <input class="info-input" placeholder="輸入密碼" />
+          </div>
+          <button class="signin-button button-regular">登入帳戶</button>
+          <button class="switch-signup-mode">還沒有帳戶？點此註冊</button>
+        </div>
+      </div>
+    
+      <div class="signup-main-container">
+        <div class="singnin-decorator-bar"></div>
+        <div class="signup-container">
+          <div class="exit-button-box">
+            <img class="exit-img2" src="/static/images/cross-img.png" alt="">
+          </div>
+          <div class="signin-title-box">
+            <p class="signin-title dialog-title-bold">註冊會員帳號</p>
+    
+          </div>
+          <div class="signin-input-box">
+            <input class="info-input" placeholder="輸入姓名" />
+          </div>
+          <div class="signin-input-box">
+            <input class="info-input" placeholder="輸入電子郵件" />
+          </div>
+          <div class="signin-input-box">
+            <input class="info-input" placeholder="輸入密碼" />
+          </div>
+          <button class="signin-button button-regular">註冊新帳戶</button>
+          <button class="switch-signin-mode">已經有帳戶了？點此登入</button>
+        </div>
+      </div>
+    </div> -->
+    {% include 'navbar.html' %}
+    {% include 'login_system.html' %}
     <div class="wrapper">
       <selection class="selection">
         <div class="selection-container">
@@ -112,7 +161,7 @@
       </selection>
       <main class="main">
         <div class="main-container">
-          <svg class="hr-line" height="2" width="100%" >
+          <svg class="hr-line" height="2" width="100%">
             <line
               x1="0"
               y1="0"
@@ -150,6 +199,7 @@
         </div>
       </footer>
     </div>
-    <script src="{{ url_for('static', filename='attraction.js') }}"></script>
+    <script src="{{ url_for('static', filename='script/attraction.js') }}"></script>
+    <script src="{{ url_for('static', filename='script/member.js') }}"></script>
   </body>
 </html>

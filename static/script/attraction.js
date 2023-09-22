@@ -160,3 +160,50 @@ morningRadio.addEventListener("change", () => {
 afternoonRadio.addEventListener("change", () => {
   updateTourCost(afternoonRadio, tourCostText);
 });
+
+
+// const loginButton = document.getElementById("signin-screen");
+// const exitButton1 = document.querySelector(".exit-img1");
+// const exitButton2 = document.querySelector(".exit-img2");
+// const signinBackground = document.querySelector(".signin-background");
+// const signinContainer = document.querySelector(".signin-main-container");
+// const signupContainer = document.querySelector(".signup-main-container");
+// const signupSwitchButton = document.querySelector(".switch-signup-mode");
+// const signinSwitchButton = document.querySelector(".switch-signin-mode");
+
+// loginButton.addEventListener("click", () => {
+//   signinBackground.style.display = "flex";
+//   setTimeout(() => {
+//     signinContainer.style.top = "80px";
+//   }, 1);
+// });
+
+// exitButton1.addEventListener("click", () => {
+//   signinContainer.style.top = "-350px";
+//   console.log("exiting...");
+//   setTimeout(() => {
+//     signinBackground.style.display = "none";
+//   }, 400);
+// });
+
+// exitButton2.addEventListener("click", () => {
+//   signupContainer.style.top = "-350px";
+//   console.log("exiting...");
+//   setTimeout(() => {
+//     signinBackground.style.display = "none";
+//   }, 400);
+// });
+
+// signupSwitchButton.addEventListener("click", () => {
+//   signinContainer.style.top = "-350px";
+//   setTimeout(() => {
+//     signupContainer.style.top = "80px";
+//   }, 400);
+// });
+
+// signinSwitchButton.addEventListener("click", () => {
+//   signupContainer.style.top = "-350px";
+//   setTimeout(() => {
+//     signinContainer.style.top = "80px";
+//   }, 400);
+// });
