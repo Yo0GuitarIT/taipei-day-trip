@@ -528,7 +528,7 @@
   cursor: pointer;
 }
 
-.alert-container{
+.alert-container {
   color: red;
   display: flex;
   justify-content: center;
@@ -582,9 +582,6 @@
     height: 220px;
   }
 
-  .user-welcome{
-    display: none;
-  }
 }
 
 @media screen and (max-width: 799px) {
