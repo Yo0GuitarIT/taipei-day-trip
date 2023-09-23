@@ -4,4 +4,4 @@
  - 2.push a pull request
  - 3.Here from ubuntu 9/1
  - 4.Edit member System
- - 5. Try to push with lazygit
+ - 5.Try to push with lazygit
