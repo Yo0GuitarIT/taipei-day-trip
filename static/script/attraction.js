@@ -201,6 +201,8 @@ bookingForm.addEventListener("submit", (event) => {
       .catch((error) => {
         console.error("預約失敗", error);
       });
+  } else {
+    openLoginPage();
   }
 });
 
