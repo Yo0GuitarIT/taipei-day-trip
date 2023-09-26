@@ -76,7 +76,7 @@ def register_user():
     
     except Exception as error:
         return handle_error("伺服器內部錯誤")
-      
+    
 @user_info.route("/api/user/auth", methods=["PUT"])
 def auth_user():
     try:
@@ -105,15 +105,12 @@ def auth_user():
         
 @user_info.route("/api/user/auth", methods=["GET"])
 def get_user():
-    print("Getting")
     auth_header = request.headers.get("Authorization")
-    
     if not auth_header:
         return json_process_utf8({"data": None})
     
     token = auth_header.replace("Bearer ", "")
     decoded_payload = verify_jwt_token(token)
-
     
     if decoded_payload is None:
         return  json_process_utf8({"data":None})

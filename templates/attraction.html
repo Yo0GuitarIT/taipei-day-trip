@@ -70,8 +70,7 @@
         </div>
       </div>
     </div> -->
-    {% include 'navbar.html' %}
-    {% include 'login_system.html' %}
+    {% include 'navbar.html' %} {% include 'login_system.html' %}
     <div class="wrapper">
       <selection class="selection">
         <div class="selection-container">
@@ -113,7 +112,7 @@
               <p class="booking-title-content body-regular">
                 以此景點為中心的一日行程，帶您探索城市角落故事
               </p>
-              <form class="booking-list" action="#">
+              <form class="booking-list">
                 <div class="booking-date">
                   <p class="booking-date-text body-bold">選擇日期：</p>
                   <label class="date-input-box">
@@ -133,6 +132,7 @@
                       class="select-item"
                       id="morning"
                       name="time"
+                      value="morning"
                       required
                     />
                     <label class="body-regular" for="morning">上半天</label>
@@ -143,6 +143,7 @@
                       class="select-item"
                       id="afternoon"
                       name="time"
+                      value="afternoon"
                     />
                     <label class="body-regular" for="afternoon">下半天</label>
                   </div>
