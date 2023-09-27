@@ -100,4 +100,32 @@ def execute_query(query,params=None):
     return result
 
 def is_user_logged_in():
+    auth_header = request.headers.get("Authorization")
+    print(auth_header)
+    if not auth_header:
+        return json_process_utf8({"data": None})
+    
+    token = auth_header.replace("Bearer ", "")
+    decoded_payload = verify_jwt_token(token)
+    
+    if decoded_payload is None:
+        return  json_process_utf8({"data":None})
+    
+    login_info = {
+        "data": {
+            "id": decoded_payload["user_id"],
+            "name": decoded_payload["user_name"],
+            "email": decoded_payload["user_email"]
+        }
+    }
+    print(login_info)
     return True
+
+def verify_jwt_token(token):
+    try:
+        decoded_payload = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
+        return decoded_payload
+    except jwt.ExpiredSignatureError:
+        return None
+    except jwt.InvalidTokenError:
+        return None

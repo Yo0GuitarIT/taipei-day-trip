@@ -187,16 +187,19 @@ bookingForm.addEventListener("submit", (event) => {
       price: price,
     };
 
+    const token = localStorage.getItem("token");
+
     fetch("/api/booking", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(data),
     })
       .then((response) => response.json())
       .then((data) => {
-        window.location.href = "/booking";
+        // window.location.href = "/booking";
       })
       .catch((error) => {
         console.error("預約失敗", error);

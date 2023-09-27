@@ -21,7 +21,9 @@ let checkUserLoginStatus = () => {
       }
     })
     .then((data) => {
-      console.log(data.data);
+      const userName = document.getElementById("user-name");
+      userName.textContent = `您好，${data.data.name}，待預定的行程如下：`;
+      console.log(data.data.name);
     })
 
     .catch((error) => {
@@ -64,9 +66,6 @@ fetch("/api/booking", {
     addressElement.textContent = bookingData[0].data.attraction.address;
     totalPriceElement.textContent = `總價：新台幣${bookingData[0].price}元`;
 
-    // // 更新信用卡表单的总价
-    // const checkoutPriceElement = document.querySelector(".checkout-price");
-    // checkoutPriceElement.textContent = `總價：新台幣${bookingData.data.price}元`;
   })
   .catch((error) => {
     console.error("获取预定信息失败", error);
