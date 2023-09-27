@@ -162,6 +162,11 @@ afternoonRadio.addEventListener("change", () => {
   updateTourCost(afternoonRadio, tourCostText);
 });
 
+
+
+
+
+
 const bookingForm = document.querySelector(".booking-list");
 bookingForm.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -199,7 +204,7 @@ bookingForm.addEventListener("submit", (event) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        // window.location.href = "/booking";
+        window.location.href = "/booking";
       })
       .catch((error) => {
         console.error("預約失敗", error);

@@ -14,6 +14,8 @@ app.register_blueprint(mrt_info,url_prefix="/api")
 app.register_blueprint(booking_info)
 app.register_blueprint(user_info)
 
+app.secret_key = 'yo0_secret_key'
+
 # Pages
 @app.route("/")
 def index():

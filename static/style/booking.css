@@ -364,6 +364,17 @@ body {
   min-height: 100%;
 }
 
+.user-info {
+  margin: 0 10px;
+}
+
+.no-booking-info {
+  margin-top: 30px;
+  padding: 0 10px;
+  box-sizing: border-box;
+  color: var(--grayColor);
+}
+
 .loading-img {
   background-image: url("/static/images/Loading-img.svg");
   background-repeat: no-repeat;
