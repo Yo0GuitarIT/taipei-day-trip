@@ -38,8 +38,8 @@ def is_user_logged_in():
             "email": decoded_payload["user_email"]
         }
     }
-    print(login_info)
-    return True
+    user_id = login_info["data"]["id"]
+    return user_id
 
 def verify_jwt_token(token):
     try:
@@ -82,26 +82,35 @@ def execute_query(query,params=None):
 
 @booking_info.route("/api/booking", methods=["GET"])
 def get_unconfirmed_bookings():
-    if not is_user_logged_in():
+    # if not is_user_logged_in():
+    #     return json_process_utf8({"error": True, "message": "未登入系統，拒絕存取"}), 403
+    # booking_data = session.get('booking_data')
+    user_id = is_user_logged_in()
+    if not user_id:
         return json_process_utf8({"error": True, "message": "未登入系統，拒絕存取"}), 403
-    booking_data = session.get('booking_data')
-    print(booking_data)
-    return json_process_utf8(booking_data), 200
+    user_orders = session.get(f"user_orders_{user_id}", [])
+
+    return json_process_utf8(user_orders), 200
 
 
 @booking_info.route("/api/booking", methods=["POST"])
 def booking():
     try:
+        user_id = is_user_logged_in()
+
+        if not user_id:
+            return json_process_utf8({"error": True, "message": "未登入系統，拒絕存取"}), 403
+        
         data = request.json
+        if not data :
+            return json_process_utf8("建立失敗，輸入不正確或其他原因"), 400
         date = data["date"]
         time = data["time"]
         price = data["price"]
 
-        if not is_user_logged_in():
-            return json_process_utf8({"error": True, "message": "未登入系統，拒絕存取"}), 403
-        if not data :
-            return json_process_utf8("建立失敗，輸入不正確或其他原因"), 400
-        
+        # if not is_user_logged_in():
+        #     return json_process_utf8({"error": True, "message": "未登入系統，拒絕存取"}), 403
+       
         data_from_database = get_attraction_info(data["attractionId"])
 
         name = data_from_database[0]["attraction_name"]
@@ -118,10 +127,14 @@ def booking():
                 }},
             "date": date,
             "time": time,
-            "price": price
+            "price": price,
+            "user_id": user_id
         }
 
-        session['booking_data'] = new_booking
+        user_orders = session.get(f"user_orders_{user_id}", [])
+        user_orders.append(new_booking)
+
+        session[f"user_orders_{user_id}"] = user_orders
 
         return jsonify({"ok":True}), 200
 
@@ -132,10 +145,20 @@ def booking():
 @booking_info.route("/api/booking", methods=["DELETE"])
 def delete_booking():
     try:
-        if not is_user_logged_in():
+        # if not is_user_logged_in():
+        #     return json_process_utf8({"error": True, "message": "未登入系統，拒絕存取"}), 403
+        user_id = is_user_logged_in()
+        if not user_id:
             return json_process_utf8({"error": True, "message": "未登入系統，拒絕存取"}), 403
         
-        session.pop('booking_data', None)
+        
+        # 获取用户的订单列表
+        user_orders = session.get(f"user_orders_{user_id}", [])
+
+        if len(user_orders) != 0:
+            user_orders.pop(0)
+            session[f"user_orders_{user_id}"] = user_orders
+
         return jsonify({"ok": True})
 
     except Exception as e:
