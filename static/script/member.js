@@ -1,3 +1,4 @@
+const bookingDriectButton = document.getElementById("booking-screen");
 const signinBackground = document.querySelector(".signin-background");
 const memberButton = document.getElementById("signin-screen");
 const userWelcome = document.getElementById("user-welcome");
@@ -20,17 +21,19 @@ const signinSwitchButton = document.querySelector(".switch-signin-mode");
 const alertContainer2 = document.getElementById("alert-container2");
 
 let handleResize = () => {
-  let windowWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+  let windowWidth =
+    window.innerWidth ||
+    document.documentElement.clientWidth ||
+    document.body.clientWidth;
   if (windowWidth < 500) {
-    userWelcome.style.display = 'none';
+    userWelcome.style.display = "none";
   } else {
-    userWelcome.style.display = 'block';
+    userWelcome.style.display = "block";
   }
-}
+};
 
 let elementAnimation = (element) => {
   element.style.top = "-400px";
-  console.log("PPP");
   setTimeout(() => {
     signinBackground.style.display = "none";
   }, 400);
@@ -59,19 +62,21 @@ signinSwitchButton.addEventListener("click", () => {
   switchAnimation(signupContainer, signinContainer);
 });
 
+bookingDriectButton.addEventListener("click", function () {
+  window.location.href = "/booking";
+});
+
+let openLoginPage = () => {
+  signinBackground.style.display = "flex";
+  setTimeout(() => {
+    signinContainer.style.top = "80px";
+  }, 1);
+};
+
 let isValidEmail = (email) => {
   let emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
   return emailPattern.test(email);
-}
-
-// // 使用示例
-// var emailToCheck = "example@example.com";
-// if (isValidEmail(emailToCheck)) {
-//   console.log(emailToCheck + " 是有效的电子邮件地址");
-// } else {
-//   console.log(emailToCheck + " 不是有效的电子邮件地址");
-// }
-
+};
 
 signupButton.addEventListener("click", () => {
   const registerData = {
@@ -82,10 +87,14 @@ signupButton.addEventListener("click", () => {
 
   console.log(registerData);
 
-  if (registerData["name"] === "" || registerData["email"] === "" || registerData["password"] === "") {
+  if (
+    registerData["name"] === "" ||
+    registerData["email"] === "" ||
+    registerData["password"] === ""
+  ) {
     alertContainer2.textContent = "請完整填寫欄位";
     return;
-  };
+  }
 
   if (!isValidEmail(registerData["email"])) {
     alertContainer2.textContent = "請完整填寫正確E-mail";
@@ -157,7 +166,9 @@ signinButton.addEventListener("click", () => {
         signinEmail.value = "";
         signinPassword.value = "";
 
-        setTimeout(() => { location.reload(); }, 800);
+        setTimeout(() => {
+          location.reload();
+        }, 800);
       }
     })
     .catch((error) => {
@@ -187,10 +198,7 @@ let getCurrentUser = () => {
         userWelcome.style.display = "none";
         memberButton.textContent = "登入/註冊";
         memberButton.addEventListener("click", () => {
-          signinBackground.style.display = "flex";
-          setTimeout(() => {
-            signinContainer.style.top = "80px";
-          }, 1);
+          openLoginPage();
         });
       } else {
         userWelcome.style.display = "block";
@@ -202,7 +210,6 @@ let getCurrentUser = () => {
           location.reload();
         });
       }
-
       console.log(data.data);
     })
     .catch((error) => {
@@ -210,7 +217,7 @@ let getCurrentUser = () => {
     });
 };
 
-window.addEventListener('resize', handleResize);
+window.addEventListener("resize", handleResize);
 window.addEventListener("load", () => {
   getCurrentUser();
   handleResize();

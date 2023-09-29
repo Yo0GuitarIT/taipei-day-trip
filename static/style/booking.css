@@ -115,297 +115,212 @@
   background-color: var(--additional);
 }
 
-/* selection--------------------------------------- */
-.selection {
-  padding-top: 54px;
-  width: 100%;
-  height: auto;
+/* main----------------------------------------- */
+.main {
+  margin-top: 54px;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
 }
 
-.selection-container {
-  width: 1170px;
-  height: 400px;
-  padding: 0 15px 0 15px;
-  margin: 40px 0 40px 0;
+.main-container {
+  margin: 40px 0;
   display: flex;
-  gap: 30px;
-  justify-content: space-around;
+  flex-direction: column;
+  align-items: center;
+  width: 1200px;
 }
 
-.selection-img-container,
-.selection-info-container {
-  height: 100%;
+.order-title {
+  box-sizing: border-box;
+  width: 1000px;
+  height: 27px;
+  display: flex;
+  align-items: center;
 }
 
-.selection-img-container {
-  width: 540px;
-  position: relative;
-  overflow: hidden;
-  border-radius: 5px;
-  box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px;
+.order-title p {
+  color: var(--grayColor);
 }
 
-.selection-img-box {
-  height: 100%;
-  width: 100%;
-  display: none;
-  transition: transform 0.3s ease;
-}
-
-.selection-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  flex-shrink: 0;
-}
-
-.img-button {
-  width: 100%;
-  position: absolute;
-  top: 50%;
-  transform: translate(0, -50%);
+.section-container {
+  margin-top: 30px;
+  width: 980px;
+  height: 200px;
   display: flex;
   justify-content: space-between;
 }
 
-.img-button-style {
-  padding: 0 10px 0 10px;
-  cursor: pointer;
-}
-
-.carousel-dot-container {
-  width: auto;
-  height: auto;
-  position: absolute;
-  bottom: 13px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  gap: 12px;
-}
-
-.carousel-dot {
-  background-color: var(--additional);
-  border: 1px solid var(--additional);
-  width: 12px;
-  height: 12px;
-  box-sizing: border-box;
-  border-radius: 50%;
-}
-
-.selection-info-container {
-  width: 600px;
-}
-
-.selection-info-profile {
-  color: var(--grayColor);
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  padding-bottom: 20px;
-}
-
-.dialog-title {
-  height: 33px;
-  display: flex;
-  align-items: center;
-}
-
-.category-and-mrt {
-  height: 22px;
-  display: flex;
-  align-items: center;
-}
-
-.booking-container {
-  background-color: var(--bookingBackgroundColor);
+.img-container {
+  width: 250px;
+  height: 100%;
   border-radius: 5px;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  padding: 15px 20px 41px 20px;
+  overflow: hidden;
+  box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px;
 }
 
-.booking-title {
-  color: var(--grayColor);
-  height: 22px;
-  display: flex;
-  align-items: center;
-}
-
-.booking-title-content {
-  color: var(--grayColor);
-  height: 24px;
-  display: flex;
-  align-items: center;
-}
-
-.booking-list {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.date-input-box {
-  width: 193px;
-  height: 35px;
-  background-color: var(--additional);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.booking-date {
-  height: 35px;
-  color: var(--grayColor);
-  display: flex;
-  align-items: center;
-}
-
-.booking-date-text {
-  padding-right: 5px;
-}
-
-.date-input {
-  height: 25px;
-  width: 173px;
-  border: 0;
-  display: flex;
-  align-items: end;
-  background: url("/static/images/icon_calendar.png") right / 24px 24px
-    no-repeat;
-}
-
-.date-input::-webkit-calendar-picker-indicator {
-  background: none;
-}
-
-.date-input:focus {
-  outline: none;
-}
-
-.booking-input-img {
-  width: 24px;
-  height: 24px;
-}
-
-.booking-time {
-  height: 22px;
-  color: var(--grayColor);
-  display: flex;
-  align-items: center;
-}
-
-.booking-time p {
-  width: 81px;
-  height: 22px;
-  display: flex;
-  align-items: center;
-}
-.radio-button {
-  width: 87px;
-  height: 22px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 4px;
-  padding: 0 5px 0 5px;
-}
-
-input[type="radio"] {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  border-radius: 50%;
-  background-color: var(--additional);
-  cursor: pointer;
-  width: 22px;
-  height: 22px;
-}
-
-.select-item {
-  width: 22px;
-  height: 22px;
-  &:checked {
-    background-color: var(--cyanColor);
-    border: 3px solid var(--additional);
-  }
-}
-
-.radio-button label {
-  width: 48px;
-  height: 14px;
-  color: var(--grayColor);
-  padding-left: 4px;
-}
-
-.booking-cost {
-  height: 22px;
-  display: flex;
-  color: var(--grayColor);
-  display: flex;
-  align-items: center;
-}
-
-.booking-button {
-  margin-top: 10px;
-  padding: 10px 20px 10px 20px;
-  width: 154px;
-  height: 36px;
-  border: 0;
-  background-color: var(--cyanColor);
-  color: var(--additional);
-  cursor: pointer;
-  border-radius: 5px;
-  text-align: center;
-}
-/* main----------------------------------------- */
-.main {
+.img-container img {
   width: 100%;
-  height: fit-content;
+  height: 100%;
+  object-fit: cover;
   display: flex;
-  justify-content: center;
-  padding-bottom: 40px;
+  flex-shrink: 0;
 }
 
-.main-container {
-  width: 1200px;
-  height: auto;
+.info-container {
+  width: 700px;
+  height: 170px;
+  position: relative;
+}
+
+.info-container img {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.info-title {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  height: 24px;
+  margin-bottom: 20px;
+}
+.info-title p {
+  color: var(--cyanColor);
+}
+.info-date,
+.info-time,
+.info-cost,
+.info-place {
+  height: 24px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
   color: var(--grayColor);
-  background-color: #ffffff;
+  margin-top: 10px;
 }
 
 .hr-line {
-  width: 100%;
-  padding-bottom: 40px;
+  margin: 40px 0;
   stroke: var(--bookingBackgroundColor);
   stroke-width: 1;
 }
 
-.main-description,
-.attraction-address,
-.transport {
-  padding: 10px;
-  text-align: justify;
+.contact-form,
+.credit-card-form {
+  width: 980px;
+  height: 227px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
-.transport {
-  height: 150px;
+.credit-card-form {
+  height: 188px;
 }
 
-.info-title {
-  height: 32px;
+.contact-info-title,
+.card-info-title {
+  height: 24px;
+  display: flex;
+  color: var(--grayColor);
+  margin-bottom: 5px;
+}
+
+.contact-info-title p,
+.card-info-title p {
   display: flex;
   align-items: center;
 }
 
-.info-title-text {
+.contact-name,
+.contact-email,
+.contact-phone,
+.card-number,
+.card-expiration,
+.card-password {
+  display: flex;
+  align-items: center;
+  height: 38px;
+  color: var(--grayColor);
+}
+
+.contact-name p,
+.contact-email p,
+.contact-phone p,
+.card-number p,
+.card-expiration p,
+.card-passwor p {
+  display: flex;
+  align-items: center;
+  color: var(--grayColor);
+}
+
+.input-box {
+  box-sizing: border-box;
+  border: 1px solid var(--bookingBackgroundColor);
+  border-radius: 5px;
+  height: 100%;
+  width: 200px;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.contact-name input,
+.contact-email input,
+.contact-phone input,
+.card-number input,
+.card-expiration input,
+.card-password input {
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+}
+
+.contact-form p {
   height: 24px;
+  color: var(--grayColor);
+  display: flex;
+  align-items: center;
+  line-height: normal;
+}
+
+.checkout-box {
+  width: 980px;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+}
+
+.price-box {
+  width: 174px;
+  height: 20px;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+.checkout-price {
+  color: var(--grayColor);
+  text-align: right;
+}
+
+.checkout-button {
+  box-sizing: border-box;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  background-color: var(--cyanColor);
+  color: var(--additional);
+  margin: 22px 0;
+  cursor: pointer;
 }
 
 /* footer----------------------------------------- */
@@ -448,6 +363,17 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100%;
+}
+
+.user-info {
+  margin: 0 10px;
+}
+
+.no-booking-info {
+  margin-top: 30px;
+  padding: 0 10px;
+  box-sizing: border-box;
+  color: var(--grayColor);
 }
 
 .loading-img {
@@ -502,7 +428,6 @@ body {
   padding: 15px;
   position: relative;
 }
-
 
 .exit-button-box {
   position: absolute;
@@ -575,7 +500,7 @@ body {
   cursor: pointer;
 }
 
-.alert-container{
+.alert-container {
   color: red;
   display: flex;
   justify-content: center;
@@ -587,64 +512,53 @@ body {
     padding-left: 10px;
     width: 100%;
   }
-
-  .selection-img-container {
-    width: 100%;
-  }
-
-  .selection-container {
-    height: 415px;
-    gap: 20px;
-  }
-
-  .booking-container {
-    width: 320px;
-  }
-
-  .booking-title-content {
-    height: 48px;
-    line-height: normal;
-  }
-
   .main-container {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0 10px;
+  }
+  .order-title,
+  .contact-form,
+  .credit-card-form,
+  .checkout-box,
+  .section-container {
     width: 100%;
   }
-  .hr-line {
-    box-sizing: border-box;
-    padding: 0 10px;
-    margin-bottom: 30px;
-  }
 
-  .transport {
-    height: auto;
+  .section-container {
+    justify-content: space-around;
+  }
+  .info-container {
+    width: 300px;
+  }
+  .img-container {
+    width: 40%;
   }
 }
 
 @media screen and (max-width: 650px) {
-  .selection-container {
-    display: block;
-    height: auto;
-    width: 100%;
-    padding: 0;
+  .section-container {
     margin: 0;
+    flex-direction: column;
+    height: auto;
   }
 
-  .selection-img-container {
-    width: 100%;
-    height: 350px;
-    border-radius: 0;
-  }
-
-  .selection-info-container {
+  .img-container {
     box-sizing: border-box;
-    margin-top: 10px;
-    margin-bottom: 30px;
-    padding: 10px;
     width: 100%;
+    border-radius: 0;
+    margin: 30px 0;
   }
 
-  .booking-container {
-    width: auto;
-    padding: 15px 20px 15px 20px;
+  .info-container img {
+    position: absolute;
+    top: auto;
+    bottom: 0;
+  }
+
+  .info-container {
+    width: 100%;
+    height: 200px;
+    margin-bottom: -10px;
   }
 }
