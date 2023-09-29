@@ -151,19 +151,17 @@ def delete_booking():
         if not user_id:
             return json_process_utf8({"error": True, "message": "未登入系統，拒絕存取"}), 403
         
-        
-        # 获取用户的订单列表
+        data = request.json
+        data_to_delete = data["sessionData"]
+        print(data_to_delete)
+
         user_orders = session.get(f"user_orders_{user_id}", [])
 
         if len(user_orders) != 0:
-            user_orders.pop(0)
+            user_orders.pop(data_to_delete)
             session[f"user_orders_{user_id}"] = user_orders
 
         return jsonify({"ok": True})
 
     except Exception as e:
         return json_process_utf8("伺服器內部錯誤"), 500
-
-
-
-

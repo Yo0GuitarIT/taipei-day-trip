@@ -51,7 +51,7 @@ let loadingBookingInfo = () => {
       }
     })
     .then((bookingData) => {
-      console.log(typeof bookingData);
+      console.log(bookingData);
       updateBookingInfo(bookingData);
     })
     .catch((error) => {
@@ -59,18 +59,24 @@ let loadingBookingInfo = () => {
     });
 };
 
-function setupDeleteButton() {
-  const deleteButton = document.getElementById("delete-button");
+let setupDeleteButton = (index) => {
+  const deleteButton = document.getElementById(`delete-button${index}`);
   deleteButton.addEventListener("click", () => {
     if (!checkUserLoginStatus()) {
       return;
     }
+
+    const dataToDelete = {
+      sessionData: index,
+    };
+
     fetch("/api/booking", {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
+      body: JSON.stringify(dataToDelete),
     })
       .then((response) => response.json())
       .then((data) => {
@@ -87,13 +93,15 @@ function setupDeleteButton() {
   });
 }
 
-function createBookingElement(bookingInfo) {
-  const sectionContainer = document.querySelector(".section-container");
+let createBookingElement = (bookingInfo, index) => {
+  const bookingSection = document.getElementById("booking-section");
+  const sectionContainer = document.createElement("div");
+  sectionContainer.className = "section-container"
 
   const imgContainer = document.createElement("div");
   imgContainer.className = "img-container";
   const imgElement = document.createElement("img");
-  imgElement.id = "booking-img";
+  imgElement.id = `booking-img${index}`;
   imgElement.src = bookingInfo.data.attraction.image;
   imgElement.alt = "";
   imgContainer.appendChild(imgElement);
@@ -101,7 +109,7 @@ function createBookingElement(bookingInfo) {
   const infoContainer = document.createElement("div");
   infoContainer.className = "info-container";
   const deleteButton = document.createElement("img");
-  deleteButton.id = "delete-button";
+  deleteButton.id = `delete-button${index - 1}`;
   deleteButton.src = "/static/images/delete-icon.png";
   deleteButton.alt = "";
   infoContainer.appendChild(deleteButton);
@@ -109,7 +117,7 @@ function createBookingElement(bookingInfo) {
   const infoTitle = document.createElement("div");
   infoTitle.className = "info-title body-bold";
   const attractionParagraph = document.createElement("p");
-  attractionParagraph.id = "booking-attraction";
+  attractionParagraph.id = `booking-attraction${index}`;
   infoTitle.appendChild(attractionParagraph);
   infoContainer.appendChild(infoTitle);
 
@@ -119,7 +127,7 @@ function createBookingElement(bookingInfo) {
   dateBoldParagraph.className = "body-bold";
   dateBoldParagraph.textContent = "日期：";
   const dateParagraph = document.createElement("p");
-  dateParagraph.id = "booking-date";
+  dateParagraph.id = `booking-date${index}`;
   infoDate.appendChild(dateBoldParagraph);
   infoDate.appendChild(dateParagraph);
   infoContainer.appendChild(infoDate);
@@ -130,7 +138,7 @@ function createBookingElement(bookingInfo) {
   timeBoldParagraph.className = "body-bold";
   timeBoldParagraph.textContent = "時間：";
   const timeParagraph = document.createElement("p");
-  timeParagraph.id = "booking-time";
+  timeParagraph.id = `booking-time${index}`;
   infoTime.appendChild(timeBoldParagraph);
   infoTime.appendChild(timeParagraph);
   infoContainer.appendChild(infoTime);
@@ -141,7 +149,7 @@ function createBookingElement(bookingInfo) {
   costBoldParagraph.className = "body-bold";
   costBoldParagraph.textContent = "費用：";
   const costParagraph = document.createElement("p");
-  costParagraph.id = "booking-price";
+  costParagraph.id = `booking-price${index}`;
   infoCost.appendChild(costBoldParagraph);
   infoCost.appendChild(costParagraph);
   infoContainer.appendChild(infoCost);
@@ -152,44 +160,55 @@ function createBookingElement(bookingInfo) {
   placeBoldParagraph.className = "body-bold";
   placeBoldParagraph.textContent = "地點：";
   const placeParagraph = document.createElement("p");
-  placeParagraph.id = "booking-address";
+  placeParagraph.id = `booking-address${index}`;
   infoPlace.appendChild(placeBoldParagraph);
   infoPlace.appendChild(placeParagraph);
   infoContainer.appendChild(infoPlace);
 
   sectionContainer.appendChild(imgContainer);
   sectionContainer.appendChild(infoContainer);
+
+  bookingSection.appendChild(sectionContainer);
 }
 
 let updateBookingInfo = (bookingData) => {
   const bookingInfoElement = document.getElementById("booking-info");
   const noBookingInfo = document.getElementById("no-booking-info");
+  const totalPriceElement = document.getElementById("booking-totalprice");
 
   if (bookingData.length !== 0) {
-    const bookingInfo = bookingData[0];
-
-    createBookingElement(bookingInfo);
-    setupDeleteButton();
-    const attractionNameElement = document.getElementById("booking-attraction");
-    const imgElement = document.getElementById("booking-img");
-    const dateElement = document.getElementById("booking-date");
-    const timeElement = document.getElementById("booking-time");
-    const priceElement = document.getElementById("booking-price");
-    const addressElement = document.getElementById("booking-address");
-    const totalPriceElement = document.getElementById("booking-totalprice");
-
-    attractionNameElement.textContent = `台北一日遊：${bookingInfo.data.attraction.name}`;
-    imgElement.src = bookingInfo.data.attraction.image;
-    dateElement.textContent = bookingInfo.date;
-    timeElement.textContent =
-      bookingInfo.time === "morning"
-        ? "上午九點到下午四點"
-        : "下午四點到晚上九點";
-    priceElement.textContent = `新台幣：${bookingInfo.price}元`;
-    addressElement.textContent = bookingInfo.data.attraction.address;
-    totalPriceElement.textContent = `總價：新台幣${bookingInfo.price}元`;
-
+    bookingInfoElement.style.display = "block";
     noBookingInfo.style.display = "none";
+
+    let totalprice = 0;
+    for (let i = 0; i < bookingData.length; i++) {
+      const bookingInfo = bookingData[i];
+
+      createBookingElement(bookingInfo, i + 1);
+      setupDeleteButton(i);
+
+      const attractionNameElement = document.getElementById(`booking-attraction${i + 1}`);
+      const imgElement = document.getElementById(`booking-img${i + 1}`);
+      const dateElement = document.getElementById(`booking-date${i + 1}`);
+      const timeElement = document.getElementById(`booking-time${i + 1}`);
+      const priceElement = document.getElementById(`booking-price${i + 1}`);
+      const addressElement = document.getElementById(`booking-address${i + 1}`);
+      
+
+      attractionNameElement.textContent = `台北一日遊：${bookingInfo.data.attraction.name}`;
+      imgElement.src = bookingInfo.data.attraction.image;
+      dateElement.textContent = bookingInfo.date;
+      timeElement.textContent =
+        bookingInfo.time === "morning"
+          ? "上午九點到下午四點"
+          : "下午四點到晚上九點";
+      priceElement.textContent = `新台幣：${bookingInfo.price}元`;
+      addressElement.textContent = bookingInfo.data.attraction.address;
+
+      totalprice += bookingInfo.price
+      totalPriceElement.textContent = `總價：新台幣${totalprice}元`;
+    }
+
   } else {
     bookingInfoElement.style.display = "none";
     noBookingInfo.style.display = "block";
