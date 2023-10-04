@@ -210,7 +210,7 @@ let getCurrentUser = () => {
           location.reload();
         });
       }
-      console.log(data.data);
+      // console.log(data.data);
     })
     .catch((error) => {
       console.error("發生錯誤:", error);

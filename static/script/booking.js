@@ -1,4 +1,4 @@
-const checkUserLoginStatus = () => {
+let checkUserLoginStatus = () => {
   const token = localStorage.getItem("token");
   if (!token) {
     console.log("未登錄，找不到令牌");
@@ -21,7 +21,7 @@ const checkUserLoginStatus = () => {
       }
     })
     .then((data) => {
-      const userName = document.getElementById("user-name");
+      const userName = document.getElementById("user-name-text");
       userName.textContent = `您好，${data.data.name}，待預定的行程如下：`;
       // console.log(data.data.id);
     })
@@ -51,7 +51,7 @@ let loadingBookingInfo = () => {
       }
     })
     .then((bookingData) => {
-      console.log(bookingData);
+      // console.log(bookingData);
       updateBookingInfo(bookingData);
     })
     .catch((error) => {
@@ -214,22 +214,5 @@ let updateBookingInfo = (bookingData) => {
     noBookingInfo.style.display = "block";
   }
 };
-
-const creditCardInput = document.getElementById("credit-card-input");
-creditCardInput.addEventListener("input", () => {
-  const inputText = creditCardInput.value.replace(/\s/g, "");
-  let maskedText = "";
-  for (let i = 0; i < inputText.length; i++) {
-    if (i < 2) {
-      maskedText += inputText[i];
-    } else {
-      maskedText += "*";
-    }
-    if ((i + 1) % 4 === 0 && i + 1 !== inputText.length) {
-      maskedText += " ";
-    }
-  }
-  creditCardInput.value = maskedText;
-});
 
 loadingBookingInfo();

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>台北一日遊</title>
+  <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico" />
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style/booking.css') }}" />
+</head>
+
+<body class="body">
+  {% include 'navbar.html' %} {% include 'login_system.html' %}
+
+  <div class="wrapper">
+    <div class="main">
+      <div class="main-container">
+        
+      </div>
+    </div>
+    <footer class="footer">
+      <div class="footer-content">
+        <p class="footer-text body-bold">COPYRIGHT © 2021 台北一日遊</p>
+      </div>
+    </footer>
+  </div>
+  <script src="{{ url_for('static', filename='script/member.js') }}"></script>
+</body>
+
+</html>

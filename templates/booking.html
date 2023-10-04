@@ -1,33 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>台北一日遊</title>
+    <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='style/booking.css') }}"
+    />
+    <script src="https://js.tappaysdk.com/sdk/tpdirect/v5.14.0"></script>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>台北一日遊</title>
-  <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico" />
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style/booking.css') }}" />
-</head>
+  <body class="body">
+    {% include 'navbar.html' %} {% include 'login_system.html' %}
 
-<body class="body">
-  {% include 'navbar.html' %} {% include 'login_system.html' %}
+    <div class="wrapper">
+      <div class="main">
+        <div class="main-container">
+          <div class="order-title">
+            <p id="user-name-text" class="button-bold user-info">
+              您好， ，待預定的行程如下：
+            </p>
+          </div>
 
-  <div class="wrapper">
-    <div class="main">
-      <div class="main-container">
-        <div class="order-title">
-          <p id="user-name" class="button-bold user-info">
-            您好， ，待預定的行程如下：
-          </p>
-        </div>
+          <div id="no-booking-info" class="order-title no-booking-info">
+            <p>目前沒有任何待預訂的行程</p>
+          </div>
 
-        <div id="no-booking-info" class="order-title no-booking-info">
-          <p>目前沒有任何待預訂的行程</p>
-        </div>
-
-        <div id="booking-info">
-          <div id="booking-section"></div>
-          <!-- <div class="section-container">
+          <div id="booking-info">
+            <div id="booking-section"></div>
+            <!-- <div class="section-container">
               <div class="img-container">
                 <img
                   id="booking-img"
@@ -63,90 +67,114 @@
               </div>
             </div> -->
 
-          <svg class="hr-line" height="2" width="100%">
-            <line x1="0" y1="0" x2="100%" y2="0" style="stroke: var(--bookingBackgroundColor); stroke-width: 1" />
-          </svg>
+            <svg class="hr-line" height="2" width="100%">
+              <line
+                x1="0"
+                y1="0"
+                x2="100%"
+                y2="0"
+                style="stroke: var(--bookingBackgroundColor); stroke-width: 1"
+              />
+            </svg>
 
-          <div class="contact-form">
-            <div class="contact-info-title">
-              <p class="button-bold">您的聯絡資訊</p>
-            </div>
-            <div class="contact-name">
-              <p>聯絡姓名：</p>
-              <div class="input-box">
-                <input type="text" />
+            <div class="contact-form">
+              <div class="contact-info-title">
+                <p class="button-bold">您的聯絡資訊</p>
               </div>
-            </div>
-            <div class="contact-email">
-              <p>連絡信箱：</p>
-              <div class="input-box">
-                <input type="email" />
+              <div class="contact-name">
+                <p>聯絡姓名：</p>
+                <div class="input-box">
+                  <input type="text" id="user-name" name="user-name" />
+                </div>
               </div>
-            </div>
-            <div class="contact-phone">
-              <p>手機號碼：</p>
-              <div class="input-box">
-                <input type="text" />
+              <div class="contact-email">
+                <p>連絡信箱：</p>
+                <div class="input-box">
+                  <input type="email" id="user-email" name="user-email" />
+                </div>
               </div>
-            </div>
-            <p class="body-bold">
-              請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。
-            </p>
-          </div>
-
-          <svg class="hr-line" height="2" width="100%">
-            <line x1="0" y1="0" x2="100%" y2="0" style="stroke: var(--bookingBackgroundColor); stroke-width: 1" />
-          </svg>
-
-          <div class="credit-card-form">
-            <div class="card-info-title">
-              <p class="button-bold">信用卡付款資訊</p>
-            </div>
-            <div class="card-number">
-              <p>卡片號碼：</p>
-              <div class="input-box">
-                <input type="text" id="credit-card-input" placeholder="**** **** **** ****" />
+              <div class="contact-phone">
+                <p>手機號碼：</p>
+                <div class="input-box">
+                  <input type="text" id="user-phone" name="user-phone" />
+                </div>
               </div>
-            </div>
-            <div class="card-expiration">
-              <p>過期時間：</p>
-              <div class="input-box">
-                <input type="text" placeholder="MM/YY" />
-              </div>
-            </div>
-            <div class="card-password">
-              <p>驗證密碼：</p>
-              <div class="input-box">
-                <input type="text" placeholder="CVV" />
-              </div>
-            </div>
-          </div>
-
-          <svg class="hr-line" height="2" width="100%">
-            <line x1="0" y1="0" x2="100%" y2="0" style="stroke: var(--bookingBackgroundColor); stroke-width: 1" />
-          </svg>
-
-          <div class="checkout-box">
-            <div class="price-box">
-              <p id="booking-totalprice" class="checkout-price body-bold">
-                總價：
+              <p class="body-bold">
+                請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。
               </p>
             </div>
-            <button class="checkout-button button-regular">
-              確認訂購並付款
-            </button>
+
+            <svg class="hr-line" height="2" width="100%">
+              <line
+                x1="0"
+                y1="0"
+                x2="100%"
+                y2="0"
+                style="stroke: var(--bookingBackgroundColor); stroke-width: 1"
+              />
+            </svg>
+
+            <div class="credit-card-form">
+              <div class="card-info-title">
+                <p class="button-bold">信用卡付款資訊</p>
+              </div>
+              <div class="card-number">
+                <p>卡片號碼：</p>
+                <div class="input-box" id="card-number">
+                  <label for="card-number"></label>
+                  <input type="text" name="card-number" />
+                </div>
+              </div>
+              <div class="card-expiration">
+                <p>過期時間：</p>
+                <div class="input-box" id="card-expiration-date">
+                  <label for="card-expiration-date"></label>
+                  <input type="text" name="card-expiration-date" />
+                </div>
+              </div>
+              <div class="card-password">
+                <p>驗證密碼：</p>
+                <div class="input-box" id="card-ccv">
+                  <label for="card-ccv"></label>
+                  <input type="text" name="card-ccv" />
+                </div>
+              </div>
+            </div>
+
+            <svg class="hr-line" height="2" width="100%">
+              <line
+                x1="0"
+                y1="0"
+                x2="100%"
+                y2="0"
+                style="stroke: var(--bookingBackgroundColor); stroke-width: 1"
+              />
+            </svg>
+
+            <div class="checkout-box">
+              <div class="price-box">
+                <p id="booking-totalprice" class="checkout-price body-bold">
+                  總價：
+                </p>
+              </div>
+              <button
+                class="checkout-button button-regular"
+                id="checkout-button"
+              >
+                確認訂購並付款
+              </button>
+            </div>
           </div>
         </div>
       </div>
+      <footer class="footer">
+        <div class="footer-content">
+          <p class="footer-text body-bold">COPYRIGHT © 2021 台北一日遊</p>
+        </div>
+      </footer>
     </div>
-    <footer class="footer">
-      <div class="footer-content">
-        <p class="footer-text body-bold">COPYRIGHT © 2021 台北一日遊</p>
-      </div>
-    </footer>
-  </div>
-  <script src="{{ url_for('static', filename='script/booking.js') }}"></script>
-  <script src="{{ url_for('static', filename='script/member.js') }}"></script>
-</body>
-
+    <script src="{{ url_for('static', filename='script/booking.js') }}"></script>
+    <script src="{{ url_for('static', filename='script/member.js') }}"></script>
+    <script src="{{ url_for('static', filename='script/payment.js') }}"></script>
+  </body>
 </html>
