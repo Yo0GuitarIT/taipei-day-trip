@@ -41,6 +41,26 @@ TPDirect.card.setup({
 
 let bookingResult = {};
 
+let loginStatus = () => {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    console.log("未登錄，找不到令牌");
+    window.location.href = "/";
+    return false;
+  }
+  fetch("/api/user/auth", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  }).catch((error) => {
+    console.error("發生錯誤", error);
+    return false;
+  });
+  return true;
+};
+
 let fieldContact = () => {
   const token = localStorage.getItem("token");
   fetch("/api/user/auth", {
@@ -62,6 +82,11 @@ let fieldContact = () => {
     });
 };
 
+let showLoadingOverlay = () => {
+  const overlay = document.getElementById("overlay");
+  overlay.style.display = "flex"; 
+};
+
 let getAttractionsInfo = () => {
   fetch("/api/booking", {
     method: "GET",
@@ -72,25 +97,24 @@ let getAttractionsInfo = () => {
   })
     .then((response) => response.json())
     .then((data) => {
-      attractionData = data[0];
-      const price = attractionData.price;
-      const date = attractionData.date;
-      const time = attractionData.time;
-      const attractionInfo = attractionData.data.attraction;
-      const order = {
-        price: price,
-        trip: {
-          attraction: attractionInfo,
+      if (data && data.length > 0) {
+        const attractionData = data[0];
+        const price = attractionData.price;
+        const date = attractionData.date;
+        const time = attractionData.time;
+        const attractionInfo = attractionData.data.attraction;
+        const order = {
+          price: price,
+          trip: {
+            attraction: attractionInfo,
+            date: date,
+            time: time,
+          },
           date: date,
           time: time,
-        },
-        date: date,
-        time: time,
-      };
-      bookingResult.order = order;
-    })
-    .catch((error) => {
-      console.error("發生錯誤", error);
+        };
+        bookingResult.order = order;
+      }
     });
 };
 
@@ -109,14 +133,15 @@ let getContactInfo = () => {
 
 let fetchOrdersApi = (bookingResult) => {
   const dataSent = JSON.stringify(bookingResult);
-  console.log(dataSent);
+  
+  showLoadingOverlay();
 
   fetch("/api/orders", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: dataSent, 
+    body: dataSent,
   })
     .then((response) => {
       if (response.status === 200) {
@@ -126,9 +151,11 @@ let fetchOrdersApi = (bookingResult) => {
       }
     })
     .then((data) => {
-      // 在這裡處理成功創建訂單後的回應
       console.log("訂單已成功創建：", data);
-      // 可以在這裡執行後續的操作，例如跳轉到訂單確認頁面
+      orderSerial = data.data.order_id;
+      console.log(orderSerial);
+      // window.location.href = "/thankyou";
+
     })
     .catch((error) => {
       console.error("發生錯誤：", error);
@@ -136,23 +163,24 @@ let fetchOrdersApi = (bookingResult) => {
 };
 
 document.getElementById("checkout-button").addEventListener("click", () => {
-  //   const tappayStatus = TPDirect.card.getTappayFieldsStatus();
-  //   console.log("TapPay Fields Status:", tappayStatus);
-  //在這裡執行其他相關的操作，例如調用 TPDirect.card.getPrime() 來獲取 Prime
-  TPDirect.card.getPrime(function (result) {
-    if (result.status !== 0) {
-      console.err("getPrime error");
-      return;
-    }
-    const prime = result.card.prime;
-    const contact = getContactInfo();
-    bookingResult.prime = prime;
-    bookingResult.contact = contact;
+  if (loginStatus() === true) {
+    const tappayStatus = TPDirect.card.getTappayFieldsStatus();
+    console.log("TapPay Fields Status:", tappayStatus);
 
-    fetchOrdersApi(bookingResult);
-  });
+    TPDirect.card.getPrime((result) => {
+      if (result.status !== 0) {
+        console.err("getPrime error");
+        return;
+      }
+      const prime = result.card.prime;
+      const contact = getContactInfo();
+      bookingResult.prime = prime;
+      bookingResult.contact = contact;
+
+      fetchOrdersApi(bookingResult);
+    });
+  }
 });
 
 fieldContact();
-
 getAttractionsInfo();
