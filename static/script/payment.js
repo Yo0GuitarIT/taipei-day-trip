@@ -154,8 +154,7 @@ let fetchOrdersApi = (bookingResult) => {
       console.log("訂單已成功創建：", data);
       orderSerial = data.data.order_id;
       console.log(orderSerial);
-      // window.location.href = "/thankyou";
-
+      window.location.href = `/thankyou?number=${orderSerial}`;
     })
     .catch((error) => {
       console.error("發生錯誤：", error);

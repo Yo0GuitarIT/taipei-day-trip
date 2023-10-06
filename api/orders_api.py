@@ -207,8 +207,8 @@ def create_and_process_order():
             },
         }
 
-        print(response_data)
-        
+        session.clear()
+
         return json_process_utf8({"data": response_data}), 200
 
     except Exception as error:
@@ -269,7 +269,7 @@ def get_orders(orderNumber):
                     }
                 }
             }
-        return json_process_utf8(return_data),200
+        return json_process_utf8(return_data), 200
 
     except Exception as error:
         return handle_error("伺服器內部錯誤"), 500
