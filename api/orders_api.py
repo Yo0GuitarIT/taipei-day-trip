@@ -59,6 +59,90 @@ def generate_order_number():
     unique_id = uuid.uuid4()
     return str(unique_id)
 
+def entry_database(data_to_database,order_id):
+    price = data_to_database["order"]["price"]
+    attraction_id = data_to_database["order"]["trip"]["attraction"]["id"]
+    attraction_name = data_to_database["order"]["trip"]["attraction"]["name"]
+    attraction_address = data_to_database["order"]["trip"]["attraction"]["address"]
+    attraction_image = data_to_database["order"]["trip"]["attraction"]["image"]
+    date = data_to_database["order"]["date"]
+    time = data_to_database["order"]["time"]
+    name = data_to_database["contact"]["name"]
+    email = data_to_database["contact"]["email"]
+    phone = data_to_database["contact"]["phone"]
+        
+    insert_data = {
+        "number" : order_id,
+        "price" : price,
+        "attraction_id" : attraction_id,
+        "attraction_name" : attraction_name,
+        "attraction_address" : attraction_address,
+        "attraction_image" : attraction_image,
+        "date" : date,
+        "time" : time,
+        "name" : name,
+        "email" : email,
+        "phone" : phone,
+        "is_paid" : False   #payment status 
+        }   
+    
+    query = """
+    INSERT INTO orders (
+        number, 
+        price, 
+        attraction_id, 
+        attraction_name, 
+        attraction_address, 
+        attraction_image, 
+        date, 
+        time, 
+        name, email, phone, 
+        is_paid)
+
+    VALUES (
+        %(number)s, 
+        %(price)s, 
+        %(attraction_id)s, 
+        %(attraction_name)s, 
+        %(attraction_address)s, 
+        %(attraction_image)s, 
+        %(date)s, 
+        %(time)s,
+        %(name)s, %(email)s, %(phone)s, 
+        %(is_paid)s)
+    """
+    insert_data_to_database(query, insert_data)
+    
+def insert_data_to_database(query,params=None):
+    connection = connection_pool.get_connection()
+    cursor = connection.cursor(dictionary=True)
+    # cursor.execute("SET GLOBAL group_concat_max_len = 102400;")
+    try:
+        cursor.execute(query,params)
+        connection.commit()
+        cursor.close()
+        connection.close()
+        print("Data has been inserted successfully!")
+
+    except Exception as e:
+        print(f"An error occurred: {str(e)}")
+    
+def update_order_status(order_id):
+    connection = connection_pool.get_connection()
+    cursor = connection.cursor(dictionary=True)
+    try:
+        update_query = "UPDATE orders SET is_paid = %s WHERE number = %s"
+        cursor.execute(update_query, (True, order_id))
+        
+        connection.commit()
+        cursor.close()
+        connection.close()
+        return True
+    
+    except Exception as e:
+        print(f"An error occurred: {str(e)}")
+        return False
+
 def process_tappay_payment(data, order_id):
     headers = {
         "Content-Type": "application/json",
@@ -75,7 +159,7 @@ def process_tappay_payment(data, order_id):
         "prime": prime,
         "partner_key": PARTNER_KEY,
         "merchant_id": "yo036563_TAISHIN",
-        "details": details,
+        "details": f"{name} 預定行程：{details}",
         "amount": amount,
         "cardholder": {
             "phone_number": phone_number,
@@ -104,17 +188,17 @@ def create_and_process_order():
        
         data = request.get_json()
         order_id = generate_order_number()
-        
+
+        entry_database(data,order_id) 
         order_status = process_tappay_payment(data, order_id)
-        is_paid = False
+        status =  order_status["status"]
+        
         if order_status["status"] != 0:
              return json_process_utf8("建立失敗，輸入不正確或其他原因"), 400
-        if order_status["status"] == 0:
-            is_paid = True
         
-        status =  order_status["status"]
-        record_to_database(data, order_id, status)
-
+        if not update_order_status(order_id):
+            return json_process_utf8("建立失敗，輸入不正確或其他原因"), 400
+            
         response_data = {
             "order_id": order_id,
             "payment": {
@@ -122,41 +206,70 @@ def create_and_process_order():
                 "message": "付款成功"
             },
         }
+
+        print(response_data)
+        
         return json_process_utf8({"data": response_data}), 200
 
     except Exception as error:
         return handle_error("伺服器內部錯誤"), 500
 
-@orders_info.route("/api/orders", methods=["GET"])
-def get_orders():
+@orders_info.route("/api/orders/<string:orderNumber>", methods=["GET"])
+def get_orders(orderNumber):
+    user_id = is_user_logged_in()
+    if not user_id:
+        return json_process_utf8({"error": True, "message": "未登入系統，拒絕存取"}), 403
+
     try:
-        user_id = is_user_logged_in()
-        if not user_id:
-            return json_process_utf8({"error": True, "message": "未登入系統，拒絕存取"}), 403
+        connection = connection_pool.get_connection()
+        cursor = connection.cursor(dictionary=True)
+        cursor.execute("SET GLOBAL group_concat_max_len = 102400;")
         
-        print("get orders")
+        search_query = "SELECT * FROM orders WHERE number = %s"
+        
+        cursor.execute(search_query,(orderNumber,))
+        result = cursor.fetchone()
+
+        cursor.close()
+        connection.close()
+
+        if not result:
+            return handle_error("找不到該訂單"), 404
+        
+        number = result["number"]
+        price = result["price"]
+        attraction_id = result["attraction_id"]
+        attraction_name = result["attraction_name"]
+        attraction_address = result["attraction_address"]
+        attraction_image = result["attraction_image"]
+        date = result["date"]
+        time = result["time"]
+        name = result["name"]
+        email = result["email"]
+        phone = result["phone"]
+
+        return_data = {
+            "data":{
+                "number": number,
+                "price": price,
+                "trip": {
+                    "attraction":{
+                        "id": attraction_id,
+                        "name": attraction_name,
+                        "address": attraction_address,
+                        "image": attraction_image
+                        },
+                        "date": date,
+                        "time": time
+                    },
+                    "contact":{
+                        "name": name,
+                        "email": email,
+                        "phone": phone
+                    }
+                }
+            }
+        return json_process_utf8(return_data),200
 
     except Exception as error:
         return handle_error("伺服器內部錯誤"), 500
-
-
-
-
-def record_to_database(booking_data, order_id, status):
-    trip = booking_data["order"]["trip"]
-    contact = booking_data["contact"]
-    price = booking_data["order"]["price"]
-    
-    result = {
-        "data": {
-            "number": order_id,
-            "price": price,
-            "trip": trip,
-            "contact": contact,
-            "status": status,
-            }
-        }
-    
-    
-    
-    print(result)
