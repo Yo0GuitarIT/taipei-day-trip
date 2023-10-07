@@ -209,61 +209,6 @@ bookingForm.addEventListener("submit", (event) => {
   }
 });
 
-// const bookingForm = document.querySelector(".booking-list");
-// bookingForm.addEventListener("submit", (event) => {
-//   event.preventDefault();
-
-//   checkUserLoginStatus()
-//     .then((userId) => {
-//       if (userId) {
-//         const attractionId = parseInt(getIdFromCurrentPath());
-//         const customDate = document.getElementById("custom-date-input").value;
-//         const selectedTime = document.querySelector(
-//           'input[name="time"]:checked'
-//         ).value;
-
-//         let price = 0;
-//         if (selectedTime === "morning") {
-//           price = 2000;
-//         } else if (selectedTime === "afternoon") {
-//           price = 2500;
-//         }
-
-//         const data = {
-//           userId: userId,
-//           attractionId: attractionId,
-//           date: customDate,
-//           time: selectedTime,
-//           price: price,
-//         };
-
-//         console.log(data);
-
-//         const token = localStorage.getItem("token");
-
-//         fetch("/api/booking", {
-//           method: "POST",
-//           headers: {
-//             "Content-Type": "application/json",
-//             Authorization: `Bearer ${token}`,
-//           },
-//           body: JSON.stringify(data),
-//         })
-//           .then((response) => response.json())
-//           .then(() => {
-//             // window.location.href = "/booking";
-//           })
-//           .catch((error) => {
-//             console.error("預約失敗", error);
-//           });
-//       } else {
-//         openLoginPage();
-//       }
-//     })
-//     .catch((error) => {
-//       console.error("無法獲取使用者ID", error);
-//     });
-// });
 
 let checkUserLoginStatus = () => {
   const token = localStorage.getItem("token");

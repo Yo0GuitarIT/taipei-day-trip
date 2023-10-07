@@ -66,8 +66,8 @@ def register_user():
         cursor = connection.cursor()
         register_query = """INSERT INTO member (name, email, password) VALUES (%s, %s, %s)"""
         cursor.execute(register_query, (data['name'], data['email'], data['password']))
-        connection.commit()
         
+        connection.commit()
         cursor.close()
         connection.close()
         
