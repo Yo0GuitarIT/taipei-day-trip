@@ -23,7 +23,6 @@ let checkUserLoginStatus = () => {
     .then((data) => {
       const userName = document.getElementById("user-name-text");
       userName.textContent = `您好，${data.data.name}，待預定的行程如下：`;
-      // console.log(data.data.id);
     })
     .catch((error) => {
       console.error("發生錯誤", error);
@@ -35,7 +34,6 @@ let loadingBookingInfo = () => {
   if (!checkUserLoginStatus()) {
     return;
   }
-
   fetch("/api/booking", {
     method: "GET",
     headers: {
@@ -51,7 +49,6 @@ let loadingBookingInfo = () => {
       }
     })
     .then((bookingData) => {
-      // console.log(bookingData);
       updateBookingInfo(bookingData);
     })
     .catch((error) => {
@@ -65,11 +62,9 @@ let setupDeleteButton = (index) => {
     if (!checkUserLoginStatus()) {
       return;
     }
-
     const dataToDelete = {
       sessionData: index,
     };
-
     fetch("/api/booking", {
       method: "DELETE",
       headers: {

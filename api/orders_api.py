@@ -208,7 +208,6 @@ def create_and_process_order():
         }
 
         session.clear()
-
         return json_process_utf8({"data": response_data}), 200
 
     except Exception as error:
@@ -226,7 +225,6 @@ def get_orders(orderNumber):
         cursor.execute("SET GLOBAL group_concat_max_len = 102400;")
         
         search_query = "SELECT * FROM orders WHERE number = %s"
-        
         cursor.execute(search_query,(orderNumber,))
         result = cursor.fetchone()
 

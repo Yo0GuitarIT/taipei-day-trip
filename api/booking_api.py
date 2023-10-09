@@ -82,17 +82,11 @@ def execute_query(query,params=None):
 
 @booking_info.route("/api/booking", methods=["GET"])
 def get_unconfirmed_bookings():
-    # if not is_user_logged_in():
-    #     return json_process_utf8({"error": True, "message": "未登入系統，拒絕存取"}), 403
-    # booking_data = session.get('booking_data')
     user_id = is_user_logged_in()
     if not user_id:
         return json_process_utf8({"error": True, "message": "未登入系統，拒絕存取"}), 403
     user_orders = session.get(f"user_orders_{user_id}", [])
-    # user_orders = session.get(f"user_order", [])
-
     return json_process_utf8(user_orders), 200
-
 
 @booking_info.route("/api/booking", methods=["POST"])
 def booking():
@@ -132,17 +126,13 @@ def booking():
         }
 
         user_orders = session.get(f"user_orders_{user_id}", [])
-        # user_order = session.get(f"user_order", [])
         user_orders.append(new_booking)
-
         session[f"user_orders_{user_id}"] = user_orders
-        # session[f"user_order"] = user_order
 
         return jsonify({"ok":True}), 200
 
     except Exception as e:
         return json_process_utf8("伺服器內部錯誤"), 500
-
 
 @booking_info.route("/api/booking", methods=["DELETE"])
 def delete_booking():
@@ -156,12 +146,10 @@ def delete_booking():
         print(data_to_delete)
 
         user_orders = session.get(f"user_orders_{user_id}", [])
-        # user_orders = session.get(f"user_order", [])
-
+        
         if len(user_orders) != 0:
             user_orders.pop(data_to_delete)
             session[f"user_orders_{user_id}"] = user_orders
-            # session[f"user_order"] = user_orders
 
         return jsonify({"ok": True})
 
