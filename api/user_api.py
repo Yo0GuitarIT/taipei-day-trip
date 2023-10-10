@@ -3,11 +3,17 @@ from mysql.connector import pooling
 import json
 import jwt
 import datetime
+import os
+
+database_host = os.getenv("DATABASE_HOST")
+database_username = os.getenv("DATABASE_USERNAME")
+database_password = os.getenv("DATABASE_PASSWORD")
+token_secrect_key = os.getenv("TOKEN_SECRET_KEY")
 
 db_config = {
-    "host": "localhost",
-    "user": "root",
-    "password": "12345678",
+    "host": database_host,
+    "user": database_username,
+    "password": database_password,
     "database": "taipei_day_trip"
 }
 
@@ -19,7 +25,7 @@ connection_pool = pooling.MySQLConnectionPool(
 
 user_info = Blueprint("user_api", __name__)
 
-SECRET_KEY = "Yo0-secret-key"
+SECRET_KEY = token_secrect_key
 
 def execute_query(query,params=None):
     connection = connection_pool.get_connection()

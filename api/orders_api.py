@@ -4,11 +4,18 @@ import json
 import requests
 import jwt
 import uuid
+import os
+
+database_host = os.getenv("DATABASE_HOST")
+database_username = os.getenv("DATABASE_USERNAME")
+database_password = os.getenv("DATABASE_PASSWORD")
+token_secrect_key = os.getenv("TOKEN_SECRET_KEY")
+partner_key = os.getenv("PARTNER_KEY")
 
 db_config = {
-    "host": "localhost",
-    "user": "root",
-    "password": "12345678",
+    "host": database_host,
+    "user": database_username,
+    "password": database_password,
     "database": "taipei_day_trip"
 }
 
@@ -20,10 +27,8 @@ connection_pool = pooling.MySQLConnectionPool(
 
 orders_info = Blueprint("orders_api", __name__)
 
-SECRET_KEY = "Yo0-secret-key"
-
+SECRET_KEY = token_secrect_key
 TAPPAY_API_URL = "https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime"
-PARTNER_KEY = "partner_yf4HPx6lfRpgRq1NRs32KtrDn17ItLUr70LaD1jAJK7Tlff65YDvRNJm"
 
 def is_user_logged_in():
     auth_header = request.headers.get("Authorization")
@@ -146,7 +151,7 @@ def update_order_status(order_id):
 def process_tappay_payment(data, order_id):
     headers = {
         "Content-Type": "application/json",
-        "x-api-key": PARTNER_KEY,
+        "x-api-key": partner_key,
     }
     prime = data["prime"]
     details = data["order"]["trip"]["attraction"]["name"]
@@ -157,7 +162,7 @@ def process_tappay_payment(data, order_id):
 
     data = {
         "prime": prime,
-        "partner_key": PARTNER_KEY,
+        "partner_key": partner_key,
         "merchant_id": "yo036563_TAISHIN",
         "details": f"{name} 預定行程：{details}",
         "amount": amount,
