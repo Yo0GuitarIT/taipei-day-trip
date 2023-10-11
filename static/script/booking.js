@@ -92,6 +92,8 @@ let createBookingElement = (bookingInfo, index) => {
   const bookingSection = document.getElementById("booking-section");
   const sectionContainer = document.createElement("div");
   sectionContainer.className = "section-container"
+  sectionContainer.setAttribute("data-aos", "fade-right");
+  sectionContainer.setAttribute("data-aos-delay","200");
 
   const imgContainer = document.createElement("div");
   imgContainer.className = "img-container";

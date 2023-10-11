@@ -115,6 +115,10 @@
   background-color: var(--additional);
 }
 
+.container-link-button:hover{
+  font-weight: 500;
+}
+
 /* hero selection--------------------------------------- */
 .section {
   padding-top: 56px;
@@ -201,11 +205,6 @@
   background-color: var(--hoverColor);
 }
 
-
-/* .search-button-box:hover  {
-  filter: brightness(0.8);
-} */
-
 .search-icon {
   width: 30px;
   height: 30px;
@@ -288,7 +287,6 @@
 }
 
 .list-text {
-  font-weight: 500;
   line-height: 13.3px;
   color: var(--grayColor);
   display: flex;
@@ -296,6 +294,10 @@
   border: 0;
   background-color: var(--additional);
   cursor: pointer;
+}
+
+.list-text:hover{
+  font-weight: 500;
 }
 
 /* attractions----------------------------------------- */
@@ -544,6 +546,11 @@
   display: flex;
   justify-content: center;
   font-size: 10px;
+}
+
+.user-welcome:hover {
+  font-weight: normal; 
+  cursor: auto;
 }
 
 

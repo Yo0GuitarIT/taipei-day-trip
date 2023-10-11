@@ -102,9 +102,13 @@ inputField.addEventListener("keydown", (event) => {
 
 // create Attractions Element
 let createAttractionContainers = (numContainers, startIndex) => {
+  let delaycount = 1;
   for (let i = 1 + startIndex; i <= numContainers + startIndex; i++) {
     const attractionContainer = document.createElement("div");
     attractionContainer.className = "attraction-container";
+    attractionContainer.setAttribute("data-aos", "zoom-in");
+    attractionContainer.setAttribute("data-aos-delay", `${50 * delaycount}`);
+    delaycount += 1;
 
     const attractionLink = document.createElement("a");
     attractionLink.className = "attraction-link";
@@ -118,6 +122,7 @@ let createAttractionContainers = (numContainers, startIndex) => {
     img.className = "attraction-img";
     img.src = "";
     img.alt = "";
+    img.style.display = "none";
 
     const loadingImg = document.createElement("div");
     loadingImg.className = "loading-img";
@@ -166,9 +171,12 @@ let createAttractionContainers = (numContainers, startIndex) => {
 
     mainContainerAttractions.appendChild(attractionContainer);
 
+
+
     img.addEventListener("load", () => {
       if (loadingImg) {
         imgContainer.removeChild(loadingImg);
+        img.style.display = "block";
       }
     });
   }

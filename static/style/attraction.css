@@ -13,6 +13,7 @@
   --secondaryColor: #f8f8f8;
   --bookingBackgroundColor: #e8e8e8;
   --footerColor: #757575;
+  --hoverColor: #59b1c8;
 }
 
 .slogan-title {
@@ -113,6 +114,10 @@
   border: 0;
   color: var(--grayColor);
   background-color: var(--additional);
+}
+
+.container-link-button:hover{
+  font-weight: 500;
 }
 
 /* selection--------------------------------------- */
@@ -364,6 +369,12 @@ input[type="radio"] {
   border-radius: 5px;
   text-align: center;
 }
+
+.booking-button:hover{
+  background-color: var(--hoverColor);
+  color: var(--footerColor);
+}
+
 /* main----------------------------------------- */
 .main {
   width: 100%;
@@ -580,6 +591,11 @@ body {
   display: flex;
   justify-content: center;
   font-size: 10px;
+}
+
+.user-welcome:hover {
+  font-weight: normal; 
+  cursor: auto;
 }
 
 @media screen and (max-width: 1199px) {

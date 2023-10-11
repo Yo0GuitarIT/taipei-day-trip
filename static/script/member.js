@@ -196,6 +196,7 @@ let getCurrentUser = () => {
     .then((data) => {
       if (data.data === null) {
         userWelcome.style.display = "none";
+        bookingDriectButton.textContent = "預定行程";
         memberButton.textContent = "登入/註冊";
         memberButton.addEventListener("click", () => {
           openLoginPage();
@@ -204,6 +205,7 @@ let getCurrentUser = () => {
         userWelcome.style.display = "block";
         userWelcome.textContent = `${data.data["name"]}，歡迎光臨`;
         memberButton.textContent = "登出系統";
+        bookingDriectButton.textContent = "預定行程";
 
         memberButton.addEventListener("click", () => {
           localStorage.removeItem("token");

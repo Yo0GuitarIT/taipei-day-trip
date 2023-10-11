@@ -11,6 +11,7 @@
       href="{{ url_for('static', filename='style/booking.css') }}"
     />
     <script src="https://js.tappaysdk.com/sdk/tpdirect/v5.14.0"></script>
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
   </head>
 
   <body class="body">
@@ -26,13 +27,18 @@
     <div class="wrapper">
       <div class="main">
         <div class="main-container">
-          <div class="order-title">
+          <div class="order-title" data-aos="fade-right">
             <p id="user-name-text" class="button-bold user-info">
               您好， ，待預定的行程如下：
             </p>
           </div>
 
-          <div id="no-booking-info" class="order-title no-booking-info">
+          <div
+            id="no-booking-info"
+            class="order-title no-booking-info"
+            data-aos="fade-right"
+            data-aos-delay="200"
+          >
             <p>目前沒有任何待預訂的行程</p>
           </div>
 
@@ -84,7 +90,11 @@
               />
             </svg>
 
-            <div class="contact-form">
+            <div
+              class="contact-form"
+              data-aos="fade-right"
+              data-aos-delay="400"
+            >
               <div class="contact-info-title">
                 <p class="button-bold">您的聯絡資訊</p>
               </div>
@@ -103,7 +113,12 @@
               <div class="contact-phone">
                 <p>手機號碼：</p>
                 <div class="input-box">
-                  <input type="text" id="user-phone" name="user-phone" />
+                  <input
+                    type="text"
+                    id="user-phone"
+                    name="user-phone"
+                    
+                  />
                 </div>
               </div>
               <p class="body-bold">
@@ -121,28 +136,29 @@
               />
             </svg>
 
-            <div class="credit-card-form">
+            <div
+              class="credit-card-form"
+              data-aos="fade-right"
+              data-aos-delay="500"
+            >
               <div class="card-info-title">
                 <p class="button-bold">信用卡付款資訊</p>
               </div>
               <div class="card-number">
                 <p>卡片號碼：</p>
                 <div class="input-box" id="card-number">
-                  <label for="card-number"></label>
                   <input type="text" name="card-number" />
                 </div>
               </div>
               <div class="card-expiration">
                 <p>過期時間：</p>
                 <div class="input-box" id="card-expiration-date">
-                  <label for="card-expiration-date"></label>
                   <input type="text" name="card-expiration-date" />
                 </div>
               </div>
               <div class="card-password">
                 <p>驗證密碼：</p>
                 <div class="input-box" id="card-ccv">
-                  <label for="card-ccv"></label>
                   <input type="text" name="card-ccv" />
                 </div>
               </div>
@@ -159,7 +175,7 @@
             </svg>
 
             <div class="checkout-box">
-              <div class="price-box">
+              <div class="price-box" data-aos="fade-left" data-aos-delay="700">
                 <p id="booking-totalprice" class="checkout-price body-bold">
                   總價：
                 </p>
@@ -167,6 +183,8 @@
               <button
                 class="checkout-button button-regular"
                 id="checkout-button"
+                data-aos="zoom-in"
+                data-aos-delay="1000"
               >
                 確認訂購並付款
               </button>
@@ -176,12 +194,17 @@
       </div>
       <footer class="footer">
         <div class="footer-content">
-          <p class="footer-text body-bold">COPYRIGHT © 2021 台北一日遊</p>
+          <p class="footer-text body-bold">COPYRIGHT © 2023 台北一日遊</p>
         </div>
       </footer>
     </div>
-    <script src="{{ url_for('static', filename='script/booking.js') }}"></script>
+
     <script src="{{ url_for('static', filename='script/member.js') }}"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+      AOS.init();
+    </script>
+    <script src="{{ url_for('static', filename='script/booking.js') }}"></script>
     <script src="{{ url_for('static', filename='script/payment.js') }}"></script>
   </body>
 </html>

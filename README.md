@@ -1,8 +1,8 @@
 # taipei-day-trip
 
- - 1.Use the Command Line Interface to push files to the github.
- - 2.push a pull request
- - 3.Here from ubuntu 9/1
- - 4.Edit member System
- - 5.Try to push with lazygit
- - 6.Create Mult-booking
+## 提升使用者體驗
+
+- 增加過場效果
+- 新增按鈕 hover 效果
+- 防手機填寫錯誤機制
+- booking 資訊未填寫完成會跳出警示效果

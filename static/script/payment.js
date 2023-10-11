@@ -61,6 +61,17 @@ let loginStatus = () => {
   return true;
 };
 
+const phoneInput = document.getElementById("user-phone");
+phoneInput.addEventListener("input", () => {
+  phoneInput.value = phoneInput.value.replace(/\D/g, "");
+  if (phoneInput.value.length > 10) {
+    phoneInput.value = phoneInput.value.slice(0, 10);
+  }
+  if (phoneInput.value.length === 10) {
+    phoneInput.style.color = "green";
+  }
+});
+
 let fieldContact = () => {
   const token = localStorage.getItem("token");
   fetch("/api/user/auth", {
@@ -84,7 +95,7 @@ let fieldContact = () => {
 
 let showLoadingOverlay = () => {
   const overlay = document.getElementById("overlay");
-  overlay.style.display = "flex"; 
+  overlay.style.display = "flex";
 };
 
 let getAttractionsInfo = () => {
@@ -133,7 +144,7 @@ let getContactInfo = () => {
 
 let fetchOrdersApi = (bookingResult) => {
   const dataSent = JSON.stringify(bookingResult);
-  
+
   showLoadingOverlay();
 
   fetch("/api/orders", {
@@ -168,7 +179,12 @@ document.getElementById("checkout-button").addEventListener("click", () => {
 
     TPDirect.card.getPrime((result) => {
       if (result.status !== 0) {
-        console.err("getPrime error");
+        console.error("getPrime error");
+        window.alert("請完整填寫資訊～");
+        return;
+      }
+      if (phoneInput.value.length < 10) {
+        window.alert("請完整填寫手機資訊～");
         return;
       }
       const prime = result.card.prime;

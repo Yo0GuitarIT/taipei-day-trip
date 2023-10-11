@@ -10,6 +10,7 @@
       type="text/css"
       href="{{ url_for('static', filename='style/homepage.css') }}"
     />
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
   </head>
 
   <body>
@@ -29,8 +30,7 @@
         </div>
       </div>
     </nav> -->
-    {% include 'navbar.html' %}
-    {% include 'login_system.html' %}
+    {% include 'navbar.html' %} {% include 'login_system.html' %}
 
     <!-- <div class="signin-background">
       <div class="signin-main-container">
@@ -107,16 +107,20 @@
     </div> -->
 
     <section class="section">
-      <div class="hero-selection">
+      <div
+        class="hero-selection"
+        data-aos="fade-right"
+        data-aos-duration="4000"
+      >
         <div class="hero-selection-container">
           <div class="hero-selection-item">
-            <p class="hero-selection-space slogan-title">
+            <p class="hero-selection-space slogan-title" data-aos="fade-right" data-aos-delay="200">
               輕鬆享受台北一日悠閒
             </p>
-            <p class="hero-selection-space body-bold">
+            <p class="hero-selection-space body-bold" data-aos="fade-right" data-aos-delay="400">
               探索每個角落，體驗城市的深度旅遊行程
             </p>
-            <div class="hero-selection-space search-box-item">
+            <div class="hero-selection-space search-box-item" data-aos="fade-right" data-aos-delay="600">
               <div class="search-input-box">
                 <input
                   class="search-input-text body-bold"
@@ -139,7 +143,7 @@
     </section>
     <main>
       <div class="main-container">
-        <div class="main-containter-list">
+        <div class="main-containter-list" data-aos="fade-right" data-aos-delay="800">
           <div class="left-container">
             <button id="scroll-left-button" class="list-button">
               <img
@@ -200,12 +204,16 @@
         <p class="body-bold">查無資料...</p>
       </div>
     </main>
-    <footer class="footer">
-      <div class="footer-content">
-        <p class="footer-text body-bold">COPYRIGHT © 2021 台北一日遊</p>
+    <footer class="footer" >
+      <div class="footer-content" >
+        <p class="footer-text body-bold">COPYRIGHT © 2023 台北一日遊</p>
       </div>
     </footer>
-    <script src="{{ url_for('static', filename='script/index.js') }}"></script>
     <script src="{{ url_for('static', filename='script/member.js') }}"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+      AOS.init();
+    </script>
+    <script src="{{ url_for('static', filename='script/index.js') }}"></script>
   </body>
 </html>
