@@ -13,7 +13,9 @@
   --secondaryColor: #f8f8f8;
   --textShadowColor: #aabbcc;
   --footerColor: #757575;
+  --hoverColor: #59b1c8;
 }
+
 
 .slogan-title {
   font-size: 28px;
@@ -194,6 +196,15 @@
   border: 0;
   cursor: pointer;
 }
+
+.search-button-box:hover {
+  background-color: var(--hoverColor);
+}
+
+
+/* .search-button-box:hover  {
+  filter: brightness(0.8);
+} */
 
 .search-icon {
   width: 30px;

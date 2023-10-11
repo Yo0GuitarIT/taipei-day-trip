@@ -20,8 +20,7 @@ app.register_blueprint(booking_info)
 app.register_blueprint(user_info)
 app.register_blueprint(orders_info)
 
-app_secret_key = os.getenv("APP_SECRET_KEY")
-app.secret_key = app_secret_key
+app.secret_key = os.getenv("APP_SECRET_KEY")
 
 @app.route("/")
 def index():

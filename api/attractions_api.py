@@ -59,16 +59,16 @@ def api_attractions():
 		data = []
 		for data_info in attractions:
 			info = {
-				"id": data_info['id'],
-				"name": data_info['name'],
-				"category": data_info['category_style'],
-				"description": data_info['description'],
-				"address": data_info['address'],
-				"transport": data_info['transport'],
-				"mrt": data_info['mrt'],
-				"lat": float(data_info['lat']),
-				"lng": float(data_info['lng']),
-				"images": data_info['images'].split(',')
+				"id": data_info["id"],
+				"name": data_info["name"],
+				"category": data_info["category_style"],
+				"description": data_info["description"],
+				"address": data_info["address"],
+				"transport": data_info["transport"],
+				"mrt": data_info["mrt"],
+				"lat": float(data_info["lat"]),
+				"lng": float(data_info["lng"]),
+				"images": data_info["images"].split(",")
 				}
 			
 			data.append(info)
@@ -108,16 +108,16 @@ def api_attraction_id(attractionId):
 		data = []
 		for data_info in attractions:
 			info = {
-				"id": data_info['id'],
-				"name": data_info['name'],
-				"category": data_info['category_style'],
-				"description": data_info['description'],
-				"address": data_info['address'],
-				"transport": data_info['transport'],
-				"mrt": data_info['mrt'],
-				"lat": float(data_info['lat']),
-				"lng": float(data_info['lng']),
-				"images": data_info['images'].split(',')
+				"id": data_info["id"],
+				"name": data_info["name"],
+				"category": data_info["category_style"],
+				"description": data_info["description"],
+				"address": data_info["address"],
+				"transport": data_info["transport"],
+				"mrt": data_info["mrt"],
+				"lat": float(data_info["lat"]),
+				"lng": float(data_info["lng"]),
+				"images": data_info["images"].split(",")
 				}
 			data.append(info)
 		result = {"data": data}
@@ -140,7 +140,7 @@ def execute_query(query, params=None):
     return result
 
 def json_process_utf8(result):
-	result = Response(json.dumps(result, ensure_ascii = False),content_type ='application/json;charset=utf-8'), 200
+	result = Response(json.dumps(result, ensure_ascii = False),content_type ="application/json;charset=utf-8"), 200
 	return result
 
 def handle_error(message):
