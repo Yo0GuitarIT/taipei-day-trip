@@ -93,6 +93,14 @@ let handleSearch = () => {
   fetchAndFillAttractions(currentPage, searchText);
 };
 
+let scrollToAttraction = () => {
+  const attractionContainer = document.querySelector(".main-containter-list");
+  attractionContainer.scrollIntoView({
+    behavior: "smooth",
+    block: "start",
+  });
+}
+
 searchButton.addEventListener("click", handleSearch);
 inputField.addEventListener("keydown", (event) => {
   if (event.key === "Enter") {
@@ -236,6 +244,9 @@ let fetchAndFillAttractions = (page, keyword) => {
         attractionMrt.textContent = mrt;
         attractionCategory.textContent = category;
         attractionImage.src = imageUrl;
+      }
+      if (isSearchMode) {
+        scrollToAttraction();
       }
     })
     .catch((error) => {
