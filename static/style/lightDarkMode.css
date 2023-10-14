@@ -13,7 +13,8 @@ input,
 .contact-form p,
 .credit-card-form p,
 .checkout-price,
-.order-info p {
+.order-info p ,
+.not-found-box{
   background-color: #3a3a3a;
   color: #bfbfbf;
   border-color: #000000;
@@ -31,4 +32,9 @@ input,
 .signin-container input,
 .signup-container input {
   background-color: #ffffff;
+  color: #000000;
+}
+
+.search-input-text{
+  color:#000000;
 }
