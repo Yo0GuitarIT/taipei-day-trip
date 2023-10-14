@@ -24,8 +24,11 @@ input,
   color: #448899;
 }
 
-.search-input-text{
-    background-color: #ffffff;
+.search-input-text {
+  background-color: #ffffff;
 }
 
-
+.signin-container input,
+.signup-container input {
+  background-color: #ffffff;
+}
