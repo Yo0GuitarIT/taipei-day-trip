@@ -3,6 +3,7 @@ const afternoonRadio = document.getElementById("afternoon");
 const tourCostText = document.getElementById("tour-cost");
 const imgContainer = document.querySelector(".selection-img-box");
 const imagesContainer = document.querySelector(".selection-img-container");
+const bookingForm = document.querySelector(".booking-list");
 
 let currentImageIndex = 0;
 
@@ -162,7 +163,6 @@ afternoonRadio.addEventListener("change", () => {
   updateTourCost(afternoonRadio, tourCostText);
 });
 
-const bookingForm = document.querySelector(".booking-list");
 bookingForm.addEventListener("submit", (event) => {
   event.preventDefault();
 
@@ -208,7 +208,6 @@ bookingForm.addEventListener("submit", (event) => {
     openLoginPage();
   }
 });
-
 
 let checkUserLoginStatus = () => {
   const token = localStorage.getItem("token");

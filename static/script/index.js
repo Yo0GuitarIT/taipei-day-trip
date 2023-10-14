@@ -75,7 +75,6 @@ let addButtonClickListener = (buttonId, clickHandler) => {
 addButtonClickListener("scroll-left-button", () => {
   scrollLeft();
 });
-
 addButtonClickListener("scroll-right-button", () => {
   scrollRight();
 });
@@ -92,14 +91,13 @@ let handleSearch = () => {
   clearChildren(mainContainerAttractions);
   fetchAndFillAttractions(currentPage, searchText);
 };
-
 let scrollToAttraction = () => {
   const attractionContainer = document.querySelector(".main-containter-list");
   attractionContainer.scrollIntoView({
     behavior: "smooth",
     block: "start",
   });
-}
+};
 
 searchButton.addEventListener("click", handleSearch);
 inputField.addEventListener("keydown", (event) => {
@@ -190,7 +188,7 @@ let createAttractionContainers = (numContainers, startIndex) => {
   }
 };
 
-//fetch Api and fill information
+// fetch Api and fill information
 let startIndex = 0;
 let fetchAndFillAttractions = (page, keyword) => {
   const apiUrl = `/api/attractions?page=${page}&keyword=${keyword}`;
@@ -200,11 +198,8 @@ let fetchAndFillAttractions = (page, keyword) => {
       const data = result.data;
       const nextPage = result.nextPage;
       let numContainers = data.length;
-      toggleNotFound(false);
 
-      if (data.length === 0) {
-        toggleNotFound(true);
-      }
+      toggleNotFound(data.length === 0);
 
       if (nextPage !== null) {
         numContainers -= 1;
@@ -272,14 +267,17 @@ let scrollListener = () => {
   }
 };
 
+// whether to display Not found results
 let toggleNotFound = (isVisible) => {
-  let element = document.querySelector(".not-found-box");
-  if (element) {
-    element.style.display = isVisible ? "flex" : "none";
-  }
+  let notFoundElement = document.querySelector(".not-found-box");
+  notFoundElement.style.display = isVisible ? "flex" : "none";
 };
 
 //page initial
-fetchMrtInfo();
-fetchAndFillAttractions(currentPage, "");
+let pageInit = () => {
+  fetchMrtInfo();
+  fetchAndFillAttractions(currentPage, "");
+}
+
+pageInit();
 window.addEventListener("scroll", scrollListener);

@@ -47,6 +47,7 @@ let switchAnimation = (fade_out_element, fade_in_element) => {
 };
 
 exitButton1.addEventListener("click", () => {
+  alertContainer1.textContent = "";
   elementAnimation(signinContainer);
 });
 
@@ -78,7 +79,7 @@ let isValidEmail = (email) => {
   return emailPattern.test(email);
 };
 
-signupButton.addEventListener("click", () => {
+let handleSignUp = () => {
   const registerData = {
     name: signupName.value,
     email: signupEmail.value,
@@ -135,9 +136,9 @@ signupButton.addEventListener("click", () => {
     .catch((error) => {
       console.error("Error:", error);
     });
-});
+}
 
-signinButton.addEventListener("click", () => {
+let handleSignIn = () => {
   const signinData = {
     email: signinEmail.value,
     password: signinPassword.value,
@@ -174,7 +175,7 @@ signinButton.addEventListener("click", () => {
     .catch((error) => {
       console.error("Error:", error);
     });
-});
+}
 
 let getCurrentUser = () => {
   const token = localStorage.getItem("token");
@@ -212,15 +213,27 @@ let getCurrentUser = () => {
           location.reload();
         });
       }
-      // console.log(data.data);
+      handleResize();
     })
     .catch((error) => {
       console.error("發生錯誤:", error);
     });
 };
 
-window.addEventListener("resize", handleResize);
-window.addEventListener("load", () => {
-  getCurrentUser();
-  handleResize();
+signupButton.addEventListener("click", handleSignUp);
+signinButton.addEventListener("click", handleSignIn);
+
+signupPassword.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    handleSignUp();
+  }
 });
+
+signinPassword.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    handleSignIn();
+  }
+});
+
+window.addEventListener("resize", handleResize);
+window.addEventListener("load", getCurrentUser);

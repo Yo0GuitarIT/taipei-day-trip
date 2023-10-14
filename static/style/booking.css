@@ -592,10 +592,6 @@ body {
 }
 
 @media screen and (max-width: 650px) {
-  .user-welcome {
-    display: none;
-  }
-
   .section-container {
     margin: 0;
     flex-direction: column;

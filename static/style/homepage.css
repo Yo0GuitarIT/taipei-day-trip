@@ -87,6 +87,7 @@
 }
 
 .nav-container {
+  box-sizing: border-box;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -143,7 +144,7 @@
   /* height: 320px; */
   height: 100%;
   width: 1920px;
-  background-image: url("/static/images/Sunset\ over\ Taipei\ City.jpg");
+  background-image: url("/static/images/sunset_taipei.jpeg");
   background-size: cover;
 }
 
@@ -337,6 +338,7 @@
 
 /* attractions----------------------------------------- */
 .main-container-attractions {
+  box-sizing: border-box;
   height: auto;
   width: auto;
   display: grid;
@@ -439,10 +441,16 @@
 /* not found box-----------------------------------*/
 .not-found-box {
   color: var(--grayColor);
-  display: flex;
+  display: none;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 40px;
+  height: auto;
+  margin-bottom:100px;
+}
+
+.not-found-box img{
+  width: 200px;
 }
 
 /* footer----------------------------------------- */
