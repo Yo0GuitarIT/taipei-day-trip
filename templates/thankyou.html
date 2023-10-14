@@ -10,6 +10,13 @@
       type="text/css"
       href="{{ url_for('static', filename='style/thankyou.css') }}"
     />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='style/lightDarkMode.css') }}"
+      id="darkModeStylesheet"
+      disabled
+    />
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
   </head>
 
@@ -71,5 +78,6 @@
       AOS.init();
     </script>
     <script src="{{ url_for('static', filename='script/thankyou.js') }}"></script>
+    <script src="{{ url_for('static', filename='script/lightDarkMode.js') }}"></script>
   </body>
 </html>

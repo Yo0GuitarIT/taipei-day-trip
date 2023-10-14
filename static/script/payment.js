@@ -2,8 +2,9 @@ const appId = "137063";
 const appKey =
   "app_O1zPbzPj1itJ7WKu8RKckUQrbjFWiVfVGTWW1Gbwvn5O50DsoUceUSclvn9I";
 
-TPDirect.setupSDK(appId, appKey, "sandbox");
+const phoneInput = document.getElementById("user-phone");
 
+TPDirect.setupSDK(appId, appKey, "sandbox");
 const displayCCVFields = {
   number: {
     element: document.getElementById("card-number"),
@@ -41,56 +42,12 @@ TPDirect.card.setup({
 
 let bookingResult = {};
 
-let loginStatus = () => {
-  const token = localStorage.getItem("token");
-  if (!token) {
-    console.log("未登錄，找不到令牌");
-    window.location.href = "/";
-    return false;
-  }
-  fetch("/api/user/auth", {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  }).catch((error) => {
-    console.error("發生錯誤", error);
-    return false;
-  });
-  return true;
-};
-
-const phoneInput = document.getElementById("user-phone");
-phoneInput.addEventListener("input", () => {
-  phoneInput.value = phoneInput.value.replace(/\D/g, "");
-  if (phoneInput.value.length > 10) {
-    phoneInput.value = phoneInput.value.slice(0, 10);
-  }
-  if (phoneInput.value.length === 10) {
-    phoneInput.style.color = "green";
-  }
-});
 
 let fieldContact = () => {
-  const token = localStorage.getItem("token");
-  fetch("/api/user/auth", {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      const nameInput = document.getElementById("user-name");
-      nameInput.value = data.data.name;
-      const emailInput = document.getElementById("user-email");
-      emailInput.value = data.data.email;
-    })
-    .catch((error) => {
-      console.error("發生錯誤:", error);
-    });
+  const nameInput = document.getElementById("user-name");
+  nameInput.value = userInfo.name;
+  const emailInput = document.getElementById("user-email");
+  emailInput.value = userInfo.email;
 };
 
 let showLoadingOverlay = () => {
@@ -99,34 +56,24 @@ let showLoadingOverlay = () => {
 };
 
 let getAttractionsInfo = () => {
-  fetch("/api/booking", {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      if (data && data.length > 0) {
-        const attractionData = data[0];
-        const price = attractionData.price;
-        const date = attractionData.date;
-        const time = attractionData.time;
-        const attractionInfo = attractionData.data.attraction;
-        const order = {
-          price: price,
-          trip: {
-            attraction: attractionInfo,
-            date: date,
-            time: time,
-          },
-          date: date,
-          time: time,
-        };
-        bookingResult.order = order;
-      }
-    });
+  fieldContact();
+  if (userInfo.bookingData !== null) {
+    const price = userInfo.bookingData.price;
+    const date = userInfo.bookingData.date;
+    const time = userInfo.bookingData.time;
+    const attractionInfo = userInfo.bookingData.data.attraction;
+    const order = {
+      price: price,
+      trip: {
+        attraction: attractionInfo,
+        date: date,
+        time: time,
+      },
+      date: date,
+      time: time,
+    };
+    bookingResult.order = order;
+  }
 };
 
 let getContactInfo = () => {
@@ -144,7 +91,6 @@ let getContactInfo = () => {
 
 let fetchOrdersApi = (bookingResult) => {
   const dataSent = JSON.stringify(bookingResult);
-
   showLoadingOverlay();
 
   fetch("/api/orders", {
@@ -164,7 +110,6 @@ let fetchOrdersApi = (bookingResult) => {
     .then((data) => {
       console.log("訂單已成功創建：", data);
       orderSerial = data.data.order_id;
-      console.log(orderSerial);
       window.location.href = `/thankyou?number=${orderSerial}`;
     })
     .catch((error) => {
@@ -172,30 +117,41 @@ let fetchOrdersApi = (bookingResult) => {
     });
 };
 
-document.getElementById("checkout-button").addEventListener("click", () => {
-  if (loginStatus() === true) {
-    const tappayStatus = TPDirect.card.getTappayFieldsStatus();
-    console.log("TapPay Fields Status:", tappayStatus);
-
-    TPDirect.card.getPrime((result) => {
-      if (result.status !== 0) {
-        console.error("getPrime error");
-        window.alert("請完整填寫資訊～");
-        return;
-      }
-      if (phoneInput.value.length < 10) {
-        window.alert("請完整填寫手機資訊～");
-        return;
-      }
-      const prime = result.card.prime;
-      const contact = getContactInfo();
-      bookingResult.prime = prime;
-      bookingResult.contact = contact;
-
-      fetchOrdersApi(bookingResult);
-    });
+phoneInput.addEventListener("input", () => {
+  phoneInput.value = phoneInput.value.replace(/\D/g, "");
+  if (phoneInput.value.length > 10) {
+    phoneInput.value = phoneInput.value.slice(0, 10);
+  }
+  if (phoneInput.value.length === 10) {
+    phoneInput.style.color = "green";
   }
 });
 
-fieldContact();
-getAttractionsInfo();
+document.getElementById("checkout-button").addEventListener("click", () => {
+  const tappayStatus = TPDirect.card.getTappayFieldsStatus();
+  console.log("TapPay Fields Status:", tappayStatus);
+
+  TPDirect.card.getPrime((result) => {
+    if (result.status !== 0) {
+      console.error("getPrime error");
+      window.alert("請完整填寫資訊～");
+      return;
+    }
+    if (phoneInput.value.length < 10) {
+      window.alert("請完整填寫手機資訊～");
+      return;
+    }
+    const prime = result.card.prime;
+    const contact = getContactInfo();
+    bookingResult.prime = prime;
+    bookingResult.contact = contact;
+
+    console.log(bookingResult);
+
+    fetchOrdersApi(bookingResult);
+  });
+});
+
+setTimeout(() => {
+  getAttractionsInfo();
+}, 300);

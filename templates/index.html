@@ -1,88 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>台北一日遊</title>
+    <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='style/homepage.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='style/lightDarkMode.css') }}"
+      id="darkModeStylesheet"
+      disabled
+    />
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>台北一日遊</title>
-  <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico" />
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style/homepage.css') }}" />
-  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-</head>
+  <body>
+    {% include 'navbar.html' %} {% include 'login_system.html' %}
+    <section class="section">
+      <div class="hero-selection" data-aos="fade-right" data-aos-delay="200">
+        <div class="hero-selection-container">
+          <div class="hero-selection-item">
+            <p
+              class="hero-selection-space slogan-title"
+              data-aos="fade-right"
+              data-aos-delay="400"
+            >
+              輕鬆享受台北一日悠閒
+            </p>
+            <p
+              class="hero-selection-space body-bold"
+              data-aos="fade-right"
+              data-aos-delay="600"
+            >
+              探索每個角落，體驗城市的深度旅遊行程
+            </p>
+            <div
+              class="hero-selection-space search-box-item"
+              data-aos="fade-right"
+              data-aos-delay="800"
+            >
+              <div class="search-input-box">
+                <input
+                  class="search-input-text body-bold"
+                  type="text"
+                  placeholder="輸入景點名稱查詢"
+                />
+              </div>
 
-<body>
-  {% include 'navbar.html' %} {% include 'login_system.html' %}
-
-  <section class="section">
-    <div class="hero-selection" data-aos="fade-right" data-aos-delay="200">
-      <div class="hero-selection-container">
-        <div class="hero-selection-item">
-          <p class="hero-selection-space slogan-title" data-aos="fade-right" data-aos-delay="400">
-            輕鬆享受台北一日悠閒
-          </p>
-          <p class="hero-selection-space body-bold" data-aos="fade-right" data-aos-delay="600">
-            探索每個角落，體驗城市的深度旅遊行程
-          </p>
-          <div class="hero-selection-space search-box-item" data-aos="fade-right" data-aos-delay="800">
-            <div class="search-input-box">
-              <input class="search-input-text body-bold" type="text" placeholder="輸入景點名稱查詢" />
+              <button class="search-button-box">
+                <img
+                  class="search-icon"
+                  src="/static/images/search.png"
+                  alt=""
+                />
+              </button>
             </div>
-
-            <button class="search-button-box">
-              <img class="search-icon" src="/static/images/search.png" alt="" />
-            </button>
           </div>
-        </div>
-        <div class="weather-container" data-aos="fade-in" data-aos-delay="1500">
-          <div class="weather-info">
-            <div class="weather-info-box">
-              <span class="city">Taipei </span>
-              <span class="temp">20°c</span>
-              <div class="humidity">Humidity: 60%</div>
-              <div class="wind">Wind Speed: 6.2km/h</div>
-              <div class="weather-img-box">
-                <div class="description">Cloudy</div>
-                <img src="https://openweathermap.org/img/wn/03n.png" alt="" class="icon">
+          <div
+            class="weather-container"
+            data-aos="fade-in"
+            data-aos-delay="1500"
+          >
+            <div class="weather-info">
+              <div class="weather-info-box">
+                <span class="city">Taipei </span>
+                <span class="temp">20°c</span>
+                <div class="humidity">Humidity: 60%</div>
+                <div class="wind">Wind Speed: 6.2km/h</div>
+                <div class="weather-img-box">
+                  <div class="description">Cloudy</div>
+                  <img
+                    src="https://openweathermap.org/img/wn/03n.png"
+                    alt=""
+                    class="icon"
+                  />
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
-  <main>
-    <div class="main-container">
-      <div class="main-containter-list" data-aos="fade-right">
-        <div class="left-container">
-          <button id="scroll-left-button" class="list-button">
-            <img class="list-button-img" src="/static/images/left arrow.png" alt="" />
-          </button>
+    </section>
+    <main>
+      <div class="main-container">
+        <div class="main-containter-list" data-aos="fade-right">
+          <div class="left-container">
+            <button id="scroll-left-button" class="list-button">
+              <img
+                class="list-button-img"
+                src="/static/images/left arrow.png"
+                alt=""
+              />
+            </button>
+          </div>
+          <div class="right-container">
+            <button id="scroll-right-button" class="list-button">
+              <img
+                class="list-button-img"
+                src="/static/images/right arrow.png"
+                alt=""
+              />
+            </button>
+          </div>
+          <div class="middle-container"></div>
         </div>
-        <div class="right-container">
-          <button id="scroll-right-button" class="list-button">
-            <img class="list-button-img" src="/static/images/right arrow.png" alt="" />
-          </button>
-        </div>
-        <div class="middle-container"></div>
+        <div class="main-container-attractions"></div>
       </div>
-      <div class="main-container-attractions"></div>
-    </div>
-    <div class="not-found-box">
-      <img src="/static/images/no-results.png" alt="">
-      <p class="body-bold">查無資料...</p>
-    </div>
-  </main>
-  <footer class="footer">
-    <div class="footer-content">
-      <p class="footer-text body-bold">COPYRIGHT © 2023 台北一日遊</p>
-    </div>
-  </footer>
-  <script src="{{ url_for('static', filename='script/member.js') }}"></script>
-  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-
-  <script src="{{ url_for('static', filename='script/index.js') }}"></script>
-  <script> AOS.init(); </script>
-  <script src="{{ url_for('static', filename='script/weather.js') }}"></script>
-</body>
-
+      <div class="not-found-box">
+        <img src="/static/images/no-results.png" alt="" />
+        <p class="body-bold">查無資料...</p>
+      </div>
+    </main>
+    <footer class="footer">
+      <div class="footer-content">
+        <p class="footer-text body-bold">COPYRIGHT © 2023 台北一日遊</p>
+      </div>
+    </footer>
+    <script src="{{ url_for('static', filename='script/member.js') }}"></script>
+    <script src="{{ url_for('static', filename='script/weather.js') }}"></script>
+    <script src="{{ url_for('static', filename='script/index.js') }}"></script>
+    <script src="{{ url_for('static', filename='script/lightDarkMode.js') }}"></script>
+  </body>
 </html>

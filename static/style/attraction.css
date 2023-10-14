@@ -282,7 +282,8 @@
   border: 0;
   display: flex;
   align-items: end;
-  background: url("/static/images/icon_calendar.png") right / 24px 24px no-repeat;
+  background: url("/static/images/icon_calendar.png") right / 24px 24px
+    no-repeat;
 }
 
 .date-input::-webkit-calendar-picker-indicator {
@@ -518,7 +519,6 @@ body {
   position: relative;
 }
 
-
 .exit-button-box {
   position: absolute;
   z-index: inherit;
@@ -602,7 +602,63 @@ body {
   cursor: auto;
 }
 
+/* switch */
+.switch-setting {
+  display: flex;
+  align-items: center;
+}
+
+.switch-img {
+  margin-right: 10px;
+}
+
+.switch-setting input[type="checkbox"] {
+  height: 0;
+  width: 0;
+  visibility: hidden;
+}
+
+.switch-setting label {
+  cursor: pointer;
+  text-indent: -9999px;
+  width: 55px;
+  height: 32px;
+  background: grey;
+  display: block;
+  border-radius: 16px;
+  position: relative;
+}
+
+.switch-setting label:after {
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  width: 22px;
+  height: 22px;
+  background: #fff;
+  border-radius: 30px;
+  transition: 0.3s;
+}
+
+.switch-setting input:checked + label {
+  background: var(--cyanColor);
+}
+
+.switch-setting input:checked + label:after {
+  left: calc(100% - 5px);
+  transform: translateX(-100%);
+}
+
+.switch-setting label:active:after {
+  width: 30px;
+}
+
 @media screen and (max-width: 1199px) {
+  .switch-setting {
+    margin-right: 10px;
+  }
+
   .nav-container {
     padding-left: 10px;
     width: 100%;

@@ -1,0 +1,31 @@
+body,
+input,
+.nav,
+.middle-container,
+.middle-container button,
+.container-link-button,
+.attraction-container,
+.selection-img-container,
+.main-container,
+.selection-info-profile,
+.order-title p,
+.info-container p,
+.contact-form p,
+.credit-card-form p,
+.checkout-price,
+.order-info p {
+  background-color: #3a3a3a;
+  color: #bfbfbf;
+  border-color: #000000;
+}
+
+.mrt-text,
+.category-text {
+  color: #448899;
+}
+
+.search-input-text{
+    background-color: #ffffff;
+}
+
+

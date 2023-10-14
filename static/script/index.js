@@ -177,14 +177,13 @@ let createAttractionContainers = (numContainers, startIndex) => {
 
     mainContainerAttractions.appendChild(attractionContainer);
 
-
-
     img.addEventListener("load", () => {
       if (loadingImg) {
         imgContainer.removeChild(loadingImg);
         img.style.display = "block";
       }
     });
+    AOS.init();
   }
 };
 
@@ -273,11 +272,10 @@ let toggleNotFound = (isVisible) => {
   notFoundElement.style.display = isVisible ? "flex" : "none";
 };
 
-//page initial
-let pageInit = () => {
+let init = () => {
   fetchMrtInfo();
   fetchAndFillAttractions(currentPage, "");
-}
+  window.addEventListener("scroll", scrollListener);
+};
 
-pageInit();
-window.addEventListener("scroll", scrollListener);
+init();

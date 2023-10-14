@@ -1,39 +1,4 @@
-let checkUserLoginStatus = () => {
-  const token = localStorage.getItem("token");
-  if (!token) {
-    console.log("未登錄，找不到令牌");
-    window.location.href = "/";
-    return false;
-  }
-  fetch("/api/user/auth", {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  })
-    .then((response) => {
-      if (response.status === 200) {
-        return response.json();
-      } else {
-        window.location.href = "/";
-        throw new Error("未登錄或無效的令牌");
-      }
-    })
-    .then((data) => {
-      const userName = document.getElementById("user-name-text");
-      userName.textContent = `您好，${data.data.name}，待預定的行程如下：`;
-    })
-    .catch((error) => {
-      console.error("發生錯誤", error);
-    });
-  return true;
-};
-
 let loadingBookingInfo = () => {
-  if (!checkUserLoginStatus()) {
-    return;
-  }
   fetch("/api/booking", {
     method: "GET",
     headers: {
@@ -49,6 +14,7 @@ let loadingBookingInfo = () => {
       }
     })
     .then((bookingData) => {
+      userInfo.bookingData = bookingData[0];
       updateBookingInfo(bookingData);
     })
     .catch((error) => {
@@ -59,9 +25,6 @@ let loadingBookingInfo = () => {
 let setupDeleteButton = (index) => {
   const deleteButton = document.getElementById(`delete-button${index}`);
   deleteButton.addEventListener("click", () => {
-    if (!checkUserLoginStatus()) {
-      return;
-    }
     const dataToDelete = {
       sessionData: index,
     };
@@ -86,14 +49,14 @@ let setupDeleteButton = (index) => {
         console.error("發生錯誤", error);
       });
   });
-}
+};
 
 let createBookingElement = (bookingInfo, index) => {
   const bookingSection = document.getElementById("booking-section");
   const sectionContainer = document.createElement("div");
-  sectionContainer.className = "section-container"
+  sectionContainer.className = "section-container";
   sectionContainer.setAttribute("data-aos", "fade-right");
-  sectionContainer.setAttribute("data-aos-delay","200");
+  sectionContainer.setAttribute("data-aos-delay", "200");
 
   const imgContainer = document.createElement("div");
   imgContainer.className = "img-container";
@@ -166,12 +129,14 @@ let createBookingElement = (bookingInfo, index) => {
   sectionContainer.appendChild(infoContainer);
 
   bookingSection.appendChild(sectionContainer);
-}
+};
 
 let updateBookingInfo = (bookingData) => {
   const bookingInfoElement = document.getElementById("booking-info");
   const noBookingInfo = document.getElementById("no-booking-info");
   const totalPriceElement = document.getElementById("booking-totalprice");
+  const userName = document.getElementById("user-name-text");
+  userName.textContent = `您好，${userInfo.name}，待預定的行程如下：`;
 
   if (bookingData.length !== 0) {
     bookingInfoElement.style.display = "block";
@@ -184,13 +149,14 @@ let updateBookingInfo = (bookingData) => {
       createBookingElement(bookingInfo, i + 1);
       setupDeleteButton(i);
 
-      const attractionNameElement = document.getElementById(`booking-attraction${i + 1}`);
+      const attractionNameElement = document.getElementById(
+        `booking-attraction${i + 1}`
+      );
       const imgElement = document.getElementById(`booking-img${i + 1}`);
       const dateElement = document.getElementById(`booking-date${i + 1}`);
       const timeElement = document.getElementById(`booking-time${i + 1}`);
       const priceElement = document.getElementById(`booking-price${i + 1}`);
       const addressElement = document.getElementById(`booking-address${i + 1}`);
-      
 
       attractionNameElement.textContent = `台北一日遊：${bookingInfo.data.attraction.name}`;
       imgElement.src = bookingInfo.data.attraction.image;
@@ -202,10 +168,9 @@ let updateBookingInfo = (bookingData) => {
       priceElement.textContent = `新台幣：${bookingInfo.price}元`;
       addressElement.textContent = bookingInfo.data.attraction.address;
 
-      totalprice += bookingInfo.price
+      totalprice += bookingInfo.price;
       totalPriceElement.textContent = `總價：新台幣${totalprice}元`;
     }
-
   } else {
     bookingInfoElement.style.display = "none";
     noBookingInfo.style.display = "block";

@@ -10,8 +10,16 @@
       type="text/css"
       href="{{ url_for('static', filename='style/booking.css') }}"
     />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='style/lightDarkMode.css') }}"
+      id="darkModeStylesheet"
+      disabled
+    />
     <script src="https://js.tappaysdk.com/sdk/tpdirect/v5.14.0"></script>
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
   </head>
 
   <body class="body">
@@ -44,42 +52,6 @@
 
           <div id="booking-info">
             <div id="booking-section"></div>
-            <!-- <div class="section-container">
-              <div class="img-container">
-                <img
-                  id="booking-img"
-                  src=""
-                  alt=""
-                />
-              </div>
-              <div class="info-container" >
-                <img
-                  id="delete-button"
-                  src="/static/images/delete-icon.png"
-                  alt=""
-                />
-                <div class="info-title body-bold">
-                  <p id="booking-attraction">台北一日遊：</p>
-                </div>
-                <div class="info-date">
-                  <p class="body-bold">日期：</p>
-                  <p id="booking-date"></p>
-                </div>
-                <div class="info-time">
-                  <p class="body-bold">時間：</p>
-                  <p id="booking-time"></p>
-                </div>
-                <div class="info-cost">
-                  <p class="body-bold">費用：</p>
-                  <p id="booking-price"></p>
-                </div>
-                <div class="info-place">
-                  <p class="body-bold">地點：</p>
-                  <p id="booking-address"></p>
-                </div>
-              </div>
-            </div> -->
-
             <svg class="hr-line" height="2" width="100%">
               <line
                 x1="0"
@@ -113,12 +85,7 @@
               <div class="contact-phone">
                 <p>手機號碼：</p>
                 <div class="input-box">
-                  <input
-                    type="text"
-                    id="user-phone"
-                    name="user-phone"
-                    
-                  />
+                  <input type="text" id="user-phone" name="user-phone" />
                 </div>
               </div>
               <p class="body-bold">
@@ -198,13 +165,12 @@
         </div>
       </footer>
     </div>
-
-    <script src="{{ url_for('static', filename='script/member.js') }}"></script>
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>
       AOS.init();
     </script>
+    <script src="{{ url_for('static', filename='script/member.js') }}"></script>
     <script src="{{ url_for('static', filename='script/booking.js') }}"></script>
     <script src="{{ url_for('static', filename='script/payment.js') }}"></script>
+    <script src="{{ url_for('static', filename='script/lightDarkMode.js') }}"></script>
   </body>
 </html>
