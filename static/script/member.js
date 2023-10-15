@@ -180,7 +180,7 @@ let getCurrentUser = () => {
         memberButton.textContent = "登入/註冊";
 
         bookingDriectButton.addEventListener("click", () => {
-          openLoginPage();
+          alert("請先登入謝謝～");
         });
         memberButton.addEventListener("click", () => {
           openLoginPage();

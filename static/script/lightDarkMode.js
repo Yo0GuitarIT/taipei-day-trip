@@ -1,4 +1,3 @@
-// 获取模式切换开关和样式表
 const modeToggle = document.getElementById("mode-toggle");
 const darkModeStylesheet = document.getElementById("darkModeStylesheet");
 

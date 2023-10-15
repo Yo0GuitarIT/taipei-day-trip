@@ -42,7 +42,6 @@ TPDirect.card.setup({
 
 let bookingResult = {};
 
-
 let fieldContact = () => {
   const nameInput = document.getElementById("user-name");
   nameInput.value = userInfo.name;

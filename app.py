@@ -8,6 +8,7 @@ from api.mrt_api import mrt_info
 from api.booking_api import booking_info
 from api.user_api import user_info
 from api.orders_api import orders_info
+from api.js_secrect_key import js_info
 
 app = Flask(__name__, static_folder="static")
 app.config["JSON_AS_ASCII"]=False
@@ -19,6 +20,7 @@ app.register_blueprint(mrt_info)
 app.register_blueprint(booking_info)
 app.register_blueprint(user_info)
 app.register_blueprint(orders_info)
+app.register_blueprint(js_info)
 
 app.secret_key = os.getenv("APP_SECRET_KEY")
 
