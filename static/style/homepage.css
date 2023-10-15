@@ -140,7 +140,6 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* height: 320px; */
   height: 100%;
   width: 1920px;
   background-image: url("/static/images/sunset_taipei.jpeg");
@@ -150,7 +149,6 @@
 .hero-selection-item {
   display: grid;
   grid-template-rows: 41px 15px 22px 25px 46px;
-  /* height: 149px; */
   width: 1180px;
   padding: 10px;
 }
