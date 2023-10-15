@@ -1,59 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>台北一日遊</title>
+    <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='style/thankyou.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='style/lightDarkMode.css') }}"
+      id="darkModeStylesheet"
+      disabled
+    />
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>台北一日遊</title>
-  <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico" />
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style/thankyou.css') }}" />
-</head>
+  <body class="body">
+    {% include 'navbar.html' %} {% include 'login_system.html' %}
 
-<body class="body">
-  {% include 'navbar.html' %} {% include 'login_system.html' %}
+    <div class="wrapper">
+      <div class="main">
+        <div class="main-container">
+          <div id="ok-mode" style="display: none">
+            <div class="vertify-img-container">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="150px"
+                viewBox="0 0 512 512"
+              >
+                <path
+                  d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"
+                />
+              </svg>
+            </div>
 
-  <div class="wrapper">
-    <div class="main">
-      <div class="main-container">
-
-        <div id="ok-mode" style="display: none;">
-          <div class="vertify-img-container">
-            <svg xmlns="http://www.w3.org/2000/svg" height="150px" viewBox="0 0 512 512">
-              <path
-                d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z" />
-            </svg>
+            <div class="order-info">
+              <p>感謝您的訂購</p>
+              <p>以下為訂單資訊</p>
+              <p id="order-id"></p>
+              <p>請妥善保存訂單序號</p>
+              <p>詳細資訊請透過定單編號查詢，謝謝!</p>
+            </div>
           </div>
 
-          <div class="order-info">
-            <p>感謝您的訂購</p>
-            <p>以下為訂單資訊</p>
-            <p id="order-id"></p>
-            <p>請妥善保存訂單序號</p>
-            <p>詳細資訊請透過定單編號查詢，謝謝!</p>
-          </div>
-        </div>
-
-        <div id="fail-mode" style="display: none;">
-          <div class="non-vertify-img-container">
-            <svg xmlns="http://www.w3.org/2000/svg" height="150" viewBox="0 0 512 512">
-              <path
-                d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z" />
-            </svg>
-          </div>
-          <div class="order-info">
-            <p>連線錯誤或是無此訂單，謝謝!</p>
+          <div id="fail-mode" style="display: none">
+            <div class="non-vertify-img-container">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="150"
+                viewBox="0 0 512 512"
+              >
+                <path
+                  d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z"
+                />
+              </svg>
+            </div>
+            <div class="fail-order-info">
+              <p>連線錯誤或是無此訂單，謝謝!</p>
+            </div>
           </div>
         </div>
       </div>
+      <footer class="footer">
+        <div class="footer-content">
+          <p class="footer-text body-bold">COPYRIGHT © 2021 台北一日遊</p>
+        </div>
+      </footer>
     </div>
-    <footer class="footer">
-      <div class="footer-content">
-        <p class="footer-text body-bold">COPYRIGHT © 2021 台北一日遊</p>
-      </div>
-    </footer>
-  </div>
-  <script src="{{ url_for('static', filename='script/member.js') }}"></script>
-  <script src="{{ url_for('static', filename='script/thankyou.js') }}"></script>
-</body>
-
+    <script src="{{ url_for('static', filename='script/member.js') }}"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+      AOS.init();
+    </script>
+    <script src="{{ url_for('static', filename='script/thankyou.js') }}"></script>
+    <script src="{{ url_for('static', filename='script/lightDarkMode.js') }}"></script>
+  </body>
 </html>

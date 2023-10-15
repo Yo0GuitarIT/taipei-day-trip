@@ -75,7 +75,6 @@ let addButtonClickListener = (buttonId, clickHandler) => {
 addButtonClickListener("scroll-left-button", () => {
   scrollLeft();
 });
-
 addButtonClickListener("scroll-right-button", () => {
   scrollRight();
 });
@@ -92,6 +91,13 @@ let handleSearch = () => {
   clearChildren(mainContainerAttractions);
   fetchAndFillAttractions(currentPage, searchText);
 };
+let scrollToAttraction = () => {
+  const attractionContainer = document.querySelector(".main-containter-list");
+  attractionContainer.scrollIntoView({
+    behavior: "smooth",
+    block: "start",
+  });
+};
 
 searchButton.addEventListener("click", handleSearch);
 inputField.addEventListener("keydown", (event) => {
@@ -102,9 +108,13 @@ inputField.addEventListener("keydown", (event) => {
 
 // create Attractions Element
 let createAttractionContainers = (numContainers, startIndex) => {
+  let delaycount = 1;
   for (let i = 1 + startIndex; i <= numContainers + startIndex; i++) {
     const attractionContainer = document.createElement("div");
     attractionContainer.className = "attraction-container";
+    attractionContainer.setAttribute("data-aos", "zoom-in");
+    attractionContainer.setAttribute("data-aos-delay", `${50 * delaycount}`);
+    delaycount += 1;
 
     const attractionLink = document.createElement("a");
     attractionLink.className = "attraction-link";
@@ -118,6 +128,7 @@ let createAttractionContainers = (numContainers, startIndex) => {
     img.className = "attraction-img";
     img.src = "";
     img.alt = "";
+    img.style.display = "none";
 
     const loadingImg = document.createElement("div");
     loadingImg.className = "loading-img";
@@ -169,12 +180,14 @@ let createAttractionContainers = (numContainers, startIndex) => {
     img.addEventListener("load", () => {
       if (loadingImg) {
         imgContainer.removeChild(loadingImg);
+        img.style.display = "block";
       }
     });
+    AOS.init();
   }
 };
 
-//fetch Api and fill information
+// fetch Api and fill information
 let startIndex = 0;
 let fetchAndFillAttractions = (page, keyword) => {
   const apiUrl = `/api/attractions?page=${page}&keyword=${keyword}`;
@@ -184,11 +197,8 @@ let fetchAndFillAttractions = (page, keyword) => {
       const data = result.data;
       const nextPage = result.nextPage;
       let numContainers = data.length;
-      toggleNotFound(false);
 
-      if (data.length === 0) {
-        toggleNotFound(true);
-      }
+      toggleNotFound(data.length === 0);
 
       if (nextPage !== null) {
         numContainers -= 1;
@@ -229,6 +239,9 @@ let fetchAndFillAttractions = (page, keyword) => {
         attractionCategory.textContent = category;
         attractionImage.src = imageUrl;
       }
+      if (isSearchMode) {
+        scrollToAttraction();
+      }
     })
     .catch((error) => {
       console.error("發生錯誤：", error);
@@ -253,14 +266,16 @@ let scrollListener = () => {
   }
 };
 
+// whether to display Not found results
 let toggleNotFound = (isVisible) => {
-  let element = document.querySelector(".not-found-box");
-  if (element) {
-    element.style.display = isVisible ? "flex" : "none";
-  }
+  let notFoundElement = document.querySelector(".not-found-box");
+  notFoundElement.style.display = isVisible ? "flex" : "none";
 };
 
-//page initial
-fetchMrtInfo();
-fetchAndFillAttractions(currentPage, "");
-window.addEventListener("scroll", scrollListener);
+let init = () => {
+  fetchMrtInfo();
+  fetchAndFillAttractions(currentPage, "");
+  window.addEventListener("scroll", scrollListener);
+};
+
+init();

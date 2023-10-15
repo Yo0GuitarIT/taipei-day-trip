@@ -3,6 +3,7 @@ const afternoonRadio = document.getElementById("afternoon");
 const tourCostText = document.getElementById("tour-cost");
 const imgContainer = document.querySelector(".selection-img-box");
 const imagesContainer = document.querySelector(".selection-img-container");
+const bookingForm = document.querySelector(".booking-list");
 
 let currentImageIndex = 0;
 
@@ -126,6 +127,34 @@ let handleError = (error) => {
   wrapper.appendChild(footerElement);
 };
 
+let checkUserLoginStatus = () => {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    return false;
+  }
+  return fetch("/api/user/auth", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((response) => response.json())
+    .then(() => {
+      return true;
+    })
+    .catch((error) => {
+      console.error("發生錯誤:", error);
+      return false;
+    });
+};
+
+let isDateValid=(selectedDate)=> {
+  const currentDate = new Date();
+  currentDate.setHours(0, 0, 0, 0); 
+  return selectedDate >= currentDate;
+}
+
 let getIdFromCurrentPath = () => {
   const currentPath = window.location.pathname;
   const attractionIdMatch = currentPath.match(/\/attraction\/(\d+)/);
@@ -162,7 +191,6 @@ afternoonRadio.addEventListener("change", () => {
   updateTourCost(afternoonRadio, tourCostText);
 });
 
-const bookingForm = document.querySelector(".booking-list");
 bookingForm.addEventListener("submit", (event) => {
   event.preventDefault();
 
@@ -172,6 +200,13 @@ bookingForm.addEventListener("submit", (event) => {
     const selectedTime = document.querySelector(
       'input[name="time"]:checked'
     ).value;
+
+    const selectedDate = new Date(customDate);
+
+    if (!isDateValid(selectedDate)) {
+      alert("請選擇有效日期。");
+      return;
+    }
 
     let price = 0;
     if (selectedTime === "morning") {
@@ -209,25 +244,3 @@ bookingForm.addEventListener("submit", (event) => {
   }
 });
 
-
-let checkUserLoginStatus = () => {
-  const token = localStorage.getItem("token");
-  if (!token) {
-    return false;
-  }
-  return fetch("/api/user/auth", {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  })
-    .then((response) => response.json())
-    .then(() => {
-      return true;
-    })
-    .catch((error) => {
-      console.error("發生錯誤:", error);
-      return false;
-    });
-};

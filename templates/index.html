@@ -10,113 +10,42 @@
       type="text/css"
       href="{{ url_for('static', filename='style/homepage.css') }}"
     />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='style/lightDarkMode.css') }}"
+      id="darkModeStylesheet"
+      disabled
+    />
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
   </head>
 
   <body>
-    <!-- <nav class="nav">
-      <div class="nav-container">
-        <a href="/" class="nav-container-slogan headline">台北一日遊</a>
-
-        <div class="nav-container-button">
-          <div
-            id="user-welcome"
-            class="container-link-button body-regular"
-          ></div>
-          <button class="container-link-button body-regular">預定行程</button>
-          <button id="signin-screen" class="container-link-button body-regular">
-            登入/註冊
-          </button>
-        </div>
-      </div>
-    </nav> -->
-    {% include 'navbar.html' %}
-    {% include 'login_system.html' %}
-
-    <!-- <div class="signin-background">
-      <div class="signin-main-container">
-        <div class="singnin-decorator-bar"></div>
-        <div class="signin-container">
-          <div class="exit-button-box">
-            <img class="exit-img1" src="/static/images/cross-img.png" alt="" />
-          </div>
-          <div class="signin-title-box">
-            <p class="signin-title dialog-title-bold">登入會員帳號</p>
-          </div>
-          <div class="signin-input-box">
-            <input
-              type="email"
-              id="signin-email"
-              class="info-input"
-              placeholder="輸入電子信箱"
-            />
-          </div>
-          <div class="signin-input-box">
-            <input
-              type="password"
-              id="signin-password"
-              class="info-input"
-              placeholder="輸入密碼"
-            />
-          </div>
-          <button class="signin-button button-regular">登入帳戶</button>
-          <button class="switch-signup-mode">還沒有帳戶？點此註冊</button>
-          <div id="alert-container1" class="alert-container"></div>
-        </div>
-      </div>
-
-      <div class="signup-main-container">
-        <div class="singnin-decorator-bar"></div>
-        <div class="signup-container">
-          <div class="exit-button-box">
-            <img class="exit-img2" src="/static/images/cross-img.png" alt="" />
-          </div>
-          <div class="signin-title-box">
-            <p class="signin-title dialog-title-bold">註冊會員帳號</p>
-          </div>
-          <div class="signin-input-box">
-            <input
-              type="text"
-              id="signup-name"
-              class="info-input"
-              placeholder="輸入姓名"
-            />
-          </div>
-          <div class="signin-input-box">
-            <input
-              type="email"
-              id="signup-email"
-              class="info-input"
-              placeholder="輸入電子郵件"
-            />
-          </div>
-          <div class="signin-input-box">
-            <input
-              type="password"
-              id="signup-password"
-              class="info-input"
-              placeholder="輸入密碼"
-            />
-          </div>
-          <button id="register-button" class="signin-button button-regular">
-            註冊新帳戶
-          </button>
-          <button class="switch-signin-mode">已經有帳戶了？點此登入</button>
-          <div id="alert-container2" class="alert-container"></div>
-        </div>
-      </div>
-    </div> -->
-
+    {% include 'navbar.html' %} {% include 'login_system.html' %}
     <section class="section">
-      <div class="hero-selection">
+      <div class="hero-selection" data-aos="fade-right" data-aos-delay="200">
         <div class="hero-selection-container">
           <div class="hero-selection-item">
-            <p class="hero-selection-space slogan-title">
+            <p
+              class="hero-selection-space slogan-title"
+              data-aos="fade-right"
+              data-aos-delay="400"
+            >
               輕鬆享受台北一日悠閒
             </p>
-            <p class="hero-selection-space body-bold">
+            <p
+              class="hero-selection-space body-bold"
+              data-aos="fade-right"
+              data-aos-delay="600"
+            >
               探索每個角落，體驗城市的深度旅遊行程
             </p>
-            <div class="hero-selection-space search-box-item">
+            <div
+              class="hero-selection-space search-box-item"
+              data-aos="fade-right"
+              data-aos-delay="800"
+            >
               <div class="search-input-box">
                 <input
                   class="search-input-text body-bold"
@@ -134,12 +63,34 @@
               </button>
             </div>
           </div>
+          <div
+            class="weather-container"
+            data-aos="fade-in"
+            data-aos-delay="1500"
+          >
+            <div class="weather-info">
+              <div class="weather-info-box">
+                <span class="city">Taipei </span>
+                <span class="temp">20°c</span>
+                <div class="humidity">Humidity: 60%</div>
+                <div class="wind">Wind Speed: 6.2km/h</div>
+                <div class="weather-img-box">
+                  <div class="description">Cloudy</div>
+                  <img
+                    src="https://openweathermap.org/img/wn/03n.png"
+                    alt=""
+                    class="icon"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
     <main>
       <div class="main-container">
-        <div class="main-containter-list">
+        <div class="main-containter-list" data-aos="fade-right">
           <div class="left-container">
             <button id="scroll-left-button" class="list-button">
               <img
@@ -158,54 +109,23 @@
               />
             </button>
           </div>
-          <div class="middle-container">
-            <!-- <div class="list-item">
-              <button class="list-text">劍潭</button>
-            </div>
-            <div class="list-item">
-              <button class="list-text">圓山</button>
-            </div>
-            <div class="list-item">
-              <button class="list-text">士林</button>
-            </div>
-            <div class="list-item">
-              <button class="list-text">新北投</button>
-            </div> -->
-          </div>
+          <div class="middle-container"></div>
         </div>
-        <div class="main-container-attractions">
-          <!-- <div class="attraction-container">
-          <a href="/attraction/1">
-            <div class="attraction-img-container">
-              <img id="attraction-image" class="attraction-img" src="" alt="" />
-              <div class="attraction-name-box">
-                <div class="attraction-name">
-                  <p id="attraction-name" class="name-text body-bold"></p>
-                </div>
-              </div>
-            </div>
-          </a>
-          <div class="attraction-text-container">
-            <div class="mrt-box">
-              <p id="mrt" class="mrt-text "></p>
-            </div>
-            <div class="category-box">
-              <p id="category" class="category-text"></p>
-            </div>
-          </div>
-        </div> -->
-        </div>
+        <div class="main-container-attractions"></div>
       </div>
       <div class="not-found-box">
+        <img src="/static/images/no-results.png" alt="" />
         <p class="body-bold">查無資料...</p>
       </div>
     </main>
     <footer class="footer">
       <div class="footer-content">
-        <p class="footer-text body-bold">COPYRIGHT © 2021 台北一日遊</p>
+        <p class="footer-text body-bold">COPYRIGHT © 2023 台北一日遊</p>
       </div>
     </footer>
-    <script src="{{ url_for('static', filename='script/index.js') }}"></script>
     <script src="{{ url_for('static', filename='script/member.js') }}"></script>
+    <script src="{{ url_for('static', filename='script/weather.js') }}"></script>
+    <script src="{{ url_for('static', filename='script/index.js') }}"></script>
+    <script src="{{ url_for('static', filename='script/lightDarkMode.js') }}"></script>
   </body>
 </html>

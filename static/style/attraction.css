@@ -13,6 +13,7 @@
   --secondaryColor: #f8f8f8;
   --bookingBackgroundColor: #e8e8e8;
   --footerColor: #757575;
+  --hoverColor: #59b1c8;
 }
 
 .slogan-title {
@@ -113,6 +114,10 @@
   border: 0;
   color: var(--grayColor);
   background-color: var(--additional);
+}
+
+.container-link-button:hover {
+  font-weight: 500;
 }
 
 /* selection--------------------------------------- */
@@ -307,6 +312,7 @@
   display: flex;
   align-items: center;
 }
+
 .radio-button {
   width: 87px;
   height: 22px;
@@ -331,6 +337,7 @@ input[type="radio"] {
 .select-item {
   width: 22px;
   height: 22px;
+
   &:checked {
     background-color: var(--cyanColor);
     border: 3px solid var(--additional);
@@ -364,6 +371,12 @@ input[type="radio"] {
   border-radius: 5px;
   text-align: center;
 }
+
+.booking-button:hover {
+  background-color: var(--hoverColor);
+  color: var(--footerColor);
+}
+
 /* main----------------------------------------- */
 .main {
   width: 100%;
@@ -415,7 +428,8 @@ input[type="radio"] {
   align-items: center;
   flex-grow: 1;
   width: 100%;
-  background-color: var(--footerColor);
+  background-color: #757575;
+  background-image: url("data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23666666' fill-opacity='0.94' fill-rule='evenodd'%3E%3Cpath d='M5 0h1L0 6V5zM6 5v1H5z'/%3E%3C/g%3E%3C/svg%3E");
 }
 
 .footer-content {
@@ -423,6 +437,7 @@ input[type="radio"] {
   display: flex;
   align-items: center;
 }
+
 .footer-text {
   color: var(--additional);
 }
@@ -434,6 +449,7 @@ input[type="radio"] {
   justify-content: center;
   align-items: center;
 }
+
 .not-found {
   width: 250px;
 }
@@ -502,7 +518,6 @@ body {
   padding: 15px;
   position: relative;
 }
-
 
 .exit-button-box {
   position: absolute;
@@ -575,14 +590,75 @@ body {
   cursor: pointer;
 }
 
-.alert-container{
+.alert-container {
   color: red;
   display: flex;
   justify-content: center;
   font-size: 10px;
 }
 
+.user-welcome:hover {
+  font-weight: normal;
+  cursor: auto;
+}
+
+/* switch */
+.switch-setting {
+  display: flex;
+  align-items: center;
+}
+
+.switch-img {
+  margin-right: 10px;
+}
+
+.switch-setting input[type="checkbox"] {
+  height: 0;
+  width: 0;
+  visibility: hidden;
+}
+
+.switch-setting label {
+  cursor: pointer;
+  text-indent: -9999px;
+  width: 55px;
+  height: 32px;
+  background: grey;
+  display: block;
+  border-radius: 16px;
+  position: relative;
+}
+
+.switch-setting label:after {
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  width: 22px;
+  height: 22px;
+  background: #fff;
+  border-radius: 30px;
+  transition: 0.3s;
+}
+
+.switch-setting input:checked + label {
+  background: var(--cyanColor);
+}
+
+.switch-setting input:checked + label:after {
+  left: calc(100% - 5px);
+  transform: translateX(-100%);
+}
+
+.switch-setting label:active:after {
+  width: 30px;
+}
+
 @media screen and (max-width: 1199px) {
+  .switch-setting {
+    margin-right: 10px;
+  }
+
   .nav-container {
     padding-left: 10px;
     width: 100%;
@@ -609,6 +685,7 @@ body {
   .main-container {
     width: 100%;
   }
+
   .hr-line {
     box-sizing: border-box;
     padding: 0 10px;

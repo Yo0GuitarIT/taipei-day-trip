@@ -1,11 +1,16 @@
 from flask import *
 from mysql.connector import pooling
 import json
+import os
+
+database_host = os.getenv("DATABASE_HOST")
+database_username = os.getenv("DATABASE_USERNAME")
+database_password = os.getenv("DATABASE_PASSWORD")
 
 db_config = {
-    "host": "localhost",
-    "user": "root",
-    "password": "12345678",
+    "host": database_host,
+    "user": database_username,
+    "password": database_password,
     "database": "taipei_day_trip"
 }
 
@@ -17,7 +22,7 @@ connection_pool = pooling.MySQLConnectionPool(
 
 mrt_info = Blueprint("mrt_api",__name__)
 
-@mrt_info.route('/mrts')
+@mrt_info.route('/api/mrts')
 def api_mrts():
 	try:
 		query = """

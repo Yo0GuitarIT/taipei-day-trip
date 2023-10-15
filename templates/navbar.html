@@ -1,6 +1,6 @@
-<nav class="nav">
+<nav class="nav" data-aos="fade-down">
   <div class="nav-container">
-    <a href="/" class="nav-container-slogan headline">台北一日遊</a>
+    <a href="/" id="slogan" class="nav-container-slogan headline">台北一日遊</a>
 
     <div class="nav-container-button">
       <div
@@ -8,12 +8,19 @@
         class="user-welcome container-link-button body-regular"
       ></div>
       <button id="booking-screen" class="container-link-button body-regular">
-        預定行程
+        載入中...
       </button>
       <button
         id="signin-screen"
         class="container-link-button body-regular"
       ></button>
+      <div class="switch-setting">
+        <div class="switch-img">
+          <img src="/static/images/dark-mode.png" alt="" />
+        </div>
+        <input type="checkbox" id="mode-toggle" />
+        <label for="mode-toggle">Toggle</label>
+      </div>
     </div>
   </div>
 </nav>
