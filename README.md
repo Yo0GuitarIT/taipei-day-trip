@@ -1,5 +1,7 @@
 # Taipei-Day-Trip
 - DEMO: http://18.143.249.177:3000/
+  
+![Uploading 截圖 2024-01-25 凌晨3.55.00.png…]()
 
 ## Feature
 - Utilized **CSS variables** to design light and dark modes. Designed transition animations using **AOS library**. Developed dynamic display of attractions using AJAX.
